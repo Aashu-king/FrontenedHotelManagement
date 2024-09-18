@@ -1,0 +1,59 @@
+<form [formGroup]="hotelForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Hotel Name</label>
+      <input id="name" formControlName="name" type="text" />
+    </div>
+    
+    <div>
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" type="text" />
+    </div>
+  
+    <div>
+      <label for="city">City</label>
+      <input id="city" formControlName="city" type="text" />
+    </div>
+  
+    <div>
+      <label for="state">State</label>
+      <input id="state" formControlName="state" type="text" />
+    </div>
+  
+    <div>
+      <label for="zipCode">Zip Code</label>
+      <input id="zipCode" formControlName="zipCode" type="text" />
+    </div>
+  
+    <div>
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" type="text" />
+    </div>
+  
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+    </div>
+  
+    <div>
+      <label for="rating">Rating</label>
+      <input id="rating" formControlName="rating" type="number" step="0.1" />
+    </div>
+  
+    <div>
+      <label for="totalRooms">Total Rooms</label>
+      <input id="totalRooms" formControlName="totalRooms" type="number" />
+    </div>
+  
+    <div>
+      <label for="isActive">Active</label>
+      <input id="isActive" formControlName="isActive" type="checkbox" />
+    </div>
+  
+    <div>
+      <label for="website">Website</label>
+      <input id="website" formControlName="website" type="text" />
+    </div>
+  
+    <button type="submit" [disabled]="hotelForm.invalid">Submit</button>
+  </form>
+  

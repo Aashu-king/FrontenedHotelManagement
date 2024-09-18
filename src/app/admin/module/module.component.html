@@ -1,0 +1,14 @@
+<form [formGroup]="moduleForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="moduleTypeId">Module Type ID</label>
+      <input id="moduleTypeId" formControlName="moduleTypeId" type="number" />
+    </div>
+  
+    <div>
+      <label for="moduleName">Module Name</label>
+      <input id="moduleName" formControlName="moduleName" type="text" />
+    </div>
+  
+    <button type="submit" [disabled]="moduleForm.invalid">Submit</button>
+  </form>
+  

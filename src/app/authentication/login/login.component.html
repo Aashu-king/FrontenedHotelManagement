@@ -1,0 +1,56 @@
+<div class="customer-page theme-default-margin">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+          <div class="note form-success text-center" id="ResetSuccess" style="display:none;">
+            We've sent you an email with a link to update your password.
+          </div>
+          <div class="login section-bg-1" style="background: beige;">
+            <div *ngIf="!isRecovering; else recoverFormTemplate">
+              <form [formGroup]="loginForm">
+                <div class="login-form-container">
+                  <div class="login-text">
+                    <h2>Login</h2>
+                    <p>Please login using account detail below.</p>
+                  </div>
+                  <div class="login-form">
+                    <input type="email" formControlName="email" id="CustomerEmail" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off" autofocus>
+                    <input type="password" formControlName="password" id="CustomerPassword" class="input-full" placeholder="Password">
+                    <div class="login-toggle-btn">
+                      <div class="form-action-button">
+                        <a href="javascript:void(0)" (click)="toggleRecoverPassword()">Forgot your password?</a>
+                      </div>
+                      <div class="account-optional-action">
+                        <a routerLink="/auth/register" id="customer_register_link">Create account</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <button type="submit" class="theme-default-button" (click)="onSubmitLogin(this.loginForm.value)">Sign In</button>
+            </div>
+            <ng-template #recoverFormTemplate>
+              <form [formGroup]="recoverPasswordForm">
+                <div class="login-form-container">
+                  <div class="login-text">
+                    <h2>Reset your password</h2>
+                    <p>We will send you an email to reset your password.</p>
+                  </div>
+                  <div class="login-form">
+                    <input type="email" formControlName="email" id="RecoverEmail" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off">
+                    <div class="login-toggle-btn">
+                      <div class="form-action-button">
+                        <button type="submit" class="theme-default-button" [disabled]="recoverPasswordForm.invalid">Submit</button>
+                        <a href="javascript:void(0)" (click)="toggleRecoverPassword()">Cancel</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

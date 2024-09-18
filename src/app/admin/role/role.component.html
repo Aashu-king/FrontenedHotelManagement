@@ -1,0 +1,23 @@
+<form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="roleId">Role ID</label>
+      <input id="roleId" formControlName="roleId" type="number" [disabled]="true" />
+    </div>
+  
+    <div class="form-group">
+      <label for="roleName">Role Name</label>
+      <input
+        id="roleName"
+        formControlName="roleName"
+        type="text"
+        maxlength="100"
+        placeholder="Enter role name"
+      />
+      <div *ngIf="roleForm.get('roleName')?.invalid && roleForm.get('roleName')?.touched" class="error">
+        Role name is required and must be less than 100 characters.
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="roleForm.invalid">Submit</button>
+  </form>
+  

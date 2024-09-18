@@ -1,0 +1,51 @@
+<form [formGroup]="userPermissionForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input
+        id="userId"
+        formControlName="userId"
+        type="number"
+        placeholder="Enter User ID"
+      />
+      <div *ngIf="userPermissionForm.get('userId')?.invalid && userPermissionForm.get('userId')?.touched" class="error">
+        User ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="pageId">Page ID</label>
+      <input
+        id="pageId"
+        formControlName="pageId"
+        type="number"
+        placeholder="Enter Page ID"
+      />
+      <div *ngIf="userPermissionForm.get('pageId')?.invalid && userPermissionForm.get('pageId')?.touched" class="error">
+        Page ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="canView" />
+        Can View
+      </label>
+    </div>
+  
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="canEdit" />
+        Can Edit
+      </label>
+    </div>
+  
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="canDelete" />
+        Can Delete
+      </label>
+    </div>
+  
+    <button type="submit" [disabled]="userPermissionForm.invalid">Submit</button>
+  </form>
+  

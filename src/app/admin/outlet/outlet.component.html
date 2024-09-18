@@ -1,0 +1,44 @@
+<form [formGroup]="outletForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Outlet Name</label>
+      <input id="name" formControlName="name" type="text" />
+    </div>
+  
+    <div>
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" type="text" />
+    </div>
+  
+    <div>
+      <label for="city">City</label>
+      <input id="city" formControlName="city" type="text" />
+    </div>
+  
+    <div>
+      <label for="state">State</label>
+      <input id="state" formControlName="state" type="text" />
+    </div>
+  
+    <div>
+      <label for="zipCode">Zip Code</label>
+      <input id="zipCode" formControlName="zipCode" type="text" />
+    </div>
+  
+    <div>
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" type="text" />
+    </div>
+  
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+    </div>
+  
+    <div>
+      <label for="hotelId">Hotel ID</label>
+      <input id="hotelId" formControlName="hotelId" type="number" />
+    </div>
+  
+    <button type="submit" [disabled]="outletForm.invalid">Submit</button>
+  </form>
+  

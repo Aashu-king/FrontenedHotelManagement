@@ -1,0 +1,60 @@
+<div class="customer-page theme-default-margin">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+          <div class="login section-bg-1" style="background: beige;">
+            <div class="login-form-container">
+              <div class="login-text">
+                <h2>Create Account</h2>
+                <p>Please Register using account details below.</p>
+              </div>
+              <div class="register-form">
+                <form [formGroup]="registerForm">
+                  <label for="firstName" class="hidden-label">Name</label>
+                  <input type="text" formControlName="userName" id="firstName" class="input-full" placeholder="First Name" autocapitalize="words" autofocus>
+                
+                  <label for="email" class="hidden-label">Email</label>
+                  <input type="email" formControlName="email" id="email" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off">
+                
+                  <label for="password" class="hidden-label">Password</label>
+                  <input type="password" formControlName="password" id="password" class="input-full" placeholder="Password">
+                
+                  <label for="gender" class="hidden-label">Gender</label>
+                  <input type="text" formControlName="gender" id="gender" class="input-full" placeholder="Gender">
+                
+                  <label for="phoneNumber" class="hidden-label">Phone Number</label>
+                  <input type="text" formControlName="phoneNumber" id="phoneNumber" class="input-full" placeholder="Phone Number">
+                
+                  <label for="street" class="hidden-label">Street</label>
+                  <input type="text" formControlName="street" id="street" class="input-full" placeholder="Street">
+                
+                  <label for="area" class="hidden-label">Area</label>
+                  <input type="text" formControlName="area" id="area" class="input-full" placeholder="Area">
+                
+                  <label for="locality" class="hidden-label">Locality</label>
+                  <input type="text" formControlName="locality" id="locality" class="input-full" placeholder="Locality">
+                
+                  <label for="state" class="hidden-label">State</label>
+                  <input type="text" formControlName="state" id="state" class="input-full" placeholder="State">
+                
+                  <label for="country" class="hidden-label">Country</label>
+                  <input type="text" formControlName="country" id="country" class="input-full" placeholder="Country">
+                
+                  <label for="isBusinessUser" class="hidden-label">Is Business User</label>
+                  <input type="checkbox" formControlName="isBuniessUser" id="isBusinessUser" class="input-full">
+                
+                 
+                </form>
+                    <button type="submit" (click)="onSubmit(registerForm.value)">Create</button>
+             
+                <div class="account-optional-action">
+                  <a href="../index.html">Return to Store</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,35 @@
+<form [formGroup]="rolePermissionForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="roleId">Role ID</label>
+      <input id="roleId" formControlName="roleId" type="number" />
+    </div>
+  
+    <div class="form-group">
+      <label for="pageId">Page ID</label>
+      <input id="pageId" formControlName="pageId" type="number" />
+    </div>
+  
+    <div class="form-group checkbox-group">
+      <label for="canView">
+        <input id="canView" formControlName="canView" type="checkbox" />
+        Can View
+      </label>
+    </div>
+  
+    <div class="form-group checkbox-group">
+      <label for="canEdit">
+        <input id="canEdit" formControlName="canEdit" type="checkbox" />
+        Can Edit
+      </label>
+    </div>
+  
+    <div class="form-group checkbox-group">
+      <label for="canDelete">
+        <input id="canDelete" formControlName="canDelete" type="checkbox" />
+        Can Delete
+      </label>
+    </div>
+  
+    <button type="submit" [disabled]="rolePermissionForm.invalid">Submit</button>
+  </form>
+  

@@ -1,0 +1,19 @@
+<form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="moduleId">Module ID</label>
+      <input id="moduleId" formControlName="moduleId" type="number" />
+    </div>
+  
+    <div>
+      <label for="pageName">Page Name</label>
+      <input id="pageName" formControlName="pageName" type="text" />
+    </div>
+  
+    <div>
+      <label for="pageUrl">Page URL</label>
+      <input id="pageUrl" formControlName="pageUrl" type="text" />
+    </div>
+  
+    <button type="submit" [disabled]="pageForm.invalid">Submit</button>
+  </form>
+  

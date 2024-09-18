@@ -1,0 +1,26 @@
+<nav class="sidebar">
+  <ul>
+
+    <li *ngFor="let moduleType of sidebarItems; let index = index">
+      <a (click)="toggleModuleType(index)">{{ moduleType.moduleTypeName }}</a>
+      <ul *ngIf="openModuleTypeIndex === index">
+        <li *ngFor="let module of moduleType.moduleData; let moduleIndex = index">
+          <a (click)="toggleModuleName(index, moduleIndex)">{{ module.moduleName }}</a>
+          <ul *ngIf="openModuleTypeIndex === index && openModuleNameIndex === moduleIndex">
+            <li *ngFor="let page of module.pageData">
+              <a [routerLink]="['/admin'+ page.pageUrl.trim()]">{{ page.pageName }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    
+<!-- 
+    <li><a routerLink="admin/outlet">Outlet</a></li>
+    <li><a routerLink="admin/page">Page</a></li>
+    <li><a routerLink="admin/role">Role</a></li>
+    <li><a routerLink="admin/role-permission">Role Permission</a></li>
+    <li><a routerLink="admin/user">User</a></li>
+    <li><a routerLink="admin/user-permission">User Permission</a></li> -->
+  </ul>
+</nav>

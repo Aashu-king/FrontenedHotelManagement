@@ -1,0 +1,75 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HotelComponent } from './hotel/hotel.component';
+import { ModuleComponent } from './module/module.component';
+import { ModuleTypeComponent } from './module-type/module-type.component';
+import { OutletComponent } from './outlet/outlet.component';
+import { PageComponent } from './page/page.component';
+import { RoleComponent } from './role/role.component';
+import { RolePermissionComponent } from './role-permission/role-permission.component';
+import { UserComponent } from './user/user.component';
+import { UserPermissionComponent } from './user-permission/user-permission.component';
+import { HotelListComponent } from './hotel/hotel-list/hotel-list.component';
+import { ModuleListComponent } from './module/module-list/module-list.component';
+import { ModuleTypeListComponent } from './module-type/module-type-list/module-type-list.component';
+import { OutletListComponent } from './outlet/outlet-list/outlet-list.component';
+import { PageListComponent } from './page/page-list/page-list.component';
+import { RoleListComponent } from './role/role-list/role-list.component';
+import { RolePermissionListComponent } from './role-permission/role-permission-list/role-permission-list.component';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
+
+const routes: Routes = [
+  {
+    path : '',
+    redirectTo : 'hotel',
+    pathMatch : 'full'
+  },
+  {
+    path : '',
+    children : [
+      {
+        path : 'hotel',
+        component : HotelListComponent
+      },
+      {
+        path : 'module',
+        component : ModuleListComponent
+      },
+      {
+        path : 'module-type',
+        component : ModuleTypeListComponent
+      },
+      {
+        path : 'outlet',
+        component : OutletListComponent
+      },
+      {
+        path : 'page',
+        component : PageListComponent
+      },
+      {
+        path : 'role',
+        component : RoleListComponent
+      },
+      {
+        path: 'role-permission',
+        component: RolePermissionListComponent
+      },
+      {
+        path: 'user',
+        component: UserListComponent
+      },
+      {
+        path: 'user-permission',
+        component: UserPermissionListComponent
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AdminRoutingModule { }

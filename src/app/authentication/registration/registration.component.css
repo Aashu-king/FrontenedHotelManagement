@@ -1,0 +1,40 @@
+.customer-page {
+    /* Your styles here */
+  }
+  
+  .login {
+    /* Your styles here */
+  }
+  
+  .login-text {
+    /* Your styles here */
+  }
+  
+  .input-full {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+  
+  .theme-default-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .theme-default-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .form-action-button {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .account-optional-action {
+    margin-top: 15px;
+  }
+  

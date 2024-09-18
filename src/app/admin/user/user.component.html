@@ -1,0 +1,93 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input id="userId" formControlName="userId" type="number" [disabled]="true" />
+    </div>
+  
+    <div class="form-group">
+      <label for="userName">User Name</label>
+      <input id="userName" formControlName="userName" type="text" maxlength="100" placeholder="Enter user name" />
+      <div *ngIf="userForm.get('userName')?.invalid && userForm.get('userName')?.touched" class="error">
+        User name is required and must be less than 100 characters.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" maxlength="255" placeholder="Enter email address" />
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error">
+        A valid email is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="passwordHash">Password Hash</label>
+      <input id="passwordHash" formControlName="passwordHash" type="password" maxlength="255" placeholder="Enter password hash" />
+      <div *ngIf="userForm.get('passwordHash')?.invalid && userForm.get('passwordHash')?.touched" class="error">
+        Password hash is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="roleId">Role ID</label>
+      <input id="roleId" formControlName="roleId" type="number" placeholder="Enter role ID" />
+      <div *ngIf="userForm.get('roleId')?.invalid && userForm.get('roleId')?.touched" class="error">
+        Role ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="outletId">Outlet ID</label>
+      <input id="outletId" formControlName="outletId" type="number" placeholder="Enter outlet ID" />
+      <div *ngIf="userForm.get('outletId')?.invalid && userForm.get('outletId')?.touched" class="error">
+        Outlet ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Enter phone number" />
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" type="text" placeholder="Enter address" />
+    </div>
+  
+    <div class="form-group">
+      <label for="city">City</label>
+      <input id="city" formControlName="city" type="text" placeholder="Enter city" />
+    </div>
+  
+    <div class="form-group">
+      <label for="state">State</label>
+      <input id="state" formControlName="state" type="text" placeholder="Enter state" />
+    </div>
+  
+    <div class="form-group">
+      <label for="zipCode">Zip Code</label>
+      <input id="zipCode" formControlName="zipCode" type="text" placeholder="Enter zip code" />
+    </div>
+  
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth</label>
+      <input id="dateOfBirth" formControlName="dateOfBirth" type="date" />
+    </div>
+  
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="isActive" />
+        Is Active
+      </label>
+    </div>
+  
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="isAdmin" />
+        Is Admin
+      </label>
+    </div>
+  
+    <button type="submit" [disabled]="userForm.invalid">Submit</button>
+  </form>
+  
