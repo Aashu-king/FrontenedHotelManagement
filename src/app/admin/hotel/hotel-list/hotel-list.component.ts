@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { HotelComponent } from '../hotel.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hotel-list',
@@ -9,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class HotelListComponent implements OnInit{
 
   justHotelData : any[] = []
-  constructor(private http : HttpClient){
+  constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
 
@@ -24,9 +26,13 @@ export class HotelListComponent implements OnInit{
     })
   }
 
-  addNewPage() {
-    // Add your logic for adding a new page here, for example, navigation or opening a modal
-    console.log('Add New Page button clicked');
+  openDialog(): void {
+    this.dialog.open(HotelComponent, {
+     height: '80%',
+     width: '80%',
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '-100px' }
+    });
   }
   
 }

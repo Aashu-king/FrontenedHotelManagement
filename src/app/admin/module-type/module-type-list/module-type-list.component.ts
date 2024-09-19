@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ModuleTypeComponent } from '../module-type.component';
+import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-module-type-list',
@@ -6,5 +9,29 @@ import { Component } from '@angular/core';
   styleUrl: './module-type-list.component.css'
 })
 export class ModuleTypeListComponent {
+  
+  justHotelData : any[] = []
+  constructor(private http : HttpClient, public dialog: MatDialog,){
 
+  }
+
+  ngOnInit(): void {
+    this.getData();
+  }
+
+  getData(){
+    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
+      this.justHotelData = result
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
+    })
+  }
+
+  openDialog(): void {
+    this.dialog.open(ModuleTypeComponent, {
+     height: '80%',
+     width: '80%',
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '-100px' }
+    });
+  }
 }

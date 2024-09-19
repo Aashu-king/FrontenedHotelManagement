@@ -1,4 +1,15 @@
-<form [formGroup]="rolePermissionForm" (ngSubmit)="onSubmit()">
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="rolePermissionForm">
     <div class="form-group">
       <label for="roleId">Role ID</label>
       <input id="roleId" formControlName="roleId" type="number" />
@@ -29,7 +40,5 @@
         Can Delete
       </label>
     </div>
-  
-    <button type="submit" [disabled]="rolePermissionForm.invalid">Submit</button>
   </form>
   

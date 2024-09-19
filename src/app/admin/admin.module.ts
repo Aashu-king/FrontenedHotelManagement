@@ -17,8 +17,12 @@ import { HotelListComponent } from './hotel/hotel-list/hotel-list.component';
 import { ModuleListComponent } from './module/module-list/module-list.component';
 import { ModuleTypeListComponent } from './module-type/module-type-list/module-type-list.component';
 import { OutletListComponent } from './outlet/outlet-list/outlet-list.component';
-
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,12 @@ import { OutletListComponent } from './outlet/outlet-list/outlet-list.component'
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule
   ]
 })
 export class AdminModule { }

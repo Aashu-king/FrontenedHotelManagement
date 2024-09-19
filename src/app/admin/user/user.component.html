@@ -1,3 +1,14 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="userId">User ID</label>
@@ -87,7 +98,5 @@
         Is Admin
       </label>
     </div>
-  
-    <button type="submit" [disabled]="userForm.invalid">Submit</button>
   </form>
   

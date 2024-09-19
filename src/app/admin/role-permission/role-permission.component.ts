@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-role-permission',
@@ -8,8 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RolePermissionComponent {
   rolePermissionForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  SaveUpdateEvent: boolean = false;
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RolePermissionComponent>, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.rolePermissionForm = this.fb.group({
@@ -24,7 +26,11 @@ export class RolePermissionComponent {
   onSubmit() {
     if (this.rolePermissionForm.valid) {
       console.log(this.rolePermissionForm.value);
-    
+      this.http.post('http://localhost:3000/api/v1/rolewisePermission', this.rolePermissionForm.value).subscribe(
+        (response : any) => {
+          console.log('Success!', response);
+        }
+      );
     }
   }
 }

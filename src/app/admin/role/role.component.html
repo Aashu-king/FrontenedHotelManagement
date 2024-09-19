@@ -1,4 +1,15 @@
-<form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="roleForm">
     <div class="form-group">
       <label for="roleId">Role ID</label>
       <input id="roleId" formControlName="roleId" type="number" [disabled]="true" />
@@ -17,7 +28,5 @@
         Role name is required and must be less than 100 characters.
       </div>
     </div>
-  
-    <button type="submit" [disabled]="roleForm.invalid">Submit</button>
   </form>
   

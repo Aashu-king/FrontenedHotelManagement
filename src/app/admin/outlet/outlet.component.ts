@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-outlet',
@@ -8,8 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class OutletComponent {
   outletForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  SaveUpdateEvent: boolean = false;
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OutletComponent>, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.outletForm = this.fb.group({
@@ -28,7 +30,11 @@ export class OutletComponent {
   onSubmit() {
     if (this.outletForm.valid) {
       console.log(this.outletForm.value);
-   
+      this.http.post('http://localhost:3000/api/v1/outlet', this.outletForm.value).subscribe(
+        (response : any) => {
+          console.log('Success!', response);
+        }
+      );
     }
   }
 }

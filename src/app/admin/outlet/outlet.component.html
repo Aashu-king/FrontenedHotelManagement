@@ -1,4 +1,15 @@
-<form [formGroup]="outletForm" (ngSubmit)="onSubmit()">
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="outletForm">
     <div>
       <label for="name">Outlet Name</label>
       <input id="name" formControlName="name" type="text" />
@@ -39,6 +50,5 @@
       <input id="hotelId" formControlName="hotelId" type="number" />
     </div>
   
-    <button type="submit" [disabled]="outletForm.invalid">Submit</button>
   </form>
   

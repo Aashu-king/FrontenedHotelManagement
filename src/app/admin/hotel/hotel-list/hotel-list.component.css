@@ -12,7 +12,6 @@
   
   .table-container {
     width: 90%;
-    margin: 50px auto;
     overflow-x: auto;
   }
   
@@ -115,3 +114,7 @@
     background-color: #45a049;
   }
   
+  ::ng-deep .custom-dialog-container .mat-dialog-container {
+    margin-left: 280px;  /* Apply margin-left to the container */
+    /* You can also add other positioning if necessary */
+  }

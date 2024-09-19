@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hotel',
@@ -8,8 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class HotelComponent {
   hotelForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  SaveUpdateEvent: boolean = false;
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<HotelComponent>,private http: HttpClient) {}
 
   ngOnInit(): void {
     this.hotelForm = this.fb.group({
@@ -31,6 +33,11 @@ export class HotelComponent {
   onSubmit() {
     if (this.hotelForm.valid) {
       console.log(this.hotelForm.value);
+      this.http.post('http://localhost:3000/api/v1/hotels', this.hotelForm.value).subscribe(
+        (response : any) => {
+          console.log('Success!', response);
+        }
+      );
     }
   }
 }

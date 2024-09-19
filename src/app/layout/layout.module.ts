@@ -6,13 +6,14 @@ import { BlankComponent } from './blank/blank.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
 
 
 
 @NgModule({
   declarations: [
       SidebarComponent,
-      FullComponent,BlankComponent
+      FullComponent,BlankComponent, HeaderComponent
   ],
   imports: [
     CommonModule,RouterModule,HttpClientModule,FormsModule ,ReactiveFormsModule

@@ -5,9 +5,9 @@ import { BlankComponent } from './layout/blank/blank.component';
 
 const routes: Routes = [
 
-  {path: '' , redirectTo: 'login', pathMatch:'full'},
+  {path: '' , redirectTo: '23/admin/hotel', pathMatch:'full'},
   {
-    path: '',
+    path: '23',
     component: FullComponent,
     children: [
       {

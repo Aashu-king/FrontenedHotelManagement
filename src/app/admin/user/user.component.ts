@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user',
@@ -8,8 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class UserComponent {
   userForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  SaveUpdateEvent: boolean = false;
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<UserComponent>, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -33,6 +35,11 @@ export class UserComponent {
   onSubmit() {
     if (this.userForm.valid) {
       console.log(this.userForm.value);
+      this.http.post('http://localhost:3000/api/v1/user', this.userForm.value).subscribe(
+        (response : any) => {
+          console.log('Success!', response);
+        }
+      );
     }
   }
 }

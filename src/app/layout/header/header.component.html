@@ -1,0 +1,42 @@
+ <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+
+  <div class="page-wrapper compact-wrapper" id="pageWrapper">
+    <div class="page-header">
+      <div class="header-wrapper row m-0">
+        <form class="form-inline search-full col" action="#" method="get">
+          <div class="form-group w-100">
+            <div class="Typeahead Typeahead--twitterUsers">
+              <div class="u-posRelative">
+                <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text" placeholder="Search Cuba .." name="q" title="" autofocus>
+                <div class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div><i class="close-search" data-feather="x"></i>
+              </div>
+              <div class="Typeahead-menu"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+   
+    <div class="page-body-wrapper">
+   
+      <div class="sidebar-wrapper"   data-sidebar-layout="stroke-svg">
+        <div>
+          <div class="logo-wrapper">
+            <a href="index.html" (click)="toggleSidebar()">
+              <img class="img-fluid for-light" src="../assets/images/homeicon/logoh.png" alt="">
+              <img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="">
+            </a>
+            <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+          </div>
+          <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/homeicon/logoh.png" alt=""></a></div>
+          <app-sidebar></app-sidebar>
+        </div>
+      </div>
+      <div style="margin-left: 280px;margin-top: 60px;">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  

@@ -1,4 +1,4 @@
-<nav class="sidebar">
+<!-- <nav class="sidebar">
   <ul>
 
     <li *ngFor="let moduleType of sidebarItems; let index = index">
@@ -14,13 +14,98 @@
         </li>
       </ul>
     </li>
-    
-<!-- 
-    <li><a routerLink="admin/outlet">Outlet</a></li>
-    <li><a routerLink="admin/page">Page</a></li>
-    <li><a routerLink="admin/role">Role</a></li>
-    <li><a routerLink="admin/role-permission">Role Permission</a></li>
-    <li><a routerLink="admin/user">User</a></li>
-    <li><a routerLink="admin/user-permission">User Permission</a></li> -->
+
   </ul>
-</nav>
+</nav> -->
+
+
+<div class="sidebar-wrapper" data-sidebar-layout="stroke-svg" [ngClass]="{ 'active': isSidebarOpen }"
+  (click)="hideScrollbar();toggleHeaderClass()">
+  <div>
+    <div class="logo-wrapper">
+      <a><img class="img-fluid for-light" style="width: 100px;height: 50px;" src="../assets/images/homeicon/logoh.png"
+          alt="" />
+      </a>
+      <div class="back-btn" (click)="hideScrollbar();toggleHeaderClass()">
+        <i class="fa fa-angle-left close-icon"></i>
+      </div>
+      <div class="toggle-sidebar" (click)="hideScrollbar();toggleHeaderClass()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-grid status_toggle middle sidebar-toggle">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+      </div>
+    </div>
+    <div class="logo-icon-wrapper">
+      <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-align-center status_toggle middle sidebar-toggle" style="margin: 11px 0px;">
+          <line x1="18" y1="10" x2="6" y2="10"></line>
+          <line x1="21" y1="6" x2="3" y2="6"></line>
+          <line x1="21" y1="14" x2="3" y2="14"></line>
+          <line x1="18" y1="18" x2="6" y2="18"></line>
+        </svg></a>
+    </div>
+    <nav class="sidebar-main">
+      <div class="left-arrow" id="left-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-arrow-left">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </div>
+      <div id="sidebar-menu">
+        <ul class="sidebar-links" id="simple-bar" data-simplebar="init" style="display: block">
+          <div class="simplebar-wrapper" style="margin: 0px">
+            <div class="simplebar-height-auto-observer-wrapper">
+              <div class="simplebar-height-auto-observer"></div>
+            </div>
+            <div class="simplebar-mask">
+              <div class="simplebar-offset" style="right: 0px; bottom: 0px">
+                <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll">
+                  <div class="simplebar-content" style="padding: 0px">
+
+                    <li *ngFor="let moduleType of sidebarItems; let index = index">
+                      <a (click)="toggleModuleType(index)">{{ moduleType.moduleTypeName }}</a>
+                      <ul *ngIf="openModuleTypeIndex === index">
+                        <li *ngFor="let module of moduleType.moduleData; let moduleIndex = index">
+                          <a (click)="toggleModuleName(index, moduleIndex)">{{ module.moduleName }}</a>
+                          <ul *ngIf="openModuleTypeIndex === index && openModuleNameIndex === moduleIndex">
+                            <li *ngFor="let page of module.pageData">
+                              <a [routerLink]="['/admin'+ page.pageUrl.trim()]">{{ page.pageName }}</a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="simplebar-placeholder" style="width: auto; height: 2479px"></div>
+          </div>
+          <div class="simplebar-track simplebar-horizontal">
+            <div class="simplebar-scrollbar" style="width: 0px; display: none"></div>
+          </div>
+          <div class="simplebar-track simplebar-vertical">
+            <div class="simplebar-scrollbar"></div>
+          </div>
+        </ul>
+
+      </div>
+      <div class="right-arrow" id="right-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-arrow-right">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -1,9 +1,17 @@
-<form [formGroup]="moduleTypeForm" (ngSubmit)="onSubmit()">
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+ <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+<form [formGroup]="moduleTypeForm">
     <div>
       <label for="moduleTypeName">Module Type Name</label>
       <input id="moduleTypeName" formControlName="moduleTypeName" type="text" />
     </div>
-  
-    <button type="submit" [disabled]="moduleTypeForm.invalid">Submit</button>
   </form>
   
