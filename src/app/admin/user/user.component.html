@@ -33,7 +33,7 @@ align-items: center;">
   
     <div class="form-group">
       <label for="passwordHash">Password Hash</label>
-      <input id="passwordHash" formControlName="passwordHash" type="password" maxlength="255" placeholder="Enter password hash" />
+      <input id="passwordHash" formControlName="password" type="password" maxlength="255" placeholder="Enter password hash" />
       <div *ngIf="userForm.get('passwordHash')?.invalid && userForm.get('passwordHash')?.touched" class="error">
         Password hash is required.
       </div>

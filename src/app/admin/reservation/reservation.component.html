@@ -1,0 +1,77 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="reservationForm">
+
+  <div>
+    <label for="guestId">Guest</label>
+    <select id="guestId" formControlName="guestId">
+      <option *ngFor="let guest of guests" [value]="guest.guestId">{{ guest.firstName }} {{ guest.lastName }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="roomId">Room</label>
+    <select id="roomId" formControlName="roomId">
+      <option *ngFor="let room of rooms" [value]="room.roomId">{{ room.roomNumber }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="reservationDate">Reservation Date</label>
+    <input id="reservationDate" formControlName="reservationDate" type="date" />
+  </div>
+
+  <div>
+    <label for="checkInDate">Check-In Date</label>
+    <input id="checkInDate" formControlName="checkInDate" type="date" />
+  </div>
+
+  <div>
+    <label for="checkOutDate">Check-Out Date</label>
+    <input id="checkOutDate" formControlName="checkOutDate" type="date" />
+  </div>
+
+  <div>
+    <label for="status">Status</label>
+    <select id="status" formControlName="status">
+      <option value="pending">Pending</option>
+      <option value="confirmed">Confirmed</option>
+      <option value="canceled">Canceled</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="paymentStatus">Payment Status</label>
+    <select id="paymentStatus" formControlName="paymentStatus">
+      <option value="paid">Paid</option>
+      <option value="pending">Pending</option>
+      <option value="partially paid">Partially Paid</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="totalAmount">Total Amount</label>
+    <input id="totalAmount" formControlName="totalAmount" type="number" step="0.01" />
+  </div>
+
+  <div>
+    <label for="specialRequests">Special Requests</label>
+    <textarea id="specialRequests" formControlName="specialRequests"></textarea>
+  </div>
+
+  <div>
+    <label for="outletid">Outlet</label>
+    <select id="outletid" formControlName="outletid">
+      <option *ngFor="let outlet of outlets" [value]="outlet.outletid">{{ outlet.name }}</option>
+    </select>
+  </div>
+</form>

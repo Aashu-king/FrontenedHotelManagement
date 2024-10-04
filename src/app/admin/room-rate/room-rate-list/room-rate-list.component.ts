@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { ModuleComponent } from '../module.component';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { RoomRateComponent } from '../room-rate.component';
 
 @Component({
-  selector: 'app-module-list',
-  templateUrl: './module-list.component.html',
-  styleUrl: './module-list.component.css'
+  selector: 'app-room-rate-list',
+  templateUrl: './room-rate-list.component.html',
+  styleUrl: './room-rate-list.component.css'
 })
-export class ModuleListComponent {
+export class RoomRateListComponent {
 
-  
   justHotelData : any[] = []
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
@@ -28,11 +27,12 @@ export class ModuleListComponent {
   }
 
   openDialog(): void {
-    this.dialog.open(ModuleComponent, {
+    this.dialog.open(RoomRateComponent, {
      height: '80%',
      width: '80%',
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });
   }
+  
 }

@@ -1,0 +1,43 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="roomRateForm">
+
+  <div>
+    <label for="roomTypeId">Room Type</label>
+    <select id="roomTypeId" formControlName="roomTypeId">
+      <option *ngFor="let type of roomTypes" [value]="type.id">{{ type.name }}</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="startDate">Start Date</label>
+    <input id="startDate" formControlName="startDate" type="date" />
+  </div>
+
+  <div>
+    <label for="endDate">End Date</label>
+    <input id="endDate" formControlName="endDate" type="date" />
+  </div>
+
+  <div>
+    <label for="ratePerNight">Rate Per Night</label>
+    <input id="ratePerNight" formControlName="ratePerNight" type="number" step="0.01" />
+  </div>
+
+  <div>
+    <label for="outletid">Outlet</label>
+    <select id="outletid" formControlName="outletid">
+      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+    </select>
+  </div>
+
+</form>

@@ -8,36 +8,35 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
+  registerForm!: FormGroup;
+  SaveUpdateEvent: boolean = false;
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
-  registerForm: FormGroup;
-
-  constructor(private fb: FormBuilder,private http: HttpClient) {
+  ngOnInit(): void {
     this.registerForm = this.fb.group({
-      userName: ['', Validators.required],        
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      gender: [''],
+      userId: [{ value: '', disabled: true }], 
+      userName: ['', [Validators.required, Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      passwordHash: ['', [Validators.required, Validators.maxLength(255)]],
+      roleId: ['', Validators.required],
+      outletId: ['', Validators.required],
       phoneNumber: [''],
-      street: [''],
-      area: [''],
-      locality: [''],
+      address: [''],
+      city: [''],
       state: [''],
-      country: [''],
-      isBuniessUser: [false, Validators.required]
+      zipCode: [''],
+      dateOfBirth: [''],
+      isActive: [true],
+      isAdmin: [false],
     });
   }
 
-  onSubmit(value: any) {
-    console.log('value: ', value);
+  onSubmit() {
     if (this.registerForm.valid) {
-
-      // Send the form data as JSON
-      this.http.post('http://localhost:3000/ecomm/user', value).subscribe(
-        response => {
+      console.log(this.registerForm.value);
+      this.http.post('http://localhost:3000/api/v1/user', this.registerForm.value).subscribe(
+        (response : any) => {
           console.log('Success!', response);
-        },
-        error => {
-          console.error('Error!', error);
         }
       );
     }

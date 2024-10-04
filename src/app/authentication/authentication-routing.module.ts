@@ -5,7 +5,7 @@ import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   {
-    path: '' , redirectTo: 'login' , pathMatch: 'full'
+    path: '' , redirectTo: 'auth' , pathMatch: 'full'
   },
   {
     path: '',

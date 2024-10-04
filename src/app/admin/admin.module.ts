@@ -23,6 +23,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RoomComponent } from './room/room.component';
+import { RoomRateComponent } from './room-rate/room-rate.component';
+import { RoomTypeComponent } from './room-type/room-type.component';
+import { GuestComponent } from './guest/guest.component';
+import { ReservationComponent } from './reservation/reservation.component';
+import { RoomListComponent } from './room/room-list/room-list.component';
+import { RoomRateListComponent } from './room-rate/room-rate-list/room-rate-list.component';
+import { RoomTypeListComponent } from './room-type/room-type-list/room-type-list.component';
+import { GuestListComponent } from './guest/guest-list/guest-list.component';
+import { ReservationListComponent } from './reservation/reservation-list/reservation-list.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +49,16 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ModuleListComponent,
     ModuleTypeListComponent,
     OutletListComponent,
+    RoomComponent,
+    RoomRateComponent,
+    RoomTypeComponent,
+    GuestComponent,
+    ReservationComponent,
+    RoomListComponent,
+    RoomRateListComponent,
+    RoomTypeListComponent,
+    GuestListComponent,
+    ReservationListComponent,
   
   ],
   imports: [

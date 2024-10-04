@@ -1,0 +1,46 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="roomForm">
+
+  <div>
+    <label for="roomNumber">Room Number</label>
+    <input id="roomNumber" formControlName="roomNumber" type="text" />
+  </div>
+  
+  <div>
+    <label for="roomTypeId">Room Type</label>
+    <select id="roomTypeId" formControlName="roomTypeId">
+      <option *ngFor="let type of roomTypes" [value]="type.id">{{ type.name }}</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="floor">Floor</label>
+    <input id="floor" formControlName="floor" type="number" />
+  </div>
+  
+  <div>
+    <label for="status">Status</label>
+    <select id="status" formControlName="status">
+      <option value="available">Available</option>
+      <option value="occupied">Occupied</option>
+      <option value="maintenance">Maintenance</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="outletid">Outlet</label>
+    <select id="outletid" formControlName="outletid">
+      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+    </select>
+  </div>
+</form>

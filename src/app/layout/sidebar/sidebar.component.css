@@ -38,3 +38,78 @@
 .sidebar ul ul li a:hover {
   color: #fff;
 }
+
+
+.simplebar-content-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+.simplebar-content-wrapper:hover {
+  overflow-y: auto; /* Enable scrolling when hovering */
+}
+
+.simplebar-content {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e5e5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a:hover {
+  background-color: lightblue;
+  color: white;
+}
+
+ul {
+  padding-left: 15px;
+  margin: 0;
+}
+
+ul ul {
+  padding-left: 20px; /* For nested lists */
+}
+
+.simplebar-content ul li a {
+  padding: 8px 10px;
+  border-bottom: none;
+}
+
+.simplebar-content ul li a:hover {
+  background-color: #f1f1f1;
+  color: lightblue;
+}
+
+/* Active link styling */
+.active {
+  background-color: lightblue;
+  color: white;
+}
+
+.dropdown-icon {
+  float: right;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-left: 10px;
+  transform: rotate(45deg); /* Default arrow pointing down */
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(-135deg); /* Arrow pointing up when open */
+}

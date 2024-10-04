@@ -1,40 +1,64 @@
-.customer-page {
-    /* Your styles here */
-  }
-  
-  .login {
-    /* Your styles here */
-  }
-  
-  .login-text {
-    /* Your styles here */
-  }
-  
-  .input-full {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-  }
-  
-  .theme-default-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .theme-default-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .form-action-button {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .account-optional-action {
-    margin-top: 15px;
-  }
-  
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 48%; 
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #563D7C;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #412a5b;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: #563D7C;
+  border: 1px solid #563D7C;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-outline-primary:hover {
+  background-color: #563D7C;
+  color: #fff;
+}
+
+input[disabled] {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}

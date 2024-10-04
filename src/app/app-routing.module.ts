@@ -5,9 +5,9 @@ import { BlankComponent } from './layout/blank/blank.component';
 
 const routes: Routes = [
 
-  {path: '' , redirectTo: '23/admin/hotel', pathMatch:'full'},
+  {path: '' , redirectTo: 'auth/login', pathMatch:'full'},
   {
-    path: '23',
+    path: '',
     component: FullComponent,
     children: [
       {
@@ -21,7 +21,7 @@ const routes: Routes = [
     component : BlankComponent,
     children : [
       {
-        path : 'login',
+        path : 'auth',
         loadChildren : () => import('./authentication/authentication.module').then(x => x.AuthenticationModule)
       },  
   ]

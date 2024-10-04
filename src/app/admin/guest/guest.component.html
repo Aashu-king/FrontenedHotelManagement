@@ -1,0 +1,62 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="guestForm">
+
+  <div>
+    <label for="firstName">First Name</label>
+    <input id="firstName" formControlName="firstName" type="text" />
+  </div>
+
+  <div>
+    <label for="lastName">Last Name</label>
+    <input id="lastName" formControlName="lastName" type="text" />
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" />
+  </div>
+
+  <div>
+    <label for="phone">Phone</label>
+    <input id="phone" formControlName="phone" type="text" />
+  </div>
+
+  <div>
+    <label for="address">Address</label>
+    <input id="address" formControlName="address" type="text" />
+  </div>
+
+  <div>
+    <label for="identificationType">Identification Type</label>
+    <select id="identificationType" formControlName="identificationType">
+      <option *ngFor="let idType of idTypes" [value]="idType">{{ idType }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="identificationNumber">Identification Number</label>
+    <input id="identificationNumber" formControlName="identificationNumber" type="text" />
+  </div>
+
+  <div>
+    <label for="dateOfBirth">Date of Birth</label>
+    <input id="dateOfBirth" formControlName="dateOfBirth" type="date" />
+  </div>
+
+  <div>
+    <label for="outletid">Outlet</label>
+    <select id="outletid" formControlName="outletid">
+      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+    </select>
+  </div>
+</form>

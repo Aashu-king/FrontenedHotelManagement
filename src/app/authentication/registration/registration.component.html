@@ -10,42 +10,92 @@
               </div>
               <div class="register-form">
                 <form [formGroup]="registerForm">
-                  <label for="firstName" class="hidden-label">Name</label>
-                  <input type="text" formControlName="userName" id="firstName" class="input-full" placeholder="First Name" autocapitalize="words" autofocus>
+              
+                  <div class="form-group">
+                    <label for="userName">User Name</label>
+                    <input id="userName" formControlName="userName" type="text" maxlength="100" placeholder="Enter user name" />
+                    <div *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched" class="error">
+                      User name is required and must be less than 100 characters.
+                    </div>
+                  </div>
                 
-                  <label for="email" class="hidden-label">Email</label>
-                  <input type="email" formControlName="email" id="email" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" formControlName="email" type="email" maxlength="255" placeholder="Enter email address" />
+                    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+                      A valid email is required.
+                    </div>
+                  </div>
                 
-                  <label for="password" class="hidden-label">Password</label>
-                  <input type="password" formControlName="password" id="password" class="input-full" placeholder="Password">
+                  <div class="form-group">
+                    <label for="passwordHash">Password Hash</label>
+                    <input id="passwordHash" formControlName="passwordHash" type="password" maxlength="255" placeholder="Enter password hash" />
+                    <div *ngIf="registerForm.get('passwordHash')?.invalid && registerForm.get('passwordHash')?.touched" class="error">
+                      Password hash is required.
+                    </div>
+                  </div>
                 
-                  <label for="gender" class="hidden-label">Gender</label>
-                  <input type="text" formControlName="gender" id="gender" class="input-full" placeholder="Gender">
+                  <div class="form-group">
+                    <label for="roleId">Role ID</label>
+                    <input id="roleId" formControlName="roleId" type="number" placeholder="Enter role ID" />
+                    <div *ngIf="registerForm.get('roleId')?.invalid && registerForm.get('roleId')?.touched" class="error">
+                      Role ID is required.
+                    </div>
+                  </div>
                 
-                  <label for="phoneNumber" class="hidden-label">Phone Number</label>
-                  <input type="text" formControlName="phoneNumber" id="phoneNumber" class="input-full" placeholder="Phone Number">
+                  <div class="form-group">
+                    <label for="outletId">Outlet ID</label>
+                    <input id="outletId" formControlName="outletId" type="number" placeholder="Enter outlet ID" />
+                    <div *ngIf="registerForm.get('outletId')?.invalid && registerForm.get('outletId')?.touched" class="error">
+                      Outlet ID is required.
+                    </div>
+                  </div>
                 
-                  <label for="street" class="hidden-label">Street</label>
-                  <input type="text" formControlName="street" id="street" class="input-full" placeholder="Street">
+                  <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Enter phone number" />
+                  </div>
                 
-                  <label for="area" class="hidden-label">Area</label>
-                  <input type="text" formControlName="area" id="area" class="input-full" placeholder="Area">
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input id="address" formControlName="address" type="text" placeholder="Enter address" />
+                  </div>
                 
-                  <label for="locality" class="hidden-label">Locality</label>
-                  <input type="text" formControlName="locality" id="locality" class="input-full" placeholder="Locality">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input id="city" formControlName="city" type="text" placeholder="Enter city" />
+                  </div>
                 
-                  <label for="state" class="hidden-label">State</label>
-                  <input type="text" formControlName="state" id="state" class="input-full" placeholder="State">
+                  <div class="form-group">
+                    <label for="state">State</label>
+                    <input id="state" formControlName="state" type="text" placeholder="Enter state" />
+                  </div>
                 
-                  <label for="country" class="hidden-label">Country</label>
-                  <input type="text" formControlName="country" id="country" class="input-full" placeholder="Country">
+                  <div class="form-group">
+                    <label for="zipCode">Zip Code</label>
+                    <input id="zipCode" formControlName="zipCode" type="text" placeholder="Enter zip code" />
+                  </div>
                 
-                  <label for="isBusinessUser" class="hidden-label">Is Business User</label>
-                  <input type="checkbox" formControlName="isBuniessUser" id="isBusinessUser" class="input-full">
+                  <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input id="dateOfBirth" formControlName="dateOfBirth" type="date" />
+                  </div>
                 
-                 
+                  <div class="form-group">
+                    <label>
+                      <input type="checkbox" formControlName="isActive" />
+                      Is Active
+                    </label>
+                  </div>
+                
+                  <div class="form-group">
+                    <label>
+                      <input type="checkbox" formControlName="isAdmin" />
+                      Is Admin
+                    </label>
+                  </div>
                 </form>
-                    <button type="submit" (click)="onSubmit(registerForm.value)">Create</button>
+                    <button type="submit" (click)="onSubmit()">Create</button>
              
                 <div class="account-optional-action">
                   <a href="../index.html">Return to Store</a>

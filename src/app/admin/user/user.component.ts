@@ -18,7 +18,7 @@ export class UserComponent {
       userId: [{ value: '', disabled: true }], 
       userName: ['', [Validators.required, Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
-      passwordHash: ['', [Validators.required, Validators.maxLength(255)]],
+      password: ['', [Validators.required, Validators.maxLength(255)]],
       roleId: ['', Validators.required],
       outletId: ['', Validators.required],
       phoneNumber: [''],

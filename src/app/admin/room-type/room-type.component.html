@@ -1,0 +1,47 @@
+<div class="form-header" style="display: flex;
+justify-content: flex-end;
+align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+</div>
+
+<form [formGroup]="roomTypeForm">
+
+  <div>
+    <label for="typeName">Room Type Name</label>
+    <input id="typeName" formControlName="typeName" type="text" />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description"></textarea>
+  </div>
+
+  <div>
+    <label for="baseRate">Base Rate</label>
+    <input id="baseRate" formControlName="baseRate" type="number" step="0.01" />
+  </div>
+
+  <div>
+    <label for="maxOccupancy">Max Occupancy</label>
+    <input id="maxOccupancy" formControlName="maxOccupancy" type="number" />
+  </div>
+
+  <div>
+    <label for="amenities">Amenities</label>
+    <select id="amenities" formControlName="amenities" multiple>
+      <option *ngFor="let amenity of amenitiesList" [value]="amenity">{{ amenity }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="outletid">Outlet</label>
+    <select id="outletid" formControlName="outletid">
+      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+    </select>
+  </div>
+</form>

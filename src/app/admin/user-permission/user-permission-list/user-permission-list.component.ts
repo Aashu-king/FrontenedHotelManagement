@@ -31,7 +31,7 @@ export class UserPermissionListComponent {
      height: '80%',
      width: '80%',
      panelClass: 'custom-dialog-container',
-     position: { left: '280px', top: '-100px' }
+     position: { left: '280px', top: '60px' }
     });
   }
 }
