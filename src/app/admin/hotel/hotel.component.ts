@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotel',
@@ -11,7 +12,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class HotelComponent {
   hotelForm!: FormGroup;
   SaveUpdateEvent: boolean = false;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<HotelComponent>,private http: HttpClient) {}
+  pageurl : any;
+  justHotelData : any[] = []
+  permissionArray : any 
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<HotelComponent>,private http: HttpClient,private router : Router) {}
 
   ngOnInit(): void {
     this.hotelForm = this.fb.group({
@@ -28,6 +32,15 @@ export class HotelComponent {
       isActive: [true],
       website: ['', Validators.maxLength(100)],
     });
+
+    this.pageurl =  this.router.url.split('/')[2]
+    console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
+    // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
+
+    this.http.get('http://localhost:3000/api/v1/getPerm').subscribe((result : any) => {
+      this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
+    })
   }
 
   onSubmit() {
