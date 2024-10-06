@@ -33,6 +33,9 @@ import { RoomRateListComponent } from './room-rate/room-rate-list/room-rate-list
 import { RoomTypeListComponent } from './room-type/room-type-list/room-type-list.component';
 import { GuestListComponent } from './guest/guest-list/guest-list.component';
 import { ReservationListComponent } from './reservation/reservation-list/reservation-list.component';
+import { RolePermissionListComponent } from './role-permission/role-permission-list/role-permission-list.component';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { ReservationListComponent } from './reservation/reservation-list/reserva
     RoomTypeListComponent,
     GuestListComponent,
     ReservationListComponent,
-  
+    RolePermissionListComponent,
+    UserListComponent,
+    UserPermissionComponent,
+    UserPermissionListComponent
   ],
   imports: [
     CommonModule,
@@ -74,3 +80,10 @@ import { ReservationListComponent } from './reservation/reservation-list/reserva
   ]
 })
 export class AdminModule { }
+//https://github.com/Aashu-king/hotelmanagement_user.git  git@github.com:Aashu-king/hotelmanagement_user.git
+
+
+//git clone https://Aashu-king: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@@github.com:Aashu-king/hotelmanagement_user.git
+
+
+//git remote set-url origin https://Aashu-king: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@@github.com:Aashu-king/hotelmanagement_user.git
