@@ -20,7 +20,7 @@ export class UserPermissionListComponent {
   }
 
   getData(){
-    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
+    this.http.get('http://localhost:3000/api/v1/userperm').subscribe((result : any) => {
       this.justHotelData = result
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })

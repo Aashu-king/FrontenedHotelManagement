@@ -62,3 +62,35 @@ input[disabled] {
   background-color: #f0f0f0;
   cursor: not-allowed;
 }
+
+
+.mat-form-field {
+  width: 100%; /* Make input fields full width */
+  margin-bottom: 20px; /* Space between input fields */
+}
+
+.mat-label {
+  font-weight: bold; /* Bold labels */
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%; /* Full width for inputs */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Optional: Styles for the Autocomplete Options */
+.mat-option {
+  transition: background-color 0.3s;
+}
+
+.mat-option:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+}

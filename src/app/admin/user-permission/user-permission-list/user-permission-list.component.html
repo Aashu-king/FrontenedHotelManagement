@@ -15,24 +15,40 @@ flex-wrap: wrap;">
       <thead>
         <tr>
           <th>#</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
+          <th>Role Name</th>
+          <th>Can View</th>
+          <th>Can Create</th>
+          <th>Can Update</th>
+          <th>Can Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of justHotelData; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
+          <td>{{ item.user?.userName }}</td>
           <td>
-            <span [class]="item.isActive ? 'status active' : 'status inactive'">
-              {{ item.isActive ? 'Active' : 'Inactive' }}
+            <span [class]="item.canView ? 'status active' : 'status inactive'">
+              {{ item.canView ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td>
+            <span [class]="item.canEdit ? 'status active' : 'status inactive'">
+              {{ item.canEdit ? 'Yes' : 'No' }}
+            </span>
+          </td>
+           <td>
+            <span [class]="item.canEdit ? 'status active' : 'status inactive'">
+              {{ item.canEdit ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          
+          <td>
+            <span [class]="item.canDelete ? 'status active' : 'status inactive'">
+              {{ item.canDelete ? 'Yes' : 'No' }}
             </span>
           </td>
         </tr>
+        
       </tbody>
     </table>
   </div>

@@ -10,19 +10,34 @@ align-items: center;">
 </div>
 
 <form [formGroup]="pageForm">
+  <div>
     <div>
-      <label for="moduleId">Module ID</label>
-      <input id="moduleId" formControlName="moduleId" type="number" />
+      <mat-form-field appearance="fill">
+        <mat-label>Module ID</mat-label>
+        <input type="text"
+               placeholder="Select Module"
+               aria-label="Module ID"
+               matInput
+               formControlName="moduleName" 
+               [matAutocomplete]="auto"
+               > 
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onModuleSelected($event)">
+          <mat-option *ngFor="let moduleType of filteredModuleTypes | async" [value]="moduleType.moduleName">
+            {{ moduleType.moduleName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
-  
-    <div>
-      <label for="pageName">Page Name</label>
-      <input id="pageName" formControlName="pageName" type="text" />
-    </div>
-  
-    <div>
-      <label for="pageUrl">Page URL</label>
-      <input id="pageUrl" formControlName="pageUrl" type="text" />
-    </div>
-  </form>
+  </div>
+
+  <div>
+    <label for="pageName">Page Name</label>
+    <input id="pageName" formControlName="pageName" type="text" />
+  </div>
+
+  <div>
+    <label for="pageUrl">Page URL</label>
+    <input id="pageUrl" formControlName="pageUrl" type="text" />
+  </div>
+</form>
   

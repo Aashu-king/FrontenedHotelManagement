@@ -36,6 +36,8 @@ import { ReservationListComponent } from './reservation/reservation-list/reserva
 import { RolePermissionListComponent } from './role-permission/role-permission-list/role-permission-list.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { PageListComponent } from './page/page-list/page-list.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { UserPermissionListComponent } from './user-permission/user-permission-l
     RolePermissionListComponent,
     UserListComponent,
     UserPermissionComponent,
-    UserPermissionListComponent
+    UserPermissionListComponent,
+    PageComponent,
+    PageListComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +80,11 @@ import { UserPermissionListComponent } from './user-permission/user-permission-l
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatFormFieldModule
   ]
 })
 export class AdminModule { }

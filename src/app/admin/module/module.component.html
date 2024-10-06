@@ -1,7 +1,5 @@
-<div class="form-header" style="display: flex;
-justify-content: flex-end;
-align-items: center;">
-  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(isUpdateMode)">
     <i class="fa fa-close"></i> Cancel
   </button>
   <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
@@ -9,16 +7,29 @@ align-items: center;">
   </button>
 </div>
 
-
 <form [formGroup]="moduleForm">
-    <div>
-      <label for="moduleTypeId">Module Type ID</label>
-      <input id="moduleTypeId" formControlName="moduleTypeId" type="number" />
-    </div>
-  
-    <div>
-      <label for="moduleName">Module Name</label>
-      <input id="moduleName" formControlName="moduleName" type="text" />
-    </div>
-  </form>
-  
+  <!-- <div>
+    <label for="moduleTypeId">Module Type ID</label>
+    <input id="moduleTypeId" formControlName="moduleTypeId" type="number" />
+  </div> -->
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Module Type</mat-label>
+      <input type="text"
+             placeholder="Pick a module type"
+             aria-label="Module Type"
+             matInput
+             formControlName="moduleName"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let moduleType of filteredModuleTypes$ | async" [value]="moduleType.moduleTypeName">
+          {{ moduleType.moduleTypeName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div>
+    <label for="moduleName">Module Name</label>
+    <input id="moduleName" formControlName="moduleName" type="text" />
+  </div>
+</form>
