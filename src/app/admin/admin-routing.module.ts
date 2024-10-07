@@ -19,8 +19,8 @@ import { RolePermissionListComponent } from './role-permission/role-permission-l
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
 import { RoomListComponent } from './room/room-list/room-list.component';
-import { BillComponent } from './bill/bill.component';
-import { BillListComponent } from './bill/bill-list/bill-list.component';
+import { RoomTypeComponent } from './room-type/room-type.component';
+import { RoomTypeListComponent } from './room-type/room-type-list/room-type-list.component';
 
 const routes: Routes = [
   {
@@ -69,6 +69,10 @@ const routes: Routes = [
       },
       {
         path: 'room-type',
+        component: RoomTypeListComponent
+      },
+      {
+        path: 'room',
         component: RoomListComponent
       },
       {

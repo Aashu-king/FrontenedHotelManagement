@@ -10,28 +10,38 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class RoomComponent {
   roomForm !: FormGroup;
-  roomTypes = [
-    { id: 1, name: 'Single' },
-    { id: 2, name: 'Double' }
-   
-  ];
-  outlets = [
-    { id: 1, name: 'Outlet 1' },
-    { id: 2, name: 'Outlet 2' }
-    
-  ];
+  roomTypes : any
+  outlets : any
   SaveUpdateEvent: boolean = false;
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RoomComponent>,private http: HttpClient) {}
 
   ngOnInit(): void {
     this.roomForm = this.fb.group({
       roomId: [''],
-      roomNumber: ['', Validators.required],
-      roomTypeId: ['', Validators.required],
-      floor: ['', Validators.required],
-      status: ['available', Validators.required],
-      outletid: ['', Validators.required]
+      roomNumber: [''],
+      roomTypeId: [''],
+      floor: [''],
+      status: ['available'],
+      outletid: ['']
     });
+    this.getDropdown()
+  }
+
+  getDropdown(){
+    console.log('yooo');
+    
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+        this.outlets = response
+      }
+    );
+    this.http.get('http://localhost:3000/api/v1/dropdown-room-types').subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+        this.roomTypes = response
+      }
+    );
   }
 
   onSubmit() {

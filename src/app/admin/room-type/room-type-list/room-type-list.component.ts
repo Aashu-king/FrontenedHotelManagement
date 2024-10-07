@@ -20,7 +20,7 @@ export class RoomTypeListComponent {
   }
 
   getData(){
-    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
+    this.http.get('http://localhost:3000/api/v1/room-types').subscribe((result : any) => {
       this.justHotelData = result
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
@@ -30,6 +30,16 @@ export class RoomTypeListComponent {
     this.dialog.open(RoomTypeComponent, {
      height: '80%',
      width: '80%',
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
+
+  openDialogForUpdate(roomTypeId : any): void {
+    this.dialog.open(RoomTypeComponent, {
+     height: '80%',
+     width: '80%',
+     data : roomTypeId,
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });

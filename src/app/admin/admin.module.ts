@@ -64,7 +64,6 @@ import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.co
     OutletListComponent,
     RoomComponent,
     RoomRateComponent,
-    RoomTypeComponent,
     GuestComponent,
     ReservationComponent,
     RoomListComponent,

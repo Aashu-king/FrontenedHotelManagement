@@ -19,7 +19,7 @@ align-items: center;">
   <div>
     <label for="roomTypeId">Room Type</label>
     <select id="roomTypeId" formControlName="roomTypeId">
-      <option *ngFor="let type of roomTypes" [value]="type.id">{{ type.name }}</option>
+      <option *ngFor="let type of roomTypes" [value]="type.roomTypeId">{{ type.typeName }}</option>
     </select>
   </div>
   
@@ -40,7 +40,7 @@ align-items: center;">
   <div>
     <label for="outletid">Outlet</label>
     <select id="outletid" formControlName="outletid">
-      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+      <option *ngFor="let outlet of outlets" [value]="outlet.outletid">{{ outlet.name }}</option>
     </select>
   </div>
 </form>
