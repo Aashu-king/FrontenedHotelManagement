@@ -1,0 +1,60 @@
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+    <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close()">
+      <i class="fa fa-close"></i> Cancel
+    </button>
+    <button *ngIf="this.permissionArray && this.permissionArray.canEdit" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+        <i class="fa fa-save"></i> Save
+      </button>
+  </div>
+  
+  <form [formGroup]="billDetailForm">
+    <div class="form-group">
+      <label for="billDetailId">Bill Detail ID</label>
+      <input id="billDetailId" formControlName="billDetailId" type="number" [disabled]="true" />
+    </div>
+  
+    <div class="form-group">
+      <label for="billId">Bill ID</label>
+      <input id="billId" formControlName="billId" type="number" />
+      <div *ngIf="billDetailForm.get('billId')?.invalid && billDetailForm.get('billId')?.touched" class="error">
+        Bill ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        formControlName="description"
+        type="text"
+        maxlength="255"
+        placeholder="Enter description"
+      />
+      <div *ngIf="billDetailForm.get('description')?.invalid && billDetailForm.get('description')?.touched" class="error">
+        Description is required and must be less than 255 characters.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input
+        id="amount"
+        formControlName="amount"
+        type="number"
+        step="0.01"
+        placeholder="Enter amount"
+      />
+      <div *ngIf="billDetailForm.get('amount')?.invalid && billDetailForm.get('amount')?.touched" class="error">
+        Amount is required and must be a valid number.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="outletid">Outlet ID</label>
+      <input id="outletid" formControlName="outletid" type="number" />
+      <div *ngIf="billDetailForm.get('outletid')?.invalid && billDetailForm.get('outletid')?.touched" class="error">
+        Outlet ID is required.
+      </div>
+    </div>
+  </form>
+  
