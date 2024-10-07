@@ -1,11 +1,14 @@
 <div class="form-header" style="display: flex;
 justify-content: flex-end;
 align-items: center;">
-  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(isUpdateMode)">
     <i class="fa fa-close"></i> Cancel
   </button>
   <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
-    <i class="fa fa-save"></i> Save
+    <i class="fa fa-save"></i> {{this.data ? 'Update' : 'Save'}}
+  </button>
+  <button type="submit" *ngIf="this.data" style="margin-right: 10px;" (click)="onDelete()">
+    <i class="fa fa-save"></i> Delete
   </button>
 </div>
 
@@ -41,7 +44,7 @@ align-items: center;">
   <div>
     <label for="outletid">Outlet</label>
     <select id="outletid" formControlName="outletid">
-      <option *ngFor="let outlet of outlets" [value]="outlet.id">{{ outlet.name }}</option>
+      <option *ngFor="let outlet of outlets" [value]="outlet.outletid">{{ outlet.name }}</option>
     </select>
   </div>
 </form>

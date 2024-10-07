@@ -56,7 +56,6 @@ import { PageListComponent } from './page/page-list/page-list.component';
     OutletListComponent,
     RoomComponent,
     RoomRateComponent,
-    RoomTypeComponent,
     GuestComponent,
     ReservationComponent,
     RoomListComponent,
@@ -69,7 +68,8 @@ import { PageListComponent } from './page/page-list/page-list.component';
     UserPermissionComponent,
     UserPermissionListComponent,
     PageComponent,
-    PageListComponent
+    PageListComponent,
+    RoomTypeComponent
   ],
   imports: [
     CommonModule,
