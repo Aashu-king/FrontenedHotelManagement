@@ -84,7 +84,8 @@ import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.co
     BillListComponent,
     BillDetailListComponent,
     CheckinListComponent,
-    CheckoutListComponent
+    CheckoutListComponent,
+    RoomTypeComponent
   ],
   imports: [
     CommonModule,

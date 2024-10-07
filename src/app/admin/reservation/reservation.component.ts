@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation',
@@ -23,7 +24,9 @@ export class ReservationComponent {
     { outletid: 2, name: 'Outlet 2' }
   ];
   SaveUpdateEvent: boolean = false;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<ReservationComponent>,private http: HttpClient) {}
+  permissionArray : any 
+  pageurl : any;
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<ReservationComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any,private router: Router) {}
 
   ngOnInit(): void {
     this.reservationForm = this.fb.group({
@@ -39,16 +42,49 @@ export class ReservationComponent {
       specialRequests: [''],
       outletid: ['', Validators.required]
     });
+
+    this.pageurl =  this.router.url.split('/')[2]
+    console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
+    // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
+
+    this.http.get('http://localhost:3000/api/v1/getPerm').subscribe((result : any) => {
+      this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
+    })
   }
 
   onSubmit() {
-    if (this.reservationForm.valid) {
-      console.log(this.reservationForm.value);
-      this.http.post('http://localhost:3000/api/v1/reservation', this.reservationForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data){
+      if (this.reservationForm.valid) {
+        console.log(this.reservationForm.value);
+        this.http.post('http://localhost:3000/api/v1/reservation', this.reservationForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else {
+      if (this.reservationForm.valid) {
+        console.log(this.reservationForm.value);
+        this.http.put(`http://localhost:3000/api/v1/reservation/${this.data}`, this.reservationForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
     }
+   
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/reservation/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      },
+      (error) => {
+        console.error('Error saving module:', error);
+      }
+    );
   }
 }

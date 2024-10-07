@@ -11,6 +11,7 @@ import { GuestComponent } from '../guest.component';
 export class GuestListComponent {
 
   justHotelData : any[] = []
+  outletid: any[] = [];
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
@@ -20,8 +21,8 @@ export class GuestListComponent {
   }
 
   getData(){
-    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
-      this.justHotelData = result
+    this.http.get(`http://localhost:3000/api/v1/guests/${this.outletid}`).subscribe((result : any) => {
+      this.justHotelData = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
   }
@@ -35,4 +36,13 @@ export class GuestListComponent {
     });
   }
   
+  openDialogForUpdate(id : any): void {
+    this.dialog.open(GuestComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
 }
