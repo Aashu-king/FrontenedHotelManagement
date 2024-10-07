@@ -15,7 +15,8 @@ flex-wrap: wrap;">
       <thead>
         <tr>
           <th>#</th>
-          <th>Role Name</th>
+          <th>User Name</th>
+          <th>Page Name</th>
           <th>Can View</th>
           <th>Can Create</th>
           <th>Can Update</th>
@@ -23,9 +24,10 @@ flex-wrap: wrap;">
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index">
+        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.pageId,item.userId)">
           <td>{{ i + 1 }}</td>
           <td>{{ item.user?.userName }}</td>
+          <td>{{ item.page?.pageName }}</td>
           <td>
             <span [class]="item.canView ? 'status active' : 'status inactive'">
               {{ item.canView ? 'Yes' : 'No' }}

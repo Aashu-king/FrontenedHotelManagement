@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -15,8 +15,9 @@ export class PageComponent implements OnInit {
   SaveUpdateEvent: boolean = false;
   moduleTypeOptions: any[] = [];  // Array to hold module options
   filteredModuleTypes!: Observable<any[]>; // Initialized without of([])
+  dataArray : any;
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PageComponent>, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<PageComponent>, private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.pageForm = this.fb.group({
@@ -35,6 +36,11 @@ export class PageComponent implements OnInit {
       map(value => typeof value === 'string' ? value : ''), // Ensure value is a string
       map(value => this._filterModuleTypes(value))
     );
+
+    if(this.data){
+      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      this.getByIdData();
+    }
   }
 
   private loadModuleTypeOptions(): void {
@@ -45,14 +51,25 @@ export class PageComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.pageForm.valid) {
-      console.log(this.pageForm.value);
-      this.http.post('http://localhost:3000/api/v1/page', this.pageForm.value).subscribe(
-        (response: any) => {
-          console.log('Success!', response);
-          this.dialogRef.close(true);  
-        }
-      );
+
+    if(!this.data){
+      if (this.pageForm.valid) {
+        console.log(this.pageForm.value);
+        this.http.post('http://localhost:3000/api/v1/page', this.pageForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    }else{
+      if (this.pageForm.valid) {
+        console.log(this.pageForm.value);
+        this.http.put(`http://localhost:3000/api/v1/page/${this.data}`, this.pageForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
     }
   }
 
@@ -64,11 +81,43 @@ export class PageComponent implements OnInit {
   onModuleSelected(event: any) {
     const selectedModule = this.moduleTypeOptions.find(module => module.moduleName === event.option.value);
     if (selectedModule) {
-      // Set the module ID to the form control
       this.pageForm.get('moduleId')!.setValue(selectedModule.moduleId);
-      
-      // Set the displayed value (moduleName) to the moduleId input
       this.pageForm.get('moduleName')!.setValue(selectedModule.moduleName);
     }
   }
+
+
+
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/page/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+      if(this.dataArray){
+        this.pageForm.get('pageName')?.setValue(this.dataArray.pageName)
+        this.pageForm.get('pageUrl')?.setValue(this.dataArray.pageUrl)
+        const selectedModule = this.moduleTypeOptions.find(module => module.moduleId === this.dataArray.moduleId);
+        if (selectedModule) {
+          this.pageForm.get('moduleId')!.setValue(selectedModule.moduleId);
+          this.pageForm.get('moduleName')!.setValue(selectedModule.moduleName);
+        }
+      }
+
+    })
+  }
+
+
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/page/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      },
+      (error) => {
+        console.error('Error saving module:', error);
+      }
+    );
+  }
+
+  
 }

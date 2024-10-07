@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-module-type',
@@ -11,24 +11,65 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ModuleTypeComponent {
   moduleTypeForm!: FormGroup;
   SaveUpdateEvent: boolean = false;
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<ModuleTypeComponent>,private http: HttpClient) {}
+  dataArray : any;
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<ModuleTypeComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private http : HttpClient) {}
 
   ngOnInit(): void {
     this.moduleTypeForm = this.fb.group({
       moduleTypeId: [{ value: '', disabled: true }], 
       moduleTypeName: ['', [Validators.required, Validators.maxLength(100)]],
     });
+
+    if(this.data){
+      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      this.getByIdData();
+    }
+  }
+
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/module-type/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+      if(this.dataArray){
+        this.moduleTypeForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
+      }
+
+    })
   }
 
   onSubmit() {
-    if (this.moduleTypeForm.valid) {
-      console.log(this.moduleTypeForm.value);
-      this.http.post('http://localhost:3000/api/v1/moduletype', this.moduleTypeForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data){
+      if (this.moduleTypeForm.valid) {
+        console.log(this.moduleTypeForm.value);
+        this.http.post('http://localhost:3000/api/v1/moduletype', this.moduleTypeForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    }else{
+      if (this.moduleTypeForm.valid) {
+        console.log(this.moduleTypeForm.value);
+        this.http.put(`http://localhost:3000/api/v1/module-type/${this.data}`, this.moduleTypeForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
     }
+
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/module-type/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      },
+      (error) => {
+        console.error('Error saving module:', error);
+      }
+    );
   }
 
   

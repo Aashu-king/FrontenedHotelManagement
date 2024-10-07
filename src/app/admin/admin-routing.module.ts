@@ -18,6 +18,7 @@ import { RoleListComponent } from './role/role-list/role-list.component';
 import { RolePermissionListComponent } from './role-permission/role-permission-list/role-permission-list.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
+import { RoomListComponent } from './room/room-list/room-list.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
       {
         path: 'user-permission',
         component: UserPermissionListComponent
+      },
+      {
+        path: 'room-type',
+        component: RoomListComponent
       }
     ]
   }

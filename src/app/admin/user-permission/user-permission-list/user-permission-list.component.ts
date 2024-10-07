@@ -34,4 +34,14 @@ export class UserPermissionListComponent {
      position: { left: '280px', top: '60px' }
     });
   }
+
+  openDialogForUpdate(pageId : any,userId : any): void {
+    this.dialog.open(UserPermissionComponent, {
+     height: '80%',
+     width: '80%',
+     data : {pageId : pageId , userId : userId},
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
 }

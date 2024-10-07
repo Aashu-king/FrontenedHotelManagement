@@ -19,7 +19,7 @@ flex-wrap: wrap;">
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index">
+        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.moduleId)">
           <td>{{ i + 1 }}</td>
           <td>{{ item.moduleName }}</td>
         </tr>

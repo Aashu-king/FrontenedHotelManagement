@@ -45,4 +45,14 @@ export class ModuleListComponent {
      position: { left: '280px', top: '60px' }
     });
   }
+  openDialogForUpdate(id : any): void {
+    console.log("🚀 ~ ModuleListComponent ~ openDialogForUpdate ~ id:", id)
+    this.dialog.open(ModuleComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
 }

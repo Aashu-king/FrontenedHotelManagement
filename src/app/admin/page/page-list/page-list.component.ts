@@ -34,4 +34,14 @@ export class PageListComponent {
      position: { left: '280px', top: '60px' }
     });
   }
+
+  openDialogForUpdate(id : any): void {
+    this.dialog.open(PageComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
 }
