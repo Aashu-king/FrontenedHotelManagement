@@ -11,7 +11,7 @@ import { PageComponent } from '../page.component';
 export class PageListComponent {
    
   justHotelData : any[] = []
-  constructor(private http : HttpClient, public dialog: MatDialog,){
+  constructor(private http : HttpClient, public dialog: MatDialog){
 
   }
 

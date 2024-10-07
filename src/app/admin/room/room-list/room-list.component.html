@@ -16,22 +16,16 @@ flex-wrap: wrap;">
         <tr>
           <th>#</th>
           <th>Outlet Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
+          <th>Room Type</th>
+          <th>Room Number</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index">
+        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.roomId)">
           <td>{{ i + 1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
-          <td>
-            <span [class]="item.isActive ? 'status active' : 'status inactive'">
-              {{ item.isActive ? 'Active' : 'Inactive' }}
-            </span>
-          </td>
+          <td>{{ item.outlet.name }}</td>
+          <td>{{ item.roomType.typeName }}</td>
+          <td>{{ item.roomNumber }}</td>
         </tr>
       </tbody>
     </table>
