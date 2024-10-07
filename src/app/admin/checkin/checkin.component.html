@@ -1,0 +1,58 @@
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+    <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close()">
+      <i class="fa fa-close"></i> Cancel
+    </button>
+    <button *ngIf="this.permissionArray && this.permissionArray.canEdit" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+      <i class="fa fa-save"></i> Save
+    </button>
+  </div>
+  
+  <form [formGroup]="checkInForm">
+    <div class="form-group">
+      <label for="checkInId">Check-In ID</label>
+      <input id="checkInId" formControlName="checkInId" type="number" [disabled]="true" />
+    </div>
+  
+    <div class="form-group">
+      <label for="reservationId">Reservation ID</label>
+      <input id="reservationId" formControlName="reservationId" type="number" />
+      <div *ngIf="checkInForm.get('reservationId')?.invalid && checkInForm.get('reservationId')?.touched" class="error">
+        Reservation ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="checkInTime">Check-In Time</label>
+      <input id="checkInTime" formControlName="checkInTime" type="datetime-local" />
+      <div *ngIf="checkInForm.get('checkInTime')?.invalid && checkInForm.get('checkInTime')?.touched" class="error">
+        Check-In Time is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="assignedRoomId">Assigned Room ID</label>
+      <input id="assignedRoomId" formControlName="assignedRoomId" type="number" />
+      <div *ngIf="checkInForm.get('assignedRoomId')?.invalid && checkInForm.get('assignedRoomId')?.touched" class="error">
+        Assigned Room ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="additionalRequests">Additional Requests</label>
+      <textarea
+        id="additionalRequests"
+        formControlName="additionalRequests"
+        rows="3"
+        placeholder="Enter any additional requests (optional)"
+      ></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label for="outletid">Outlet ID</label>
+      <input id="outletid" formControlName="outletid" type="number" />
+      <div *ngIf="checkInForm.get('outletid')?.invalid && checkInForm.get('outletid')?.touched" class="error">
+        Outlet ID is required.
+      </div>
+    </div>
+  </form>
+  

@@ -2,14 +2,13 @@
 justify-content: flex-end;
 flex-wrap: wrap;">
     <!-- Add New Page Button -->
-    <button class="add-new-page-button" (click)="openDialog()" style=" background-color: #4CAF50;
+    <button *ngIf="this.permissionArray && this.permissionArray.canEdit" class="add-new-page-button" (click)="openDialog()" style=" background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;">Add Guest</button>
-  
+    margin-bottom: 10px;">Add Hotel</button>
     <!-- Table -->
     <table class="styled-table">
       <thead>
@@ -22,7 +21,7 @@ flex-wrap: wrap;">
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.guestId)">
+        <tr *ngFor="let item of justHotelData; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
           <td>{{ item.email }}</td>

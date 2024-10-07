@@ -1,0 +1,59 @@
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+    <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close()">
+      <i class="fa fa-close"></i> Cancel
+    </button>
+    <button *ngIf="this.permissionArray && this.permissionArray.canEdit" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+      <i class="fa fa-save"></i> Save
+    </button>
+  </div>
+  
+  <form [formGroup]="checkOutForm">
+    <div class="form-group">
+      <label for="checkOutId">Check-Out ID</label>
+      <input id="checkOutId" formControlName="checkOutId" type="number" [disabled]="true" />
+    </div>
+  
+    <div class="form-group">
+      <label for="checkInId">Check-In ID</label>
+      <input id="checkInId" formControlName="checkInId" type="number" />
+      <div *ngIf="checkOutForm.get('checkInId')?.invalid && checkOutForm.get('checkInId')?.touched" class="error">
+        Check-In ID is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="checkOutTime">Check-Out Time</label>
+      <input id="checkOutTime" formControlName="checkOutTime" type="datetime-local" />
+      <div *ngIf="checkOutForm.get('checkOutTime')?.invalid && checkOutForm.get('checkOutTime')?.touched" class="error">
+        Check-Out Time is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="finalBillAmount">Final Bill Amount</label>
+      <input id="finalBillAmount" formControlName="finalBillAmount" type="number" step="0.01" />
+      <div *ngIf="checkOutForm.get('finalBillAmount')?.invalid && checkOutForm.get('finalBillAmount')?.touched" class="error">
+        Final Bill Amount is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="paymentStatus">Payment Status</label>
+      <select id="paymentStatus" formControlName="paymentStatus">
+        <option value="paid">Paid</option>
+        <option value="unpaid">Unpaid</option>
+      </select>
+      <div *ngIf="checkOutForm.get('paymentStatus')?.invalid && checkOutForm.get('paymentStatus')?.touched" class="error">
+        Payment Status is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="outletid">Outlet ID</label>
+      <input id="outletid" formControlName="outletid" type="number" />
+      <div *ngIf="checkOutForm.get('outletid')?.invalid && checkOutForm.get('outletid')?.touched" class="error">
+        Outlet ID is required.
+      </div>
+    </div>
+  </form>
+  

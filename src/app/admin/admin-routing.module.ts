@@ -21,6 +21,10 @@ import { UserPermissionListComponent } from './user-permission/user-permission-l
 import { RoomListComponent } from './room/room-list/room-list.component';
 import { RoomTypeComponent } from './room-type/room-type.component';
 import { RoomTypeListComponent } from './room-type/room-type-list/room-type-list.component';
+import { BillListComponent } from './bill/bill-list/bill-list.component';
+import { RoomRateListComponent } from './room-rate/room-rate-list/room-rate-list.component';
+import { GuestListComponent } from './guest/guest-list/guest-list.component';
+import { ReservationListComponent } from './reservation/reservation-list/reservation-list.component';
 
 const routes: Routes = [
   {
@@ -74,7 +78,28 @@ const routes: Routes = [
       {
         path: 'room',
         component: RoomListComponent
-      }
+      },
+      {
+        path: 'bill',
+        component: BillListComponent
+      },
+      {
+        path: 'room-rate',
+        component: RoomRateListComponent
+      },
+      {
+        path: 'room',
+        component: RoomListComponent
+      },
+      {
+        path: 'guest',
+        component: GuestListComponent
+      },
+      {
+        path: 'reservation',
+        component: ReservationListComponent
+      },
+
     ]
   }
 ];

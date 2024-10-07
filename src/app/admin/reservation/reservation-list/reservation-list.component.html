@@ -8,7 +8,7 @@ flex-wrap: wrap;">
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;">Add New Page</button>
+    margin-bottom: 10px;">Add Reservation</button>
   
     <!-- Table -->
     <table class="styled-table">
@@ -22,7 +22,7 @@ flex-wrap: wrap;">
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index">
+        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.reservationId)">
           <td>{{ i + 1 }}</td>
           <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
           <td>{{ item.email }}</td>

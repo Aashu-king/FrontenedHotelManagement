@@ -38,6 +38,14 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPermissionListComponent } from './user-permission/user-permission-list/user-permission-list.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PageListComponent } from './page/page-list/page-list.component';
+import { BillDetailComponent } from './bill-detail/bill-detail.component';
+import { BillComponent } from './bill/bill.component';
+import { CheckinComponent } from './checkin/checkin.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { BillListComponent } from './bill/bill-list/bill-list.component';
+import { BillDetailListComponent } from './bill-detail/bill-detail-list/bill-detail-list.component';
+import { CheckinListComponent } from './checkin/checkin-list/checkin-list.component';
+import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +77,14 @@ import { PageListComponent } from './page/page-list/page-list.component';
     UserPermissionListComponent,
     PageComponent,
     PageListComponent,
+    BillDetailComponent,
+    BillComponent,
+    CheckinComponent,
+    CheckoutComponent,
+    BillListComponent,
+    BillDetailListComponent,
+    CheckinListComponent,
+    CheckoutListComponent,
     RoomTypeComponent
   ],
   imports: [
