@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,8 @@ export class OutletComponent {
   SaveUpdateEvent: boolean = false;
   permissionArray : any 
   pageurl : any;
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OutletComponent>, private http: HttpClient, private router: Router) {}
+  dataArray : any
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OutletComponent>, private http: HttpClient, private router: Router,@Inject(MAT_DIALOG_DATA) public data: any,) {}
 
   ngOnInit(): void {
     this.outletForm = this.fb.group({
@@ -28,7 +29,10 @@ export class OutletComponent {
       email: ['', [Validators.email]], 
       hotelId: [''] 
     });
-
+    if(this.data){
+      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      this.getByIdData();
+    }
     this.pageurl =  this.router.url.split('/')[2]
     console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
     // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
@@ -39,14 +43,46 @@ export class OutletComponent {
     })
   }
 
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/outlet/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+   
+
+    })
+  }
+
   onSubmit() {
-    if (this.outletForm.valid) {
-      console.log(this.outletForm.value);
-      this.http.post('http://localhost:3000/api/v1/outlet', this.outletForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data) {
+      if (this.outletForm.valid) {
+        console.log(this.outletForm.value);
+        this.http.post('http://localhost:3000/api/v1/outlet', this.outletForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else {
+      if (this.outletForm.valid) {
+        console.log(this.outletForm.value);
+        console.log("🚀 ~ ModuleComponent ~ onSubmit ~ this.data:", this.data)
+        this.http.put(`http://localhost:3000/api/v1/outlet/${this.data}`, this.outletForm.value).subscribe(
+          (response: any) => {
+            console.log('Success!', response);
+            this.dialogRef.close(true); 
+          }
+        );
+      }
     }
+   
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/outlet/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }

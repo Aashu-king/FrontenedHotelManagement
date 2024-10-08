@@ -4,8 +4,11 @@ align-items: center;">
   <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
     <i class="fa fa-close"></i> Cancel
   </button>
-  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
-    <i class="fa fa-save"></i> Save
+  <button  type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> {{this.data ? 'Update' : 'Save'}}
+  </button>
+  <button type="submit" *ngIf="this.data" style="margin-right: 10px;" (click)="onDelete()">
+    <i class="fa fa-save"></i> Delete
   </button>
 </div>
 

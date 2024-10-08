@@ -42,14 +42,6 @@ export class RoomRateComponent {
   }
 
   onSubmit() {
-    if (this.roomRateForm.valid) {
-      console.log(this.roomRateForm.value);
-      this.http.post('http://localhost:3000/api/v1/roomRate', this.roomRateForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
-    }
     if(!this.data){
       if (this.roomRateForm.valid) {
         console.log(this.roomRateForm.value);
@@ -86,5 +78,14 @@ export class RoomRateComponent {
       }
 
     })
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/roomRate/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }

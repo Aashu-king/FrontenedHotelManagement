@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,8 @@ export class HotelComponent {
   pageurl : any;
   justHotelData : any[] = []
   permissionArray : any 
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<HotelComponent>,private http: HttpClient,private router : Router) {}
+  dataArray : any
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<HotelComponent>,private http: HttpClient,private router : Router,@Inject(MAT_DIALOG_DATA) public data: any,) {}
 
   ngOnInit(): void {
     this.hotelForm = this.fb.group({
@@ -32,7 +33,10 @@ export class HotelComponent {
       isActive: [true],
       website: ['', Validators.maxLength(100)],
     });
-
+    if(this.data){
+      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      this.getByIdData();
+    }
     this.pageurl =  this.router.url.split('/')[2]
     console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
     // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
@@ -43,14 +47,46 @@ export class HotelComponent {
     })
   }
 
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/hotel/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+   
+
+    })
+  }
+
   onSubmit() {
-    if (this.hotelForm.valid) {
-      console.log(this.hotelForm.value);
-      this.http.post('http://localhost:3000/api/v1/hotels', this.hotelForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data) {
+      if (this.hotelForm.valid) {
+        console.log(this.hotelForm.value);
+        this.http.post('http://localhost:3000/api/v1/hotels', this.hotelForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else{
+      if (this.hotelForm.valid) {
+        console.log(this.hotelForm.value);
+        console.log("🚀 ~ ModuleComponent ~ onSubmit ~ this.data:", this.data)
+        this.http.put(`http://localhost:3000/api/v1/hotel/${this.data}`, this.hotelForm.value).subscribe(
+          (response: any) => {
+            console.log('Success!', response);
+            this.dialogRef.close(true); 
+          }
+        );
+      }
     }
+ 
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/hotel/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }

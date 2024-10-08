@@ -70,9 +70,11 @@ a {
 }
 
 a:hover {
-  background-color: lightblue;
+  background-color: #d1ceff;
+  ;
   color: white;
 }
+
 
 ul {
   padding-left: 15px;

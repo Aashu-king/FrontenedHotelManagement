@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,8 @@ export class RolePermissionComponent {
   SaveUpdateEvent: boolean = false;
   permissionArray : any 
   pageurl : any;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RolePermissionComponent>, private http: HttpClient, private router: Router) {}
+  dataArray : any
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RolePermissionComponent>, private http: HttpClient, private router: Router,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.rolePermissionForm = this.fb.group({
@@ -24,6 +25,11 @@ export class RolePermissionComponent {
       canEdit: [false],
       canDelete: [false],
     });
+
+    if(this.data){
+      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      this.getByIdData();
+    }
 
     this.pageurl =  this.router.url.split('/')[2]
     console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
@@ -35,14 +41,45 @@ export class RolePermissionComponent {
     })
   }
 
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/outlet/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+   
+
+    })
+  }
+
   onSubmit() {
-    if (this.rolePermissionForm.valid) {
-      console.log(this.rolePermissionForm.value);
-      this.http.post('http://localhost:3000/api/v1/rolewisePermission', this.rolePermissionForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data) {
+      if (this.rolePermissionForm.valid) {
+        console.log(this.rolePermissionForm.value);
+        this.http.post('http://localhost:3000/api/v1/rolewisePermission', this.rolePermissionForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else {
+      if (this.rolePermissionForm.valid) {
+        console.log(this.rolePermissionForm.value);
+        console.log("🚀 ~ ModuleComponent ~ onSubmit ~ this.data:", this.data)
+        this.http.put(`http://localhost:3000/api/v1/outlet/${this.data}`, this.rolePermissionForm.value).subscribe(
+          (response: any) => {
+            console.log('Success!', response);
+            this.dialogRef.close(true); 
+          }
+        );
+      }
     }
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/outlet/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }
