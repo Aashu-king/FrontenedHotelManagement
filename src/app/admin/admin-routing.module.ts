@@ -27,6 +27,7 @@ import { GuestListComponent } from './guest/guest-list/guest-list.component';
 import { ReservationListComponent } from './reservation/reservation-list/reservation-list.component';
 import { CheckinListComponent } from './checkin/checkin-list/checkin-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -108,6 +109,10 @@ const routes: Routes = [
       {
         path: 'admindashboard',
         component: AdminDashboardComponent
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
       },
     ]
   }

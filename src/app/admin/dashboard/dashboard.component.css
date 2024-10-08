@@ -1,0 +1,19 @@
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button {
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tabs button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .table {
+    display: block; /* Tables are displayed when active */
+  }
+  
