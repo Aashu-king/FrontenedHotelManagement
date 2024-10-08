@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -49,6 +49,7 @@ import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.co
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
+import { RoomInfoComponent } from './room-info/room-info.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { DeveloperDashboardComponent } from './developer-dashboard/developer-das
     RoomTypeComponent,
     DashboardComponent,
     AdminDashboardComponent,
-    DeveloperDashboardComponent
+    DeveloperDashboardComponent,
+    RoomInfoComponent
   ],
   imports: [
     CommonModule,
@@ -106,7 +108,8 @@ import { DeveloperDashboardComponent } from './developer-dashboard/developer-das
     MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatPaginatorModule,
   ]
 })
 export class AdminModule { }

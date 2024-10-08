@@ -1,42 +1,37 @@
-<div class="table-container" style="    display: flex;
-justify-content: flex-end;
-flex-wrap: wrap;">
-    <!-- Add New Page Button -->
-    <button class="add-new-page-button" (click)="openDialog()" style=" background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;">Add Room Rate</button>
-  
-    <!-- Table -->
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Room Type</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Rate Per Night</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.rateId)">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.roomTypeName }}</td> <!-- Room Type field from RoomType model -->
-          <td>{{ item.startDate | date: 'shortDate' }}</td> <!-- Start Date -->
-          <td>{{ item.endDate | date: 'shortDate' }}</td> <!-- End Date -->
-          <td>{{ item.ratePerNight | currency }}</td> <!-- Rate Per Night -->
-          <td>
-            <span [class]="item.isActive ? 'status active' : 'status inactive'">
-              {{ item.isActive ? 'Active' : 'Inactive' }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-  </div>
-  
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+  <!-- Add New Page Button -->
+  <button class="add-new-page-button" (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+    Add Room Rate
+  </button>
+
+  <!-- Table -->
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Room Type</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Rate Per Night</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.rateId)">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.roomTypeName }}</td>
+        <td>{{ item.startDate | date: 'shortDate' }}</td>
+        <td>{{ item.endDate | date: 'shortDate' }}</td>
+        <td>{{ item.ratePerNight | currency }}</td>
+        <td>
+          <span [class]="item.isActive ? 'status active' : 'status inactive'">
+            {{ item.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <mat-paginator [length]="justHotelData.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

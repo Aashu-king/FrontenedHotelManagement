@@ -1,0 +1,103 @@
+<div class="col-md-12 od-xl-12">
+    <div class="card sales-report" style="margin-top: 42px">
+      <div class="card-header card-no-border">
+        <div class="header-top">
+          <h5>Social Analytics</h5>
+          <div class="card-header-right-icon">
+            <div class="dropdown icon-dropdown">
+              <button class="btn dropdown-toggle" id="salesButton" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa fa-ellipsis-h icons"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesButton">
+                <a class="dropdown-item" href="#!">Today</a><a class="dropdown-item" href="#!">Tomorrow</a><a
+                  class="dropdown-item" href="#!">Yesterday</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body pt-0 analytics-data">
+        <ul class="balance-data">
+          <li>
+            <span class="circle bg-primary"></span><span class="c-light ms-1">Followers</span>
+          </li>
+          <li>
+            <span class="circle bg-secondary"> </span><span class="c-light ms-1">Comments</span>
+          </li>
+          <li>
+            <span class="circle bg-success"></span><span class="c-light ms-1">Likes</span>
+          </li>
+        </ul>
+        <div class="social-tabs">
+          <div style="display: flex;justify-content: space-evenly;" class="nav nav-pills custom-scrollbar" id="social-pills-tab" role="tablist">
+            <a class="social-box bg-7-danger" (click)="selectTab('table1')" style="width: 200px;display: flex;justify-content: space-around;align-items: center;height: 50px;border: 1px solid;cursor: pointer;">
+              <div class="frame-image">
+                <div class="outline-10-danger">
+                  <div class="bg-10-danger">
+                    <i class="fa fa-youtube"></i>
+                  </div>
+                </div>
+              </div>
+              <span>Youtube</span>
+            </a>
+            <a class="social-box bg-7-primary active" (click)="selectTab('table2')" style="width: 200px;display: flex;justify-content: space-around;align-items: center;height: 50px;border: 1px solid;cursor: pointer;">
+              <div class="frame-image">
+                <div class="outline-10-primary">
+                  <div class="bg-10-primary">
+                    <i class="fa fa-facebook"></i>
+                  </div>
+                </div>
+              </div>
+              <span>Facebook</span>
+            </a>
+          </div>
+          <div class="tab-content" id="social-pills-tabContent">
+            <div class="tab-pane fade" *ngIf="selectedTab === 'table1'" id="table1" class="table">
+              <div>
+                <div id="youtube-analysis" style="min-height: 365px;    margin-top: 20px;">
+                    <div class="table-container" style="    display: flex;
+                    justify-content: flex-end;
+                    flex-wrap: wrap;">
+                      
+                        <!-- Table -->
+                        <table class="styled-table">
+                          <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Outlet Name</th>
+                                <th>Room Type</th>
+                                <th>Room Number</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of paginatedDataForRoom; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ item.outlet.name }}</td>
+                                <td>{{ item.roomType.typeName }}</td>
+                                <td>{{ item.roomNumber }}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    
+                        <mat-paginator [length]="theDataWeGotForRoom.length" [pageSize]="10" [pageSizeOptions]="[0, 5, 10, 25, 50]" (page)="onPageChange($event)">
+                        </mat-paginator>
+                      </div>
+                      
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade active show" *ngIf="selectedTab === 'table2'" id="table2" class="table">
+              <div>
+                <div id="facebook-analysis" style="min-height: 365px;    margin-top: 20px;">
+                  <div class="col-xxl-12 col-ed-12 col-xl-12 box-col-12e"> 
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
