@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import moment from 'moment';
+import { RoomInfoComponent } from '../room-info/room-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,7 +14,7 @@ export class AdminDashboardComponent {
   monthName!: string;
   calendarDays: any[][] = [];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     const today = moment();
@@ -58,5 +60,16 @@ export class AdminDashboardComponent {
 
   isToday(day: any): boolean {
     return day.fullDate.isSame(moment(), 'day');
+  }
+
+  openRoomAvailability(data : any): void {
+    const formattedDate = data.fullDate.format('YYYY-MM-DD');
+    this.dialog.open(RoomInfoComponent, {
+     height: '80%',
+     width: '80%',
+     data : formattedDate,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
   }
 }

@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let week of calendarDays">
-          <td *ngFor="let day of week" [class.active]="isToday(day)">
+          <td *ngFor="let day of week" [class.active]="isToday(day)" (click)="openRoomAvailability(day)">
             {{ day.date }}
           </td>
         </tr>

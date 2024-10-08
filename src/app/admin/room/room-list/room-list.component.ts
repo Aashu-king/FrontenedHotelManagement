@@ -11,6 +11,7 @@ import { RoomComponent } from '../room.component';
 export class RoomListComponent {
 
   justHotelData : any[] = []
+  
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
