@@ -25,6 +25,8 @@ import { BillListComponent } from './bill/bill-list/bill-list.component';
 import { RoomRateListComponent } from './room-rate/room-rate-list/room-rate-list.component';
 import { GuestListComponent } from './guest/guest-list/guest-list.component';
 import { ReservationListComponent } from './reservation/reservation-list/reservation-list.component';
+import { CheckinListComponent } from './checkin/checkin-list/checkin-list.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -99,7 +101,14 @@ const routes: Routes = [
         path: 'reservation',
         component: ReservationListComponent
       },
-
+      {
+        path: 'checkIn',
+        component: CheckinListComponent
+      },
+      {
+        path: 'admindashboard',
+        component: AdminDashboardComponent
+      },
     ]
   }
 ];

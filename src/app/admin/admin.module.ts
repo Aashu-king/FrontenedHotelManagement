@@ -46,6 +46,9 @@ import { BillListComponent } from './bill/bill-list/bill-list.component';
 import { BillDetailListComponent } from './bill-detail/bill-detail-list/bill-detail-list.component';
 import { CheckinListComponent } from './checkin/checkin-list/checkin-list.component';
 import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,10 @@ import { CheckoutListComponent } from './checkout/checkout-list/checkout-list.co
     BillDetailListComponent,
     CheckinListComponent,
     CheckoutListComponent,
-    RoomTypeComponent
+    RoomTypeComponent,
+    DashboardComponent,
+    AdminDashboardComponent,
+    DeveloperDashboardComponent
   ],
   imports: [
     CommonModule,

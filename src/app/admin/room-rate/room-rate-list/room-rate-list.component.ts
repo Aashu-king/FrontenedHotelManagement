@@ -20,8 +20,8 @@ export class RoomRateListComponent {
   }
 
   getData(){
-    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
-      this.justHotelData = result
+    this.http.get('http://localhost:3000/api/v1/roomRates').subscribe((result : any) => {
+      this.justHotelData = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
   }
@@ -35,4 +35,13 @@ export class RoomRateListComponent {
     });
   }
   
+  openDialogForUpdate(id : any): void {
+    this.dialog.open(RoomRateComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+}
 }

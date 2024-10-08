@@ -26,6 +26,7 @@ export class ReservationComponent {
   SaveUpdateEvent: boolean = false;
   permissionArray : any 
   pageurl : any;
+  dataArray : any
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<ReservationComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any,private router: Router) {}
 
   ngOnInit(): void {
@@ -51,6 +52,10 @@ export class ReservationComponent {
       this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
     })
+
+    if(this.data){
+      this.getByIdData()
+    }
   }
 
   onSubmit() {
@@ -74,6 +79,18 @@ export class ReservationComponent {
       }
     }
    
+  }
+
+
+  getByIdData(){
+    this.http.get(`http://localhost:3000/api/v1/reservation/${this.data}`).subscribe((result : any) => {
+      this.dataArray = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
+      if(this.dataArray){
+        // this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
+      }
+
+    })
   }
 
   onDelete(){

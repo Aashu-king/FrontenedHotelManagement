@@ -21,7 +21,7 @@ export class GuestListComponent {
   }
 
   getData(){
-    this.http.get(`http://localhost:3000/api/v1/guests/${this.outletid}`).subscribe((result : any) => {
+    this.http.get(`http://localhost:3000/api/v1/guests`).subscribe((result : any) => {
       this.justHotelData = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
