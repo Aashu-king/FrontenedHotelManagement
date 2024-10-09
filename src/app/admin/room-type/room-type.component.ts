@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-room-type',
@@ -11,9 +12,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class RoomTypeComponent {
   roomTypeForm !: FormGroup;
   amenitiesList = ['WiFi', 'Air Conditioning', 'TV', 'Mini Bar'];
-  outlets : any;
   SaveUpdateEvent: boolean = false;
 isUpdateMode: any;
+dataArray : any
+OutletTypeOptions: any[] = [];  
+outlets: any[] = [];
+ filteredOutlets$: Observable<any[]> = of([]);
+
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RoomTypeComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('yooo');
 
@@ -29,12 +34,44 @@ isUpdateMode: any;
       baseRate: [''],
       maxOccupancy: [''],
       amenities: [],
-      outletid: ['']
+      outletid: [''],
+      OutletName: [''],
     });
 
     this.getDropdown()
     if(this.data){
       this.getById()
+    }
+    
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
+  } 
+
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
+      this.outlets  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+    });
+  }
+
+  private setupOutletAutoComplete(): void {
+    this.filteredOutlets$ = this.roomTypeForm.get('OutletName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.outlets.filter((option: any) => 
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedOutlet  = this.outlets.find((type: any) => type.name === event.option.value);
+    if (selectedOutlet ) {
+      this.roomTypeForm.get('outletid')?.setValue(selectedOutlet .outletid);
     }
   }
 
@@ -81,6 +118,11 @@ isUpdateMode: any;
           const filteredData = this.outlets.find((ele : any) => ele.outletid == response.outletid)
           this.roomTypeForm.get('outletid')?.setValue(filteredData.outletid)
           this.roomTypeForm.get('amenities')?.setValue(response.amenities[0])
+          this.roomTypeForm.get('outletid')?.setValue(this.dataArray.name)
+          const selectedOutlet = this.outlets.find(outlet => outlet.outletid === response.outletid);
+      if (selectedOutlet) {
+        this.roomTypeForm.get('OutletName')?.setValue(selectedOutlet.name);
+      }
         }
       }
     );

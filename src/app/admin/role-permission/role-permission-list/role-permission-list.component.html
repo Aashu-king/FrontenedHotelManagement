@@ -23,7 +23,7 @@ flex-wrap: wrap;">
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.roleId)">
+        <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.roleId)">
           <td>{{ i + 1 }}</td>
           <td>{{ item.role?.roleName }}</td>
           <td>
@@ -51,5 +51,9 @@ flex-wrap: wrap;">
         
       </tbody>
     </table>
+
+    
+    <mat-paginator [length]="justHotelData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
   </div>
   

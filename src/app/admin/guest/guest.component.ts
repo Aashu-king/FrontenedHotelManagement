@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-guest',
@@ -12,14 +13,14 @@ import { Router } from '@angular/router';
 export class GuestComponent {
   guestForm !: FormGroup;
   idTypes = ['Passport', 'Driver\'s License', 'National ID'];
-  outlets = [
-    { id: 1, name: 'Outlet 1' },
-    { id: 2, name: 'Outlet 2' }
-  ];
+ 
   SaveUpdateEvent: boolean = false;
   dataArray : any;
   permissionArray : any 
   pageurl : any;
+  OutletTypeOptions: any[] = [];  
+  outlets: any[] = [];
+   filteredOutlets$: Observable<any[]> = of([]);
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<GuestComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any,private router: Router) {}
 
   ngOnInit(): void {
@@ -33,7 +34,8 @@ export class GuestComponent {
       identificationType: ['', Validators.required],
       identificationNumber: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      outletid: ['', Validators.required]
+      outletid: ['', Validators.required],
+      OutletName: ['']
     });
 
     this.pageurl =  this.router.url.split('/')[2]
@@ -49,6 +51,37 @@ export class GuestComponent {
       console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
       this.getByIdData();
     }
+
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
+  }
+
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
+      this.outlets  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+    });
+  }
+
+  private setupOutletAutoComplete(): void {
+    this.filteredOutlets$ = this.guestForm.get('OutletName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.outlets.filter((option: any) => 
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedOutlet  = this.outlets.find((type: any) => type.name === event.option.value);
+    if (selectedOutlet ) {
+      this.guestForm.get('outletid')?.setValue(selectedOutlet .outletid);
+    }
   }
 
   getByIdData(){
@@ -57,6 +90,11 @@ export class GuestComponent {
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
       if(this.dataArray){
         this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
+        this.guestForm.get('outletid')?.setValue(this.dataArray.name)
+        const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
+    if (selectedOutlet) {
+      this.guestForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
       }
 
     })

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation.component';
 import { BillDetailComponent } from '../../bill-detail/bill-detail.component';
 import { CheckinComponent } from '../../checkin/checkin.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-reservation-list',
@@ -15,6 +16,9 @@ export class ReservationListComponent {
   justHotelData : any[] = []
   paymentStatus : any
   outletid: any[] = [];
+  paginatedData: any[] = []; 
+  pageSize = 10;
+  currentPage = 0;
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
@@ -23,9 +27,27 @@ export class ReservationListComponent {
     this.getData();
   }
 
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.setPaginatedData();
+  }
+
+  setPaginatedData() {
+    const startIndex = this.currentPage * this.pageSize;
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ startIndex:", startIndex)
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedData = this.justHotelData.slice(startIndex, endIndex);
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ this.paginatedData:", this.paginatedData)
+  }
+
   getData(){
     this.http.get(`http://localhost:3000/api/v1/reservations`).subscribe((result : any) => {
       this.justHotelData = result.data
+      if(this.justHotelData.length > 0){
+        this.setPaginatedData();
+  
+      }
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
     // this.http.get(`http://localhost:3000/api/v1/paymentStatus`).subscribe((result : any) => {

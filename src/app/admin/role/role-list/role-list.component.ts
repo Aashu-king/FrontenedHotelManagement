@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleComponent } from '../role.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-role-list',
@@ -11,6 +12,9 @@ import { RoleComponent } from '../role.component';
 export class RoleListComponent {
    
   justHotelData : any[] = []
+  paginatedData: any[] = []; 
+  pageSize = 10;
+  currentPage = 0;
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
@@ -18,6 +22,21 @@ export class RoleListComponent {
   ngOnInit(): void {
     this.getData();
   }
+
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.setPaginatedData();
+  }
+
+  setPaginatedData() {
+    const startIndex = this.currentPage * this.pageSize;
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ startIndex:", startIndex)
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedData = this.justHotelData.slice(startIndex, endIndex);
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ this.paginatedData:", this.paginatedData)
+  }
+
 
   getData(){
     this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
