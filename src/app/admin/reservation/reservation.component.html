@@ -72,9 +72,26 @@ align-items: center;">
   </div>
 
   <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Outlet</mat-label>
+      <input type="text"
+             placeholder="Pick a Outlet"
+             aria-label="Outlet"
+             matInput
+             formControlName="OutletName"
+             [matAutocomplete]="autoOutlet">
+      <mat-autocomplete #autoOutlet="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let outlet of filteredOutlets$ | async" [value]="outlet.name">
+          {{ outlet.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <!-- <div>
     <label for="outletid">Outlet</label>
     <select id="outletid" formControlName="outletid">
       <option *ngFor="let outlet of outlets" [value]="outlet.outletid">{{ outlet.name }}</option>
     </select>
-  </div>
+  </div> -->
 </form>
