@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModuleTypeComponent } from '../module-type.component';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-module-type-list',
@@ -11,6 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class ModuleTypeListComponent {
   
   justHotelData : any[] = []
+  paginatedData: any[] = []; 
+  pageSize = 10;
+  currentPage = 0;
   constructor(private http : HttpClient, public dialog: MatDialog,){
 
   }
@@ -19,9 +23,27 @@ export class ModuleTypeListComponent {
     this.getData();
   }
 
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.setPaginatedData();
+  }
+
+  setPaginatedData() {
+    const startIndex = this.currentPage * this.pageSize;
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ startIndex:", startIndex)
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedData = this.justHotelData.slice(startIndex, endIndex);
+    console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ this.paginatedData:", this.paginatedData)
+  }
+
   getData(){
     this.http.get('http://localhost:3000/api/v1/get-moduletype').subscribe((result : any) => {
       this.justHotelData = result
+      if(this.justHotelData.length > 0){
+        this.setPaginatedData();
+  
+      }
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
   }

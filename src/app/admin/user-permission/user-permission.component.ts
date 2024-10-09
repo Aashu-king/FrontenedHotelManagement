@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-user-permission',
@@ -12,23 +13,88 @@ export class UserPermissionComponent {
   userPermissionForm!: FormGroup;
   SaveUpdateEvent: boolean = false;
   dataArray : any
-isUpdateMode: any;
+  isUpdateMode: any;
+  UserOptions: any[] = []; 
+  PageOptions: any[] = []; 
+  filteredUserTypes$: Observable<any[]> = of([]); 
+  filteredPageTypes$: Observable<any[]> = of([]); 
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<UserPermissionComponent>, private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.userPermissionForm = this.fb.group({
       userId: [''],
       pageId: [''],
+      userName: [''],
+      pageName: [''],
       canView: [false],
       canEdit: [false],
       canDelete: [false],
     });
 
     if(this.data && this.data.userId && this.data.pageId){
-      console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
+      console.log("🚀 ~ UserTypes ~ ngOnInit ~ this.data:", this.data)
       this.getByIdData();
     }
+    this.loadModuleTypeOptions();
+    this.setupAutoComplete();
+    this.setupAutoCompletePage();
   }
+
+  private loadModuleTypeOptions(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-users').subscribe((result: any) => {
+      this.UserOptions = result;
+      console.log("🚀 ~ UserOptions ~ this.httpClient.get ~ UserOptions:", this.UserOptions);
+    });
+    this.http.get('http://localhost:3000/api/v1/dropdown-pages').subscribe((result: any) => {
+      this.PageOptions = result;
+      console.log("🚀 ~ PageOptions ~ this.httpClient.get ~ PageOptions:", this.PageOptions);
+    });
+  }
+
+  private setupAutoComplete(): void {
+    this.filteredUserTypes$ = this.userPermissionForm.get('userName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterUserTypes(value || ''))
+    );
+  }
+
+  private setupAutoCompletePage(): void {
+    this.filteredPageTypes$ = this.userPermissionForm.get('pageName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterPageTypes(value || ''))
+    );
+  }
+
+  private filterUserTypes(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.UserOptions.filter((option: any) => 
+      option.userName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private filterPageTypes(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.PageOptions.filter((option: any) => 
+      option.pageName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelectedPage(event: any): void {
+    const selectedPageType = this.PageOptions.find((type: any) => type.pageName === event.option.value);
+    if (selectedPageType) {
+      this.userPermissionForm.get('pageId')?.setValue(selectedPageType.pageId);
+      this.userPermissionForm.get('pageName')?.setValue(selectedPageType.pageName);
+    }
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedUserType = this.UserOptions.find((type: any) => type.userName === event.option.value);
+    if (selectedUserType) {
+      this.userPermissionForm.get('userId')?.setValue(selectedUserType.userId);
+      this.userPermissionForm.get('userName')?.setValue(selectedUserType.userName);
+    }
+  }
+
 
   onSubmit() {
     if(!this.data){
@@ -79,6 +145,16 @@ isUpdateMode: any;
       this.userPermissionForm.get('canView')?.setValue(this.dataArray.canView);
       this.userPermissionForm.get('canEdit')?.setValue(this.dataArray.canEdit);
       this.userPermissionForm.get('canDelete')?.setValue(this.dataArray.canDelete);
+      this.userPermissionForm.get('userId')?.setValue(this.dataArray.userName)
+      this.userPermissionForm.get('pageId')?.setValue(this.dataArray.pageName)
+      const selectedUserType = this.UserOptions.find((type: any) => type.userId === this.dataArray.userId);
+      if (selectedUserType) {
+        this.userPermissionForm.get('userId')?.setValue(selectedUserType.userId);
+      }
+      const selectedPageType = this.PageOptions.find((type: any) => type.pageId === this.dataArray.pageId);
+      if (selectedPageType) {
+        this.userPermissionForm.get('pageId')?.setValue(selectedPageType.pageId);
+      }
     }
   });
   }

@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-room-rate',
@@ -16,14 +17,12 @@ export class RoomRateComponent {
     { id: 2, name: 'Double' }
     // Add more room types as needed
   ];
-  outlets = [
-    { id: 1, name: 'Outlet 1' },
-    { id: 2, name: 'Outlet 2' }
-    // Add more outlets as needed
-  ];
 
   dataArray : any
   SaveUpdateEvent: boolean = false;
+OutletTypeOptions: any[] = [];  
+outlets: any[] = [];
+ filteredOutlets$: Observable<any[]> = of([]);
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<RoomRateComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any, private router: Router) {}
 
   ngOnInit(): void {
@@ -33,11 +32,42 @@ export class RoomRateComponent {
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       ratePerNight: ['', [Validators.required, Validators.min(0)]],
-      outletid: ['', Validators.required]
+      outletid: ['', Validators.required],
+      OutletName: ['']
     });
 
     if(this.data){
       this.getByIdData()
+    }
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
+  }
+
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
+      this.outlets  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+    });
+  }
+
+  private setupOutletAutoComplete(): void {
+    this.filteredOutlets$ = this.roomRateForm.get('OutletName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.outlets.filter((option: any) => 
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedOutlet  = this.outlets.find((type: any) => type.name === event.option.value);
+    if (selectedOutlet ) {
+      this.roomRateForm.get('outletid')?.setValue(selectedOutlet .outletid);
     }
   }
 
@@ -75,6 +105,11 @@ export class RoomRateComponent {
         //   this.roomRateForm.get('moduleId')!.setValue(selectedModule.moduleId);
         //   this.roomRateForm.get('moduleName')!.setValue(selectedModule.moduleName);
         // }
+        this.roomRateForm.get('outletid')?.setValue(this.dataArray.name)
+        const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
+    if (selectedOutlet) {
+      this.roomRateForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
       }
 
     })

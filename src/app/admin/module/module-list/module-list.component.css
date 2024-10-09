@@ -118,3 +118,7 @@
     margin-left: 280px;  /* Apply margin-left to the container */
     /* You can also add other positioning if necessary */
   }
+
+  .mat-mdc-paginator {
+    background-color: #e9e7ff !important;
+  }

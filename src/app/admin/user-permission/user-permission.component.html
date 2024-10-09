@@ -13,7 +13,23 @@ align-items: center;">
 </div>
 
 <form [formGroup]="userPermissionForm">
-    <div class="form-group">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>User Name</mat-label>
+      <input type="text"
+             placeholder="Pick a User"
+             aria-label="userId"
+             matInput
+             formControlName="userName"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let UserType of filteredUserTypes$ | async" [value]="UserType.userName">
+          {{ UserType.userName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+    <!-- <div class="form-group">
       <label for="userId">User ID</label>
       <input
         id="userId"
@@ -24,9 +40,24 @@ align-items: center;">
       <div *ngIf="userPermissionForm.get('userId')?.invalid && userPermissionForm.get('userId')?.touched" class="error">
         User ID is required.
       </div>
+    </div> -->
+    <div>
+      <mat-form-field>
+        <mat-label>Page Name</mat-label>
+        <input type="text"
+               placeholder="Pick a Page"
+               aria-label="pageId"
+               matInput
+               formControlName="pageName"
+               [matAutocomplete]="autoPage">
+        <mat-autocomplete #autoPage="matAutocomplete" (optionSelected)="onOptionSelectedPage($event)">
+          <mat-option *ngFor="let PageType of filteredPageTypes$ | async" [value]="PageType.pageName">
+            {{ PageType.pageName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
-  
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="pageId">Page ID</label>
       <input
         id="pageId"
@@ -37,7 +68,7 @@ align-items: center;">
       <div *ngIf="userPermissionForm.get('pageId')?.invalid && userPermissionForm.get('pageId')?.touched" class="error">
         Page ID is required.
       </div>
-    </div>
+    </div> -->
   
     <div class="form-group">
       <label>

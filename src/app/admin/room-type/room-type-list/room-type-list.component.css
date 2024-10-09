@@ -117,3 +117,7 @@
   ::ng-deep .custom-dialog-container .mat-dialog-container {
     margin-left: 280px; 
   }
+
+  .mat-mdc-paginator {
+    background-color: #e9e7ff !important;
+  }
