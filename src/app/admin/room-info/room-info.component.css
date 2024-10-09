@@ -1,0 +1,170 @@
+/* General Card Styling */
+.card.sales-report {
+    margin-top: 42px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.card-header.card-no-border {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.header-top h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.card-header-right-icon .dropdown-toggle {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 18px;
+}
+
+.dropdown-menu a {
+    color: #333;
+    padding: 10px 20px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Analytics Data Section */
+.analytics-data {
+    padding: 20px;
+}
+
+.balance-data {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.balance-data li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.bg-primary { background-color: #007bff; }
+.bg-secondary { background-color: #6c757d; }
+.bg-success { background-color: #28a745; }
+
+.c-light {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Social Tabs Section */
+.social-tabs {
+    margin-top: 20px;
+}
+
+.nav-pills.custom-scrollbar {
+    display: flex;
+    justify-content: space-evenly;
+    overflow-x: auto;
+}
+
+.social-box {
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+}
+
+.social-box.active {
+    border-color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.social-box i {
+    font-size: 24px;
+}
+
+.social-box span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.bg-7-primary { background-color: #007bff; }
+.bg-7-danger { background-color: #dc3545; }
+
+/* Table Styling */
+.table-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.styled-table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.styled-table td {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.styled-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Mat Paginator Styling */
+mat-paginator {
+    margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .header-top h5 {
+        font-size: 16px;
+    }
+    .balance-data {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .social-box {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+    .styled-table th, .styled-table td {
+        padding: 8px 10px;
+    }
+}

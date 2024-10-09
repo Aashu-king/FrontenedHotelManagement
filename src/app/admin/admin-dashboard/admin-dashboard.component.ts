@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import moment from 'moment';
 import { RoomInfoComponent } from '../room-info/room-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ReservationComponent } from '../reservation/reservation.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,7 +16,7 @@ export class AdminDashboardComponent {
   monthName!: string;
   calendarDays: any[][] = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private router : Router) { }
 
   ngOnInit(): void {
     const today = moment();
@@ -62,14 +64,32 @@ export class AdminDashboardComponent {
     return day.fullDate.isSame(moment(), 'day');
   }
 
-  openRoomAvailability(data : any): void {
-    const formattedDate = data.fullDate.format('YYYY-MM-DD');
-    this.dialog.open(RoomInfoComponent, {
-     height: '80%',
-     width: '80%',
-     data : formattedDate,
-     panelClass: 'custom-dialog-container',
-     position: { left: '280px', top: '60px' }
-    });
+  openRoomAvailability(data ?: any,value ?: any): void {
+    console.log("🚀 ~ AdminDashboardComponent ~ openRoomAvailability ~ value:", value)
+    if(data != ''){
+      var formattedDate = data.fullDate.format('YYYY-MM-DD');
+    }
+    if(value === 'toOpenCalendar'){
+      this.dialog.open(RoomInfoComponent, {
+       height: '80%',
+       width: '80%',
+       data : {formattedDate : formattedDate,value : value} ,
+       panelClass: 'custom-dialog-container',
+       position: { left: '280px', top: '60px' }
+      });
+    }
+    if(value === 'toOpenReservation'){
+      this.router.navigate(['admin/reservation'])
+    }
+    if(value === 'toCreateResrvation'){
+      this.router.navigate(['admin/reservation'])
+      this.dialog.open(ReservationComponent, {
+        height: '80%',
+        width: '80%',
+        panelClass: 'custom-dialog-container',
+        position: { left: '280px', top: '60px' }
+       });
+     }
+    }
   }
-}
+

@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { CheckinComponent } from '../checkin/checkin.component';
 
 @Component({
   selector: 'app-room-info',
@@ -19,16 +20,16 @@ export class RoomInfoComponent implements OnInit{
   pageSizeRes = 5;
   currentPageRes = 0;
   paginatedDataForReserVation: any[] = []; 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,private http : HttpClient){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,private http : HttpClient,public dialog: MatDialog){}
 
 
   ngOnInit(): void {
-    if(this.data){
+    if(this.data.formattedDate){
       this.getData()
     }
 
     
-    console.log("🚀 ~ RoomInfoComponent ~ ngOnInit ~ this.data:", this.data)
+    console.log("🚀 ~ RoomInfoComponent ~ ngOnInit ~ this.data.formattedDate:", this.data.formattedDate)
   }
   selectedTab: string = 'table1';
 
@@ -49,6 +50,7 @@ export class RoomInfoComponent implements OnInit{
     console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ startIndex:", startIndex)
     const endIndex = startIndex + this.pageSizeRes;
     this.paginatedDataForReserVation = this.reservationData.slice(startIndex, endIndex);
+    console.log("🚀 ~ RoomInfoComponent ~ setPaginatedDataForRes ~ this.paginatedDataForReserVation:", this.paginatedDataForReserVation)
     console.log("🚀 ~ RoomRateListComponent ~ setPaginatedData ~ this.paginatedData:", this.reservationData)
   }
 
@@ -66,19 +68,32 @@ export class RoomInfoComponent implements OnInit{
 
   getData(){
     const params = new HttpParams()
-    .set('theDate' , this.data)
-    console.log("🚀 ~ RoomInfoComponent ~ getData ~  this.data:",  this.data)
+    .set('theDate' , this.data.formattedDate)
+    console.log("🚀 ~ RoomInfoComponent ~ getData ~  this.data.formattedDate:",  this.data.formattedDate)
+    if(this.data.value === 'toOpenCalendar'){
+      this.http.get('http://localhost:3000/api/v1/theDate',{params}).subscribe((result : any) => {
+        this.theDataWeGotForRoom = result.availableRooms.data
+        if(this.theDataWeGotForRoom.length){
+          this.setPaginatedData();
+        }
+        this.reservationData = result.reservedRooms.data
+        console.log("🚀 ~ RoomInfoComponent ~ this.http.get ~ this.reservationData:", this.reservationData)
+        if(this.reservationData.length){
+          this.setPaginatedDataForRes();
+        }
+        console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.theDataWeGotForRoom)
+      })
+    }
+   
+  }
 
-    this.http.get('http://localhost:3000/api/v1/theDate',{params}).subscribe((result : any) => {
-      this.theDataWeGotForRoom = result.availableRooms.data
-      if(this.theDataWeGotForRoom.length){
-        this.setPaginatedData();
-      }
-      this.reservationData = result.reservedRooms.data
-      if(this.reservationData.length){
-        this.setPaginatedDataForRes();
-      }
-      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.theDataWeGotForRoom)
-    })
+  openDialog(id : any): void {
+    this.dialog.open(CheckinComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
   }
 }

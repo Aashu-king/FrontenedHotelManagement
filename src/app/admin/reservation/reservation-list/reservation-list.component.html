@@ -11,29 +11,51 @@ flex-wrap: wrap;">
     margin-bottom: 10px;">Add Reservation</button>
   
     <!-- Table -->
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.reservationId)">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
-          <td>
-            <span [class]="item.isActive ? 'status active' : 'status inactive'">
-              {{ item.isActive ? 'Active' : 'Inactive' }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+     <div style="overflow: scroll;"> 
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Guest ID</th>
+            <th>Room ID</th>
+            <th>Reservation Date</th>
+            <th>Check-In Date</th>
+            <th>Check-Out Date</th>
+            <th>Status</th>
+            <th>Payment Status</th>
+            <th>Total Amount</th>
+            <th>Special Requests</th>
+            <th>Outlet ID</th>
+            <th>Checkin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of justHotelData; let i = index">
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ i + 1 }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.guestId }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.roomId }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.reservationDate | date: 'yyyy-MM-dd' }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.checkInDate | date: 'yyyy-MM-dd' }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.checkOutDate | date: 'yyyy-MM-dd' }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.status }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.paymentStatus }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.totalAmount | currency }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.specialRequests }}</td>
+            <td (click)="openDialogForUpdate(item.reservationId)">{{ item.outletid }}</td>
+            
+            <td>
+              <span [class]="item.paymentStatus == 'paid' ? 'status active' : 'status inactive'">
+                <span *ngIf="item.paymentStatus != 'paid'" class="pay-now" (click)="openDialogForPayment(item.reservationId, $event)">Pay Now</span>
+                <span *ngIf="item.paymentStatus == 'paid'" class="pay-now" (click)="openDialogForCheckIn(item.reservationId,item.roomId,item.outletid,$event)">checkin</span>
+              </span>
+            </td>
+          
+          </tr>
+          
+        </tbody>
+      </table>
+     </div>
+  
+    
   </div>
   

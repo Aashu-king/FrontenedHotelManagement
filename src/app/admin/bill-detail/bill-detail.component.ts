@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,11 +13,13 @@ export class BillDetailComponent {
   billDetailForm!: FormGroup;
   permissionArray : any 
   pageurl : any;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<BillDetailComponent>,private http: HttpClient,private router : Router) {}
+SaveUpdateEvent: any;
+  
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<BillDetailComponent>,private http: HttpClient,private router : Router,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.billDetailForm = this.fb.group({
-      billDetailId: [{ value: '', disabled: true }],
+      billDetailId: [],
       billId: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(255)]],
       amount: ['', [Validators.required, Validators.min(0)]],
@@ -32,16 +34,37 @@ export class BillDetailComponent {
       this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
     })
+
+    if(this.data.id){
+      this.getPaymentData();
+    }
   }
 
   onSubmit() {
     if (this.billDetailForm.valid) {
       console.log(this.billDetailForm.value);
-      this.http.post('http://localhost:3000/api/v1/hotels', this.billDetailForm.value).subscribe(
+      this.http.post('http://localhost:3000/api/v1/bill-detail', this.billDetailForm.value).subscribe(
         (response : any) => {
           console.log('Success!', response);
         }
       );
     }
+  }
+
+  getPaymentData(){
+  
+    if(this.data){
+      console.log("🚀 ~ BillDetailComponent ~ getPaymentData ~ this.data:", this.data)
+      this.billDetailForm.get('amount')?.setValue(this.data.paymentStatus.AmountTobePaidMore)
+      this.billDetailForm.get('outletid')?.setValue(this.data.paymentStatus.outletid)
+      this.billDetailForm.get('billId')?.setValue(this.data.paymentStatus.billId)
+    }
+       
+      
+   
+  }
+
+  onDelete(){
+
   }
 }
