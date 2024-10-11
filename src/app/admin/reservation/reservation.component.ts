@@ -110,8 +110,6 @@ outlets: any[] = [];
     this.reservationForm.get('outletid')?.valueChanges.subscribe((ele : any) =>{
       this.billForm.get('outletid')?.setValue(parseInt(this.reservationForm.get('outletid')?.value))
       this.billDetailForm.get('outletid')?.setValue(parseInt(this.reservationForm.get('outletid')?.value))
-    console.log("🚀 ~ ReservationComponent ~ this.reservationForm.get ~ this.billDetailForm:", this.billForm.value)
-    console.log("🚀 ~ ReservationComponent ~ this.reservationForm.get ~ this.billDetailForm:", this.billDetailForm.value)
 
     })
 
@@ -203,6 +201,9 @@ outlets: any[] = [];
             console.log('Success!', response);
           }
         );
+      }else{
+        console.log('yo');
+        
       }
     } else {
       if (this.reservationForm.valid) {

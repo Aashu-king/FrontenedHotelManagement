@@ -28,6 +28,8 @@ import { ReservationListComponent } from './reservation/reservation-list/reserva
 import { CheckinListComponent } from './checkin/checkin-list/checkin-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BillDetailComponent } from './bill-detail/bill-detail.component';
+import { BillDetailListComponent } from './bill-detail/bill-detail-list/bill-detail-list.component';
 
 const routes: Routes = [
   {
@@ -116,7 +118,7 @@ const routes: Routes = [
       },
       {
         path : 'bill-details',
-        component : BillListComponent
+        component : BillDetailListComponent
       }
     ]
   }

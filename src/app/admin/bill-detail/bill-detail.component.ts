@@ -36,28 +36,59 @@ SaveUpdateEvent: any;
     })
 
     if(this.data.id){
+      console.log("🚀 ~ BillDetailComponent ~ ngOnInit ~ this.data.id:", this.data.id)
       this.getPaymentData();
     }
   }
 
   onSubmit() {
-    if (this.billDetailForm.valid) {
-      console.log(this.billDetailForm.value);
-      this.http.post('http://localhost:3000/api/v1/bill-detail', this.billDetailForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
+    if(this.data.paymentStatus == ''){
+      if(!this.data){
+        if (this.billDetailForm.valid) {
+          console.log(this.billDetailForm.value);
+          this.http.post('http://localhost:3000/api/v1/bill-detail', this.billDetailForm.value).subscribe(
+            (response : any) => {
+              console.log('Success!', response);
+            }
+          );
         }
-      );
+      }else{
+        if (this.billDetailForm.valid) {
+          console.log(this.billDetailForm.value);
+          this.http.put(`http://localhost:3000/api/v1/bill-detail/${this.data.id}`, this.billDetailForm.value).subscribe(
+            (response : any) => {
+              console.log('Success!', response);
+            }
+          );
+        }
+      }
+     
+    }else{
+      if (this.billDetailForm.valid) {
+        console.log(this.billDetailForm.value);
+        this.http.post('http://localhost:3000/api/v1/bill-detail', this.billDetailForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
     }
+  
   }
 
   getPaymentData(){
   
-    if(this.data){
+    if(this.data.paymentStatus != ''){
       console.log("🚀 ~ BillDetailComponent ~ getPaymentData ~ this.data:", this.data)
       this.billDetailForm.get('amount')?.setValue(this.data.paymentStatus.AmountTobePaidMore)
       this.billDetailForm.get('outletid')?.setValue(this.data.paymentStatus.outletid)
       this.billDetailForm.get('billId')?.setValue(this.data.paymentStatus.billId)
+    }else{
+      this.http.get(`http://localhost:3000/api/v1/bill-detail/${this.data.id}`, this.billDetailForm.value).subscribe(
+        (response : any) => {
+          console.log('Success!', response);
+        }
+      );
     }
        
       

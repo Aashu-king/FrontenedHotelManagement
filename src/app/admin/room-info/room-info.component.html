@@ -100,4 +100,93 @@
     </div>
   </div>
 </div>
+<div class="col-md-12 col-xl-12" *ngIf="this.data.value === 'toOpenGuestManagement'">
+  <div class="card sales-report" style="margin-top: 42px;">
+    <div class="card-header card-no-border">
+      <div class="header-top">
+        <h5>Availability</h5>
+      <div>
+        <form [formGroup]="searchForm">
+          <div>
+            <label for="firstName">First Name</label>
+    <input id="firstName" formControlName="firstName" type="text" />
+          </div>
+          <div>
+            <label for="lastName">Last Name</label>
+    <input id="lastName" formControlName="lastName" type="text" />
+          </div>
+        </form>
+      </div>
+      </div>
+    </div>
+
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Guest Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Identification Type</th>
+          <th>Identification Number</th>
+          <th>Reservation Date</th>
+          <th>Check-In Date</th>
+          <th>Check-Out Date</th>
+          <th>Reservation Status</th>
+          <th>Payment Status</th>
+          <th>Total Reservation Amount</th>
+          <th>Bill Payment Method</th>
+          <th>Bill Status</th>
+          <th>Bill Total Amount</th>
+          <th>Bill Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Guest Loop -->
+        <ng-container *ngFor="let guest of paginatedDataForRoom; let i = index">
+          <!-- Reservation Loop -->
+          <ng-container *ngFor="let res of guest.reservation; let j = index">
+            <tr>
+              <!-- Guest Info: Only on the first reservation row -->
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ i + 1 }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ guest.firstName }} {{ guest.lastName }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ guest.email }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ guest.phone }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ guest.identificationType }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="guest.reservation.length">{{ guest.identificationNumber }}</td>
+  
+              <!-- Reservation Info -->
+              <td>{{ res.reservationDate | date: 'shortDate' }}</td>
+              <td>{{ res.checkInDate | date: 'shortDate' }}</td>
+              <td>{{ res.checkOutDate | date: 'shortDate' }}</td>
+              <td>{{ res.status }}</td>
+              <td>{{ res.paymentStatus }}</td>
+              <td>{{ res.totalAmount | currency }}</td>
+  
+              <!-- Bill Info (Matching the reservationId) -->
+              <ng-container *ngIf="guest.bill">
+                <ng-container *ngFor="let bill of guest.bill">
+                  <ng-container *ngIf="bill.reservationId === res.reservationId">
+                    <td>{{ bill.paymentMethod }}</td>
+                    <td>{{ bill.status }}</td>
+                    <td>{{ bill.totalAmount | currency }}</td>
+                    <td>
+                      <ul>
+                        <li *ngFor="let detail of bill.billDetails">
+                          {{ detail.description }}: {{ detail.amount | currency }}
+                        </li>
+                      </ul>
+                    </td>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+    <mat-paginator [length]="theDataWeGotForRoom.length" [pageSize]="10" [pageSizeOptions]="[0, 5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>
 

@@ -66,10 +66,10 @@ export class AdminDashboardComponent {
 
   openRoomAvailability(data ?: any,value ?: any): void {
     console.log("🚀 ~ AdminDashboardComponent ~ openRoomAvailability ~ value:", value)
-    if(data != ''){
+    if(data != '' && value !== 'toOpenGuestManagement'){
       var formattedDate = data.fullDate.format('YYYY-MM-DD');
     }
-    if(value === 'toOpenCalendar'){
+    if(value === 'toOpenCalendar' || value === 'toOpenGuestManagement'){
       this.dialog.open(RoomInfoComponent, {
        height: '80%',
        width: '80%',

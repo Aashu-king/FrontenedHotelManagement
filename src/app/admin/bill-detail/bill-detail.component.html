@@ -2,10 +2,13 @@
   <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
     <i class="fa fa-close"></i> Cancel
   </button>
-  <button *ngIf="this.permissionArray && this.permissionArray.canEdit" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
-    <i class="fa fa-save"></i> {{this.data.canHeCheckIn ? 'Update' : 'Save'}}
+  <button *ngIf="this.permissionArray && this.permissionArray.canEdit && this.data.paymentStatus == ''" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> {{this.data  ? 'Update' : 'Save'}}
   </button>
-  <button type="submit" *ngIf="this.data.canHeCheckIn" style="margin-right: 10px;" (click)="onDelete()">
+  <button *ngIf="this.permissionArray && this.permissionArray.canEdit && this.data.paymentStatus !== ''" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+  <button type="submit" *ngIf="this.data.paymentStatus.canHeCheckIn" style="margin-right: 10px;" (click)="onDelete()">
     <i class="fa fa-save"></i> Delete
   </button>
   </div>
