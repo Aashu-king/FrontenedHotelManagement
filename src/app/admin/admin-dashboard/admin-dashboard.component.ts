@@ -4,6 +4,7 @@ import { RoomInfoComponent } from '../room-info/room-info.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ReservationComponent } from '../reservation/reservation.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +17,7 @@ export class AdminDashboardComponent {
   monthName!: string;
   calendarDays: any[][] = [];
 
-  constructor(public dialog: MatDialog,private router : Router) { }
+  constructor(public dialog: MatDialog,private router : Router,private http : HttpClient ) { }
 
   ngOnInit(): void {
     const today = moment();
@@ -90,6 +91,16 @@ export class AdminDashboardComponent {
         position: { left: '280px', top: '60px' }
        });
      }
+    }
+
+    schduleingFunction(){
+      this.http.get('http://localhost:3000/api/v1/theSchdueling').subscribe((result : any) => {
+     
+        console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", result)
+      })
+    }
+    getData(){
+     
     }
   }
 
