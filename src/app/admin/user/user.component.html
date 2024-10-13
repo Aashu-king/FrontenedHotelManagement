@@ -13,10 +13,6 @@ align-items: center;">
 </div>
 
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="userId">User ID</label>
-      <input id="userId" formControlName="userId" type="number" [disabled]="true" />
-    </div>
   
     <div class="form-group">
       <label for="userName">User Name</label>

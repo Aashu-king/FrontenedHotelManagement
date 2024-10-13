@@ -1,17 +1,19 @@
 <div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
-    <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close()">
-      <i class="fa fa-close"></i> Cancel
-    </button>
-    <button *ngIf="this.permissionArray && this.permissionArray.canEdit" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
-        <i class="fa fa-save"></i> Save
-      </button>
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button *ngIf="this.permissionArray && this.permissionArray.canEdit && this.data.paymentStatus == ''" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> {{this.data  ? 'Update' : 'Save'}}
+  </button>
+  <button *ngIf="this.permissionArray && this.permissionArray.canEdit && this.data.paymentStatus !== ''" type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> Save
+  </button>
+  <button type="submit" *ngIf="this.data.paymentStatus.canHeCheckIn" style="margin-right: 10px;" (click)="onDelete()">
+    <i class="fa fa-save"></i> Delete
+  </button>
   </div>
   
   <form [formGroup]="billDetailForm">
-    <div class="form-group">
-      <label for="billDetailId">Bill Detail ID</label>
-      <input id="billDetailId" formControlName="billDetailId" type="number" [disabled]="true" />
-    </div>
   
     <div class="form-group">
       <label for="billId">Bill ID</label>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,11 +13,15 @@ export class CheckinComponent {
   checkInForm!: FormGroup;
   permissionArray : any 
   pageurl : any;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<CheckinComponent>,private http: HttpClient,private router : Router) {}
+  outlets : any;
+  roomTypes : any;
+  reservationsData : any;
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<CheckinComponent>,private http: HttpClient,private router : Router,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
+    this.getDropdown();
     this.checkInForm = this.fb.group({
-      checkInId: [{ value: '', disabled: true }],
+      checkInId: [''],
       reservationId: ['', [Validators.required]],
       checkInTime: ['', [Validators.required]],
       assignedRoomId: ['', [Validators.required]],
@@ -33,6 +37,49 @@ export class CheckinComponent {
       this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
     })
+
+    if(this.data.reservationId && this.data.roomId && this.data.outletid){
+      this.setValueFromReservation()
+    }
+  }
+
+  getDataById(){
+    this.http.get(`http://localhost:3000/api/v1/reservation/${this.data}`, this.checkInForm.value).subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+      }
+    );
+  }
+
+  setValueFromReservation(){
+    if(this.data.reservationId && this.data.roomId && this.data.outletid){
+      this.checkInForm.get('reservationId')?.setValue(this.data.reservationId)
+      this.checkInForm.get('assignedRoomId')?.setValue(this.data.roomId)
+      this.checkInForm.get('outletid')?.setValue(this.data.outletid)
+    }
+  }
+
+  getDropdown(){
+    console.log('yooo');
+    
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+        this.outlets = response
+      }
+    );
+    this.http.get('http://localhost:3000/api/v1/dropdown-rooms').subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+        this.roomTypes = response
+      }
+    );
+    this.http.get('http://localhost:3000/api/v1/dropdown-reservations').subscribe(
+      (response : any) => {
+        console.log('Success!', response);
+        this.reservationsData = response
+      }
+    );
   }
 
   onSubmit() {

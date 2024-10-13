@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -25,6 +25,18 @@ export class ReservationComponent {
   permissionArray : any 
   pageurl : any;
   dataArray : any
+
+  billForm!: FormGroup;
+  moduleTypeOptions: any[] = []; 
+  filteredModuleTypes!: Observable<any[]>;
+  billDetailForm!: FormGroup;
+  atLeastAmountToBePaidis : any
+
+  // permissionArray : any 
+  // pageurl : any;
+
+
+
   
 OutletTypeOptions: any[] = [];  
 outlets: any[] = [];
@@ -54,15 +66,95 @@ filteredRooms$: Observable<any[]> = of([]);
       GuestName: ['']
     });
 
+    this.billForm = this.fb.group({
+      billId: [],
+      guestId: [parseInt(this.reservationForm.get('outletid')?.value)],
+      totalAmount: [, [Validators.required, Validators.min(0)]],
+      paymentMethod: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      outletid: [this.reservationForm.get('outletid')?.value],
+    });
+
+    this.billDetailForm = this.fb.group({
+      billDetailId: [''],
+      billId: [''],
+      description: ['', [Validators.required, Validators.maxLength(255)]],
+      amount: ['', [Validators.required, Validators.min(0)]],
+      outletid: [],
+    });
+
     this.pageurl =  this.router.url.split('/')[2]
     console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
     // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
+
+    console.log("🚀 ~ ReservationComponent ~ ngOnInit ~ this.reservationForm.get('roomId')?.value:", this.reservationForm.get('roomId')?.value)
+    this.reservationForm.get('checkInDate')?.valueChanges.subscribe((ele : any) =>{
+      console.log(ele);
+      
+      if(this.reservationForm.get('roomId')?.value && this.reservationForm.get('checkInDate')?.value && this.reservationForm.get('checkOutDate')?.value){
+        this.getDataForTotal()
+      }
+    })
+    
+    this.reservationForm.get('checkOutDate')?.valueChanges.subscribe((ele : any) =>{
+      if(this.reservationForm.get('roomId')?.value && this.reservationForm.get('checkInDate')?.value && this.reservationForm.get('checkOutDate')?.value){
+        this.getDataForTotal()
+      }
+    })
+
+    this.reservationForm.get('roomId')?.valueChanges.subscribe((ele : any) =>{
+      if(this.reservationForm.get('roomId')?.value && this.reservationForm.get('checkInDate')?.value && this.reservationForm.get('checkOutDate')?.value){
+        this.getDataForTotal()
+      }
+    })
+
+    this.reservationForm.get('guestId')?.valueChanges.subscribe((ele : any) =>{
+      console.log(ele);
+      
+    this.billForm.get('guestId')?.setValue(parseInt(this.reservationForm.get('guestId')?.value))
+    console.log("🚀 ~ ReservationComponent ~ this.reservationForm.get ~ this.billDetailForm:", this.billForm.value)
+    })
+    this.reservationForm.get('outletid')?.valueChanges.subscribe((ele : any) =>{
+      this.billForm.get('outletid')?.setValue(parseInt(this.reservationForm.get('outletid')?.value))
+      this.billDetailForm.get('outletid')?.setValue(parseInt(this.reservationForm.get('outletid')?.value))
+
+    })
+
+    this.reservationForm.get('totalAmount')?.valueChanges.subscribe((ele : any) =>{
+      this.billForm.get('totalAmount')?.setValue(parseInt(this.reservationForm.get('totalAmount')?.value))
+    })
+   
+
+    if(this.data){
+      this.getByIdData()
+    }
+
+  
+
+    this.pageurl =  this.router.url.split('/')[2]
+    console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
 
     this.http.get('http://localhost:3000/api/v1/getPerm').subscribe((result : any) => {
       this.permissionArray = result.Permissions.find((ele : any) => ele.page.pageUrl == `/${this.pageurl}`)
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.permissionArray)
     })
+    
+    this.billDetailForm.get('amount')?.valueChanges.subscribe((ele) => {
+      console.log("🚀 ~ ReservationComponent ~ this.billDetailForm.get ~ ele:", ele)
+      if(ele < this.atLeastAmountToBePaidis){
+        this.billDetailForm.get('amount')?.setValue(this.atLeastAmountToBePaidis)
+        //error message dikhana hai
+      }
+    })
 
+    
+
+   
+    
+
+    this.loadModuleTypeOptions();
+
+   
     if(this.data){
       this.getByIdData()
     }
@@ -160,13 +252,24 @@ filteredRooms$: Observable<any[]> = of([]);
 
   onSubmit() {
     if(!this.data){
-      if (this.reservationForm.valid) {
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billForm.valid:", this.billForm.value)
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billDetailForm.valid:", this.billDetailForm.value)
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.reservationForm.valid:", this.reservationForm.value)
+      if (this.reservationForm.valid && this.billDetailForm.valid && this.billForm.valid) {
+        let theObj = {
+          reservationForm : this.reservationForm.value,
+          billDetailForm : this.billDetailForm.value,
+          billForm : this.billForm.value,
+        }
         console.log(this.reservationForm.value);
-        this.http.post('http://localhost:3000/api/v1/reservation', this.reservationForm.value).subscribe(
+        this.http.post('http://localhost:3000/api/v1/reservation', theObj).subscribe(
           (response : any) => {
             console.log('Success!', response);
           }
         );
+      }else{
+        console.log('yo');
+        
       }
     } else {
       if (this.reservationForm.valid) {
@@ -181,6 +284,22 @@ filteredRooms$: Observable<any[]> = of([]);
    
   }
 
+  getDataForTotal(){
+    const params = new HttpParams()
+    .set('roomId', this.reservationForm.get('roomId')?.value)
+    .set('checkInDate', this.reservationForm.get('checkInDate')?.value)
+    .set('checkOutDate', this.reservationForm.get('checkOutDate')?.value)
+    this.http.get(`http://localhost:3000/api/v1/reservationTotal`,{params}).subscribe((result : any) => {
+      const typo = result.data
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",typo)
+      this.reservationForm.get('totalAmount')?.setValue(typo)
+      if(typo > 0){
+         this.atLeastAmountToBePaidis = (40*typo)/100
+        console.log("🚀 ~ ReservationComponent ~ this.http.get ~ atLeastAmountToBePaidis:", this.atLeastAmountToBePaidis)
+        this.billDetailForm.get('amount')?.setValue(this.atLeastAmountToBePaidis)
+      }
+    })
+  }
 
   getByIdData(){
     this.http.get(`http://localhost:3000/api/v1/reservation/${this.data}`).subscribe((result : any) => {
@@ -219,4 +338,13 @@ filteredRooms$: Observable<any[]> = of([]);
       }
     );
   }
+
+  private loadModuleTypeOptions(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
+      this.moduleTypeOptions = result;
+      console.log("🚀 ~ PageComponent ~ loadModuleTypeOptions ~ moduleTypeOptions:", this.moduleTypeOptions);
+    });
+  }
+
+
 }

@@ -16,7 +16,7 @@ export class UserComponent {
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
-      userId: [{ value: '', disabled: true }], 
+      userId: [{ value: ''}], 
       userName: ['', [Validators.required, Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       password: ['', [Validators.required, Validators.maxLength(255)]],

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import moment from 'moment';
 import { RoomInfoComponent } from '../room-info/room-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ReservationComponent } from '../reservation/reservation.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,7 +17,7 @@ export class AdminDashboardComponent {
   monthName!: string;
   calendarDays: any[][] = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private router : Router,private http : HttpClient ) { }
 
   ngOnInit(): void {
     const today = moment();
@@ -62,14 +65,42 @@ export class AdminDashboardComponent {
     return day.fullDate.isSame(moment(), 'day');
   }
 
-  openRoomAvailability(data : any): void {
-    const formattedDate = data.fullDate.format('YYYY-MM-DD');
-    this.dialog.open(RoomInfoComponent, {
-     height: '80%',
-     width: '80%',
-     data : formattedDate,
-     panelClass: 'custom-dialog-container',
-     position: { left: '280px', top: '60px' }
-    });
+  openRoomAvailability(data ?: any,value ?: any): void {
+    console.log("🚀 ~ AdminDashboardComponent ~ openRoomAvailability ~ value:", value)
+    if(data != '' && value !== 'toOpenGuestManagement'){
+      var formattedDate = data.fullDate.format('YYYY-MM-DD');
+    }
+    if(value === 'toOpenCalendar' || value === 'toOpenGuestManagement'){
+      this.dialog.open(RoomInfoComponent, {
+       height: '80%',
+       width: '80%',
+       data : {formattedDate : formattedDate,value : value} ,
+       panelClass: 'custom-dialog-container',
+       position: { left: '280px', top: '60px' }
+      });
+    }
+    if(value === 'toOpenReservation'){
+      this.router.navigate(['admin/reservation'])
+    }
+    if(value === 'toCreateResrvation'){
+      this.router.navigate(['admin/reservation'])
+      this.dialog.open(ReservationComponent, {
+        height: '80%',
+        width: '80%',
+        panelClass: 'custom-dialog-container',
+        position: { left: '280px', top: '60px' }
+       });
+     }
+    }
+
+    schduleingFunction(){
+      this.http.get('http://localhost:3000/api/v1/theSchdueling').subscribe((result : any) => {
+     
+        console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", result)
+      })
+    }
+    getData(){
+     
+    }
   }
-}
+

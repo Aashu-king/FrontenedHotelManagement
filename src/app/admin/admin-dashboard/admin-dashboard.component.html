@@ -21,11 +21,58 @@
       </thead>
       <tbody>
         <tr *ngFor="let week of calendarDays">
-          <td *ngFor="let day of week" [class.active]="isToday(day)" (click)="openRoomAvailability(day)">
+          <td *ngFor="let day of week" [class.active]="isToday(day)" (click)="openRoomAvailability(day,'toOpenCalendar')">
             {{ day.date }}
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <div class="card" (click)="openRoomAvailability('','toOpenReservation')">
+    <div class="card-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">View Reservations</h3>
+      <!-- <p class="card-description">
+        Your operation was completed successfully. You can now proceed with the next step.
+      </p>
+      <button class="card-button">Continue</button> -->
+    </div>
+  </div>
+
+  <div class="card" (click)="openRoomAvailability('','toOpenGuestManagement')">
+    <div class="card-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">View Guest</h3>
+      <!-- <p class="card-description">
+        Your operation was completed successfully. You can now proceed with the next step.
+      </p>
+      <button class="card-button">Continue</button> -->
+    </div>
+  </div>
+
+  <div class="card" (click)="openRoomAvailability('','toCreateResrvation')">
+    <div class="card-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Create Reservation</h3>
+      <!-- <p class="card-description">
+        Your operation was completed successfully. You can now proceed with the next step.
+      </p> -->
+    </div>
+  </div>
+
+  <button class="add-new-page-button" (click)="schduleingFunction()" style=" background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;">Schdule Cleaning</button>
+  
   
