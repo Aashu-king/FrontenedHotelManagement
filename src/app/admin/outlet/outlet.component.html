@@ -47,6 +47,23 @@ align-items: center;">
       <label for="email">Email</label>
       <input id="email" formControlName="email" type="email" />
     </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Hotel</mat-label>
+        <input type="text"
+               placeholder="Pick a Outlet"
+               aria-label="Hotel"
+               matInput
+               formControlName="HotelName"
+               [matAutocomplete]="autoHotel">
+        <mat-autocomplete #autoHotel="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+          <mat-option *ngFor="let Hotel of filteredHotels$ | async" [value]="Hotel.HotelName">
+            {{ Hotel.HotelName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
   
     <div>
       <label for="hotelId">Hotel ID</label>

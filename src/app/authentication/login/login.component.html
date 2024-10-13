@@ -1,4 +1,4 @@
-<div class="customer-page theme-default-margin">
+<!-- <div class="customer-page theme-default-margin">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
@@ -52,5 +52,77 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   
+  <div class="container-fluid p-0">
+    <div class="row m-0">
+      <div class="col-12 p-0">    
+        <div class="login-card login-dark">
+          <div>
+            <!-- <div><a class="logo" href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div> -->
+            <div class="login-main"> 
+              <div *ngIf="!isRecovering; else recoverFormTemplate">
+                <form class="theme-form" [formGroup]="loginForm">
+                  <h4>Sign in to account</h4>
+                  <p>Enter your email & password to login</p>
+                  <div class="form-group">
+                    <label class="col-form-label">Email Address</label>
+                    <input class="form-control" type="email" formControlName="email" id="CustomerEmail" placeholder="Test@gmail.com" autocorrect="off" autocapitalize="off" autofocus>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Password</label>
+                    <div class="form-input position-relative">
+                      <input class="form-control" type="password" formControlName="password" id="CustomerPassword" placeholder="*********">
+                      <div class="show-hide"><span class="show">                         </span></div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="checkbox p-0">
+                      <input id="checkbox1" type="checkbox">
+                      <label class="text-muted" for="checkbox1">Remember password</label>
+                    </div> <a href="javascript:void(0)" (click)="toggleRecoverPassword()" style="color: #37327e;">Forgot your password?</a>
+                    <div class="text-end mt-3">
+                      <button class="btn btn-block w-100" style="background-color: #37327e;color: aliceblue;" type="submit" (click)="onSubmitLogin(this.loginForm.value)">Sign in</button>
+                    </div>
+                  </div>
+                 
+                  <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2" routerLink="/auth/register">Create Account</a></p>
+                </form>
+              </div>
+            
+              <ng-template #recoverFormTemplate>
+                <form [formGroup]="recoverPasswordForm">
+                  <div class="login-form-container">
+                    <div class="login-text">
+                      <h2>Reset your password</h2>
+                      <p>We will send you an email to reset your password.</p>
+                    </div>
+                    <div class="login-form">
+                      <input type="email" formControlName="email" id="RecoverEmail" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off">
+                      <div class="login-toggle-btn">
+                        <div class="form-action-button">
+                          <button type="submit" class="theme-default-button" [disabled]="recoverPasswordForm.invalid" style="background-color: #37327e;color: aliceblue;">Submit</button>
+                          <a href="javascript:void(0)" (click)="toggleRecoverPassword()">Cancel</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="../assets/js/jquery.min.js"></script>
+   
+    <script src="../assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+  
+    <script src="../assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="../assets/js/icons/feather-icon/feather-icon.js"></script>
+   
+    <script src="../assets/js/config.js"></script>
+   
+    <script src="../assets/js/script.js"></script>
+  </div>

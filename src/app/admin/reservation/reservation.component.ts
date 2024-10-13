@@ -29,6 +29,12 @@ export class ReservationComponent {
 OutletTypeOptions: any[] = [];  
 outlets: any[] = [];
  filteredOutlets$: Observable<any[]> = of([]);
+ GuestOptions: any[] = [];  
+Guests: any[] = [];
+ filteredGuests$: Observable<any[]> = of([]);
+Rooms: any[] = [];
+RoomOptions: any[] = [];  
+filteredRooms$: Observable<any[]> = of([]);
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<ReservationComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any,private router: Router) {}
 
   ngOnInit(): void {
@@ -44,7 +50,8 @@ outlets: any[] = [];
       totalAmount: [0, [Validators.required, Validators.min(0)]],
       specialRequests: [''],
       outletid: ['', Validators.required],
-      OutletName: ['']
+      OutletName: [''],
+      GuestName: ['']
     });
 
     this.pageurl =  this.router.url.split('/')[2]
@@ -60,13 +67,31 @@ outlets: any[] = [];
       this.getByIdData()
     }
     this.loadOutlets();
+    this.loadGuests();
+    this.loadRooms();
     this.setupOutletAutoComplete();
+    this.setupGuestAutoComplete();
+    this.setupRoomAutoComplete();
   }
 
   private loadOutlets(): void {
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
       console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+    });
+  }
+
+  private loadGuests(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-guests').subscribe((result: any) => {
+      this.guests  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ GuestOptions:", this.GuestOptions);
+    });
+  }
+
+  private loadRooms(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-rooms').subscribe((result: any) => {
+      this.Rooms  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ RoomOptions:", this.RoomOptions);
     });
   }
 
@@ -77,6 +102,20 @@ outlets: any[] = [];
     );
   }
 
+  private setupGuestAutoComplete(): void {
+    this.filteredGuests$ = this.reservationForm.get('GuestName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterGuests(value || ''))
+    );
+  }
+
+  private setupRoomAutoComplete(): void {
+    this.filteredRooms$ = this.reservationForm.get('Room')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterRooms(value || ''))
+    );
+  }
+
   private filterOutlets(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.outlets.filter((option: any) => 
@@ -84,13 +123,40 @@ outlets: any[] = [];
     );
   }
 
+  private filterGuests(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.guests.filter((option: any) => 
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private filterRooms(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.Rooms.filter((option: any) => 
+      option.Room.toLowerCase().includes(filterValue)
+    );
+  }
+
   onOptionSelected(event: any): void {
-    const selectedOutlet  = this.outlets.find((type: any) => type.name === event.option.value);
+    const selectedOutlet  = this.outlets.find((type: any) => type.OutletName === event.option.value);
     if (selectedOutlet ) {
-      this.reservationForm.get('outletid')?.setValue(selectedOutlet .outletid);
+      this.reservationForm.get('outletid')?.setValue(selectedOutlet.outletid);
     }
   }
 
+  onOptionSelectedGuest(event: any): void {
+    const selectedGuest  = this.guests.find((type: any) => type.GuestName === event.option.value);
+    if (selectedGuest ) {
+      this.reservationForm.get('guestId')?.setValue(selectedGuest.guestId);
+    }
+  }
+
+  onOptionSelectedRoom(event: any): void {
+    const selectedRoom  = this.Rooms.find((type: any) => type.room === event.option.value);
+    if (selectedRoom ) {
+      this.reservationForm.get('roomId')?.setValue(selectedRoom.roomId);
+    }
+  }
 
   onSubmit() {
     if(!this.data){
@@ -123,9 +189,19 @@ outlets: any[] = [];
       if(this.dataArray){
         // this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
         this.reservationForm.get('outletid')?.setValue(this.dataArray.name)
+        this.reservationForm.get('guestId')?.setValue(this.dataArray.GuestName)
+        this.reservationForm.get('roomId')?.setValue(this.dataArray.Room)
         const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
+        const selectedGuest = this.guests.find(Guest => Guest.guestId === this.dataArray.guestId);
+        const selectedRoom = this.Rooms.find(Room => Room.roomId === this.dataArray.roomId);
     if (selectedOutlet) {
       this.reservationForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
+    if (selectedGuest) {
+      this.reservationForm.get('GuestName')?.setValue(selectedGuest.firstName);
+    }
+    if (selectedRoom) {
+      this.reservationForm.get('Room')?.setValue(selectedRoom.Room);
     }
       }
 

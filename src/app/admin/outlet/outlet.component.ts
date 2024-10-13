@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-outlet',
@@ -15,6 +16,9 @@ export class OutletComponent {
   permissionArray : any 
   pageurl : any;
   dataArray : any
+  HotelTypeOptions: any[] = [];  
+  Hotels: any[] = [];
+  filteredHotels$: Observable<any[]> = of([]);
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OutletComponent>, private http: HttpClient, private router: Router,@Inject(MAT_DIALOG_DATA) public data: any,) {}
 
   ngOnInit(): void {
@@ -27,8 +31,12 @@ export class OutletComponent {
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]], 
       phoneNumber: ['', [Validators.pattern('[0-9]{10,20}')]], 
       email: ['', [Validators.email]], 
-      hotelId: [''] 
+      hotelId: [''],
+      HotelName: ['']
     });
+
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
     if(this.data){
       console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
       this.getByIdData();
@@ -43,11 +51,45 @@ export class OutletComponent {
     })
   }
 
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-hotels').subscribe((result: any) => {
+      this.Hotels  = result;
+      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.HotelTypeOptions);
+    });
+  }
+
+  private setupOutletAutoComplete(): void {
+    this.filteredHotels$ = this.outletForm.get('HotelName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.Hotels.filter((option: any) => 
+      option.HotelName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedOutlet  = this.Hotels.find((type: any) => type.HotelName === event.option.value);
+    if (selectedOutlet ) {
+      this.outletForm.get('hotelid')?.setValue(selectedOutlet.hotelid);
+    }
+  }
+
   getByIdData(){
     this.http.get(`http://localhost:3000/api/v1/outlet/${this.data}`).subscribe((result : any) => {
       this.dataArray = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
-   
+      if(this.dataArray){
+        this.outletForm.get('hotelid')?.setValue(this.dataArray.HotelName)
+        const selectedOutlet = this.Hotels.find(Hotel => Hotel.hotelid === this.dataArray.hotelid);
+    if (selectedOutlet) {
+      this.outletForm.get('HotelName')?.setValue(selectedOutlet.HotelName);
+    }
+      }
 
     })
   }
