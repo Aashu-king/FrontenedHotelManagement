@@ -47,7 +47,13 @@ outlets: any[] = [];
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
       console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+
+      if (this.dataArray) {
+        this.setOutlet(this.dataArray.outletid);
+      }
     });
+
+    
   }
 
   private setupOutletAutoComplete(): void {
@@ -98,21 +104,44 @@ outlets: any[] = [];
       this.dataArray = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
       if(this.dataArray){
-        // this.roomRateForm.get('pageName')?.setValue(this.dataArray.pageName)
-        // this.roomRateForm.get('pageUrl')?.setValue(this.dataArray.pageUrl)
+
+        const formattedStartDate = this.formatDate(this.dataArray.startDate);
+      const formattedEndDate = this.formatDate(this.dataArray.endDate);
+      
+        this.roomRateForm.get('roomTypeId')?.setValue(this.dataArray.roomTypeId)
+        this.roomRateForm.get('startDate')?.setValue(formattedStartDate)
+        this.roomRateForm.get('endDate')?.setValue(formattedEndDate)
+        this.roomRateForm.get('ratePerNight')?.setValue(this.dataArray.ratePerNight)
+
         // const selectedModule = this.moduleTypeOptions.find(module => module.moduleId === this.dataArray.moduleId);
         // if (selectedModule) {
         //   this.roomRateForm.get('moduleId')!.setValue(selectedModule.moduleId);
         //   this.roomRateForm.get('moduleName')!.setValue(selectedModule.moduleName);
         // }
-        this.roomRateForm.get('outletid')?.setValue(this.dataArray.name)
-        const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
-    if (selectedOutlet) {
-      this.roomRateForm.get('OutletName')?.setValue(selectedOutlet.name);
-    }
+        if (this.outlets.length > 0) {
+          this.setOutlet(this.dataArray.outletid);
+        } else {
+          // If outlets are not loaded yet, subscribe to the loadOutlets method
+          this.loadOutlets();
+          this.filteredOutlets$.subscribe(() => {
+            this.setOutlet(this.dataArray.outletid);
+          });
+        }
       }
 
     })
+  }
+
+  setOutlet(outletid: number) {
+    // Find the outlet with the corresponding outletid and set the OutletName
+    const selectedOutlet = this.outlets.find(outlet => outlet.outletid === outletid);
+    if (selectedOutlet) {
+      this.roomRateForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
+  }
+
+  private formatDate(date: string): string {
+    return new Date(date).toISOString().split('T')[0]; // Extracts "yyyy-MM-dd"
   }
 
   onDelete(){

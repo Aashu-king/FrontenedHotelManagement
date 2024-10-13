@@ -104,6 +104,7 @@ outlets: any[] = [];
         this.outlets = response
       }
     );
+
   }
 
   getById(){
@@ -115,19 +116,30 @@ outlets: any[] = [];
           this.roomTypeForm.get('description')?.setValue(response.description)
           this.roomTypeForm.get('baseRate')?.setValue(response.baseRate)
           this.roomTypeForm.get('maxOccupancy')?.setValue(response.maxOccupancy)
-          const filteredData = this.outlets.find((ele : any) => ele.outletid == response.outletid)
-          this.roomTypeForm.get('outletid')?.setValue(filteredData.outletid)
           this.roomTypeForm.get('amenities')?.setValue(response.amenities[0])
-          this.roomTypeForm.get('outletid')?.setValue(this.dataArray.name)
-          const selectedOutlet = this.outlets.find(outlet => outlet.outletid === response.outletid);
-      if (selectedOutlet) {
-        this.roomTypeForm.get('OutletName')?.setValue(selectedOutlet.name);
-      }
+          if (this.outlets.length > 0) {
+            this.setOutlet(response.outletid);
+          } else {
+            // If outlets are not loaded yet, subscribe to the loadOutlets method
+            this.loadOutlets();
+            this.filteredOutlets$.subscribe(() => {
+              this.setOutlet(response.outletid);
+            });
+          }
+        
         }
       }
     );
   }
 
+  setOutlet(outletid: number) {
+    // Find the outlet with the corresponding outletid and set the OutletName
+    const selectedOutlet = this.outlets.find(outlet => outlet.outletid === outletid);
+    if (selectedOutlet) {
+      this.roomTypeForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
+  }
+  
   onDelete(){
     this.http.delete(`http://localhost:3000/api/v1//room-type/${this.data}`).subscribe(
       (response: any) => {

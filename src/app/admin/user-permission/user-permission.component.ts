@@ -41,13 +41,19 @@ export class UserPermissionComponent {
   }
 
   private loadModuleTypeOptions(): void {
+    // Fetch user options
     this.http.get('http://localhost:3000/api/v1/dropdown-users').subscribe((result: any) => {
       this.UserOptions = result;
-      console.log("🚀 ~ UserOptions ~ this.httpClient.get ~ UserOptions:", this.UserOptions);
+      console.log("🚀 ~ UserOptions:", this.UserOptions);
+  
+      // After loading user options, get the data by ID and set the form
+      this.getByIdData();  // Call this AFTER options are loaded
     });
+  
+    // Fetch page options
     this.http.get('http://localhost:3000/api/v1/dropdown-pages').subscribe((result: any) => {
       this.PageOptions = result;
-      console.log("🚀 ~ PageOptions ~ this.httpClient.get ~ PageOptions:", this.PageOptions);
+      console.log("🚀 ~ PageOptions:", this.PageOptions);
     });
   }
 
@@ -145,16 +151,21 @@ export class UserPermissionComponent {
       this.userPermissionForm.get('canView')?.setValue(this.dataArray.canView);
       this.userPermissionForm.get('canEdit')?.setValue(this.dataArray.canEdit);
       this.userPermissionForm.get('canDelete')?.setValue(this.dataArray.canDelete);
-      this.userPermissionForm.get('userId')?.setValue(this.dataArray.userName)
-      this.userPermissionForm.get('pageId')?.setValue(this.dataArray.pageName)
-      const selectedUserType = this.UserOptions.find((type: any) => type.userId === this.dataArray.userId);
-      if (selectedUserType) {
-        this.userPermissionForm.get('userId')?.setValue(selectedUserType.userId);
-      }
-      const selectedPageType = this.PageOptions.find((type: any) => type.pageId === this.dataArray.pageId);
-      if (selectedPageType) {
-        this.userPermissionForm.get('pageId')?.setValue(selectedPageType.pageId);
-      }
+     // Find and set the userName based on userId
+     const selectedUserType = this.UserOptions.find((type: any) => type.userId === this.dataArray.userId);
+     if (selectedUserType) {
+       this.userPermissionForm.get('userName')?.setValue(selectedUserType.userName);
+       // Set the filtered list to include the selected user
+       this.filteredUserTypes$ = of([selectedUserType]);
+     }
+
+     // Find and set the pageName based on pageId
+     const selectedPageType = this.PageOptions.find((type: any) => type.pageId === this.dataArray.pageId);
+     if (selectedPageType) {
+       this.userPermissionForm.get('pageName')?.setValue(selectedPageType.pageName);
+       // Set the filtered list to include the selected page
+       this.filteredPageTypes$ = of([selectedPageType]);
+     }
     }
   });
   }

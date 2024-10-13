@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -33,7 +33,7 @@ export class HotelComponent {
       isActive: [true],
       website: ['', Validators.maxLength(100)],
     });
-    if(this.data){
+    if(this.data && this.data.hotelid){
       console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
       this.getByIdData();
     }
@@ -48,10 +48,26 @@ export class HotelComponent {
   }
 
   getByIdData(){
-    this.http.get(`http://localhost:3000/api/v1/hotel/${this.data}`).subscribe((result : any) => {
-      this.dataArray = result.data
+    const params = new HttpParams()
+    .set('hotelid', this.data.hotelid)
+    this.http.get(`http://localhost:3000/api/v1/get-hotel`,{params}).subscribe((result : any) => {
+      this.dataArray = result
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
    
+      if(this.dataArray){
+
+        this.hotelForm.get('name')?.setValue(this.dataArray.name)
+        this.hotelForm.get('address')?.setValue(this.dataArray.address)
+        this.hotelForm.get('city')?.setValue(this.dataArray.city)
+        this.hotelForm.get('state')?.setValue(this.dataArray.state)
+        this.hotelForm.get('zipCode')?.setValue(this.dataArray.zipCode)
+        this.hotelForm.get('phoneNumber')?.setValue(this.dataArray.phoneNumber)
+        this.hotelForm.get('email')?.setValue(this.dataArray.email)
+        this.hotelForm.get('rating')?.setValue(this.dataArray.rating)
+        this.hotelForm.get('totalRooms')?.setValue(this.dataArray.totalRooms)
+        this.hotelForm.get('isActive')?.setValue(this.dataArray.isActive)
+        this.hotelForm.get('website')?.setValue(this.dataArray.website)
+      }
 
     })
   }
