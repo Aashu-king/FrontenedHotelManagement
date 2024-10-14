@@ -54,7 +54,7 @@
   </div>
    -->
 
-   <div class="container">
+   <!-- <div class="container">
     <h2>Create New Order</h2>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -85,7 +85,7 @@
       <div class="form-group" *ngIf="this.isEdit && this.data.isBillsettled">
         <label for="orderStatus">Order Status:</label>
         <select formControlName="order_status" class="form-control">
-          <!-- <option value="Pending">Pending</option> -->
+        
           <option value="In Progress">In Progress</option>
           <option value="Delivered">Delivered</option>
           <option value="Completed">Completed</option>
@@ -146,4 +146,111 @@
       <button *ngIf="!this.data" type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Submit Order</button>
 
       </form>
+  </div> -->
+
+  <div class="container">
+    <div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+      <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close()">
+        <i class="fa fa-close"></i> Cancel
+      </button>
+      <!-- <button  type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+        <i class="fa fa-save"></i> {{ this.data ? 'Update' : 'Save' }}
+      </button> -->
+      <button *ngIf="this.data" type="button" style="margin-right: 10px;" >
+        <i class="fa fa-trash"></i> Delete
+      </button>
+    </div>
+  
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="guest">Guest:</label>
+        <select formControlName="guestId" class="form-control">
+          <option *ngFor="let guest of guests" [value]="guest.guestId">
+            {{ guest.firstName }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="outlet">Outlet:</label>
+        <select formControlName="outletid" class="form-control">
+          <option *ngFor="let outlet of outlets" [value]="outlet.outletid">
+            {{ outlet.name }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="isRoomService">Is Room Service:</label>
+        <input type="checkbox" formControlName="is_room_service" class="form-check-input">
+      </div>
+  
+      <div *ngIf="!isEdit || (isEdit && !data.isBillsettled)" class="form-group">
+        <label for="orderStatus">Order Status:</label>
+        <select formControlName="order_status" class="form-control">
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+  
+      <div *ngIf="isEdit && data?.isBillsettled" class="form-group">
+        <label for="orderStatus">Order Status:</label>
+        <select formControlName="order_status" class="form-control">
+          <option value="In Progress">In Progress</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+  
+      <div style="    display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      width: 100%;">
+        <h3>Order Items</h3>
+        <button type="button" (click)="addOrderItem()">+ Add Item</button>
+      </div>
+    
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Menu Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="orderItems">
+          <tr *ngFor="let item of orderItems.controls; let i = index" [formGroupName]="i">
+            <td style="width: 500px;">
+              <select formControlName="menu_item_id" class="form-control" (change)="updatePrice(i)">
+                <option *ngFor="let menuItem of menuItems" [value]="menuItem.menu_item_id">
+                  {{ menuItem.item_name }} - ${{ menuItem.price }}
+                </option>
+              </select>
+            </td>
+            <td style="width: 200px;">
+              <input type="number" formControlName="quantity" class="form-control" min="1" (change)="updatePrice(i)">
+            </td>
+            <td style="width: 200px;">
+              <input type="number" formControlName="price" class="form-control" readonly>
+            </td>
+            <td style="width: 70px;">
+              <button type="button" class="btn btn-outline-primary" (click)="removeOrderItem(i)">- Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+     
+      
+      <div class="form-group">
+        <label>Total Amount:</label>
+        <input type="number" formControlName="total_amount" class="form-control" readonly>
+      </div>
+  
+      <div  *ngIf="data && !data.isBillsettled">Make Payment First</div>
+  
+      <button type="submit"  [disabled]="!orderForm.valid" *ngIf="!data || data.isBillsettled">Submit Order</button>
+    </form>
   </div>
+  

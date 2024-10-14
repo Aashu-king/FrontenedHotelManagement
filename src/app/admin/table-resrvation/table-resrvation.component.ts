@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, Observable, of, startWith } from 'rxjs';
 @Component({
   selector: 'app-table-resrvation',
   templateUrl: './table-resrvation.component.html',
@@ -12,6 +13,11 @@ export class TableResrvationComponent {
 
   reservationForm: FormGroup;
   isEditMode: boolean = false;
+  SaveUpdateEvent: boolean = false;
+  dataArray : any
+Guestoptions: any[] = [];  
+Guests: any[] = [];
+filteredGuest$: Observable<any[]> = of([]);
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +32,7 @@ export class TableResrvationComponent {
       reservation_start: ['', Validators.required],
       reservation_end: ['', Validators.required],
       status: ['Confirmed', Validators.required],
+      GuestName: ['']
     });
   }
 
@@ -33,6 +40,40 @@ export class TableResrvationComponent {
     if (this.data) {
       this.isEditMode = true;
       this.getTableData(this.data.reservationId);
+    }
+    
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
+  }
+
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-guests').subscribe((result: any) => {
+      this.Guests = result;  // Update the correct array
+      console.log("Guests data loaded:", this.Guests);
+    });
+  }
+  
+
+  private setupOutletAutoComplete(): void {
+    this.filteredGuest$ = this.reservationForm.get('GuestName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.Guests.filter(guest => 
+      (`${guest.firstName} ${guest.lastName}`).toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedGuest = this.Guests.find(guest => 
+      `${guest.firstName} ${guest.lastName}` === event.option.value
+    );
+    if (selectedGuest) {
+      this.reservationForm.get('guestId')?.setValue(selectedGuest.guestId);
     }
   }
 

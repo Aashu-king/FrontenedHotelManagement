@@ -1,4 +1,4 @@
-<div class="payment-form-container">
+<!-- <div class="payment-form-container">
   <h2>{{ isEditMode ? 'Update Payment' : 'Create Payment' }}</h2>
   <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
@@ -38,4 +38,75 @@
 
     <button mat-raised-button color="primary" type="submit">Submit</button>
   </form>
+</div> -->
+
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+    <i class="fa fa-save"></i> {{ isEditMode ? 'Update' : 'Create' }} Payment
+  </button>
+  <button type="button" *ngIf="isEditMode" style="margin-right: 10px;">
+    <i class="fa fa-trash"></i> Delete
+  </button>
 </div>
+
+<form [formGroup]="paymentForm">
+
+  <!-- <div>
+    <label for="guestId">Guest ID</label>
+    <input id="guestId" formControlName="guestId" type="text" />
+  </div> -->
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Guest</mat-label>
+      <input type="text"
+             placeholder="Pick a Guest"
+             aria-label="Guest"
+             matInput
+             formControlName="GuestName"
+             [matAutocomplete]="autoGuest">
+      <mat-autocomplete #autoGuest="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let guest of filteredGuest$ | async" [value]="guest.firstName + ' ' + guest.lastName">
+          {{ guest.firstName }} {{ guest.lastName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  
+
+  <div>
+    <label for="orderId">Order ID</label>
+    <input id="orderId" formControlName="order_id" type="text" />
+  </div>
+
+  <div>
+    <label for="paymentDate">Payment Date</label>
+    <input id="paymentDate" formControlName="payment_date" type="date" />
+  </div>
+
+  <div>
+    <label for="paymentMethod">Payment Method</label>
+    <select id="paymentMethod" formControlName="payment_method">
+      <option value="Cash">Cash</option>
+      <option value="Card">Card</option>
+      <option value="Room Bill">Room Bill</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="amount">Amount</label>
+    <input id="amount" formControlName="amount" type="number" />
+  </div>
+
+  <div>
+    <label for="isSettled">Is Settled</label>
+    <input id="isSettled" type="checkbox" formControlName="is_settled" />
+  </div>
+
+  <div>
+    <!-- <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Update' : 'Create' }} Payment</button> -->
+  </div>
+</form>

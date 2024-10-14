@@ -8,18 +8,36 @@
   </div>
   
   <form [formGroup]="billForm">
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="billId">Bill ID</label>
       <input id="billId" formControlName="billId" type="number" [disabled]="true" />
-    </div>
+    </div> -->
   
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="guestId">Guest ID</label>
       <input id="guestId" formControlName="guestId" type="number" />
       <div *ngIf="billForm.get('guestId')?.invalid && billForm.get('guestId')?.touched" class="error">
         Guest ID is required.
       </div>
-    </div>
+    </div> -->
+
+    
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Guest</mat-label>
+      <input type="text"
+             placeholder="Pick a Guest"
+             aria-label="Guest"
+             matInput
+             formControlName="GuestName"
+             [matAutocomplete]="autoGuest">
+      <mat-autocomplete #autoGuest="matAutocomplete" (optionSelected)="onOptionSelectedGuest($event)">
+        <mat-option *ngFor="let guest of filteredGuest$ | async" [value]="guest.firstName + ' ' + guest.lastName">
+          {{ guest.firstName }} {{ guest.lastName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
   
     <div class="form-group">
       <label for="totalAmount">Total Amount</label>
@@ -60,29 +78,29 @@
       </div>
     </div>
   
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="outletid">Outlet ID</label>
       <input id="outletid" formControlName="outletid" type="number" />
       <div *ngIf="billForm.get('outletid')?.invalid && billForm.get('outletid')?.touched" class="error">
         Outlet ID is required.
       </div>
-    </div>
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Module ID</mat-label>
-        <input type="text"
-               placeholder="Select Module"
-               aria-label="Module ID"
-               matInput
-               formControlName="moduleName" 
-               [matAutocomplete]="auto"
-               > 
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onModuleSelected($event)">
-          <mat-option *ngFor="let moduleType of filteredModuleTypes | async" [value]="moduleType.moduleName">
-            {{ moduleType.moduleName }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
+    </div> -->
+    
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Outlet</mat-label>
+      <input type="text"
+             placeholder="Pick a Outlet"
+             aria-label="Outlet"
+             matInput
+             formControlName="OutletName"
+             [matAutocomplete]="autoOutlet">
+      <mat-autocomplete #autoOutlet="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let outlet of filteredOutlets$ | async" [value]="outlet.name">
+          {{ outlet.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
   </form>
   

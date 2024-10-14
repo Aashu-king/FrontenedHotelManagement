@@ -170,6 +170,10 @@ filteredRooms$: Observable<any[]> = of([]);
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
       console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+      
+      if (this.dataArray) {
+        this.setOutlet(this.dataArray.outletid);
+      }
     });
   }
 
@@ -307,15 +311,19 @@ filteredRooms$: Observable<any[]> = of([]);
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
       if(this.dataArray){
         // this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
-        this.reservationForm.get('outletid')?.setValue(this.dataArray.name)
         this.reservationForm.get('guestId')?.setValue(this.dataArray.GuestName)
         this.reservationForm.get('roomId')?.setValue(this.dataArray.Room)
-        const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
         const selectedGuest = this.guests.find(Guest => Guest.guestId === this.dataArray.guestId);
         const selectedRoom = this.Rooms.find(Room => Room.roomId === this.dataArray.roomId);
-    if (selectedOutlet) {
-      this.reservationForm.get('OutletName')?.setValue(selectedOutlet.name);
-    }
+        if (this.outlets.length > 0) {
+          this.setOutlet(this.dataArray.outletid);
+        } else {
+          // If outlets are not loaded yet, subscribe to the loadOutlets method
+          this.loadOutlets();
+          this.filteredOutlets$.subscribe(() => {
+            this.setOutlet(this.dataArray.outletid);
+          });
+        }
     if (selectedGuest) {
       this.reservationForm.get('GuestName')?.setValue(selectedGuest.firstName);
     }
@@ -325,6 +333,14 @@ filteredRooms$: Observable<any[]> = of([]);
       }
 
     })
+  }
+
+  setOutlet(outletid: number) {
+    // Find the outlet with the corresponding outletid and set the OutletName
+    const selectedOutlet = this.outlets.find(outlet => outlet.outletid === outletid);
+    if (selectedOutlet) {
+      this.reservationForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
   }
 
   onDelete(){
