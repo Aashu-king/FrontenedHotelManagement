@@ -39,12 +39,25 @@ export class UserComponent {
   }
 
   getByIdData(){
+    console.log('yoo');
     this.http.get(`http://localhost:3000/api/v1/user/${this.data}`).subscribe((result : any) => {
       this.dataArray = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
-   
+      if(this.dataArray){
+
+        const formattedStartDate = this.formatDate(this.dataArray.startDate);
+      
+        this.userForm.get('roomTypeId')?.setValue(this.dataArray.roomTypeId)
+        this.userForm.get('startDate')?.setValue(formattedStartDate)
+        this.userForm.get('ratePerNight')?.setValue(this.dataArray.ratePerNight)
+
+      }
 
     })
+  }
+
+  private formatDate(date: string): string {
+    return new Date(date).toISOString().split('T')[0]; // Extracts "yyyy-MM-dd"
   }
 
   onSubmit() {

@@ -60,6 +60,10 @@ export class GuestComponent {
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
       console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+      
+      if (this.dataArray) {
+        this.setOutlet(this.dataArray.outletid);
+      }
     });
   }
 
@@ -89,15 +93,41 @@ export class GuestComponent {
       this.dataArray = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.dataArray)
       if(this.dataArray){
-        this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
-        this.guestForm.get('outletid')?.setValue(this.dataArray.name)
-        const selectedOutlet = this.outlets.find(outlet => outlet.outletid === this.dataArray.outletid);
-    if (selectedOutlet) {
-      this.guestForm.get('OutletName')?.setValue(selectedOutlet.name);
-    }
+        const formattedStartDate = this.formatDate(this.dataArray.dateOfBirth);
+
+        this.guestForm.get('firstName')?.setValue(this.dataArray.firstName)
+        this.guestForm.get('lastName')?.setValue(this.dataArray.lastName)
+        this.guestForm.get('email')?.setValue(this.dataArray.email)
+        this.guestForm.get('phone')?.setValue(this.dataArray.phone)
+        this.guestForm.get('address')?.setValue(this.dataArray.address)
+        this.guestForm.get('identificationType')?.setValue(this.dataArray.identificationType)
+        this.guestForm.get('identificationNumber')?.setValue(this.dataArray.identificationNumber)
+        this.guestForm.get('dateOfBirth')?.setValue(formattedStartDate)
+
+        if (this.outlets.length > 0) {
+          this.setOutlet(this.dataArray.outletid);
+        } else {
+          // If outlets are not loaded yet, subscribe to the loadOutlets method
+          this.loadOutlets();
+          this.filteredOutlets$.subscribe(() => {
+            this.setOutlet(this.dataArray.outletid);
+          });
+        }
       }
 
     })
+  }
+
+  setOutlet(outletid: number) {
+    // Find the outlet with the corresponding outletid and set the OutletName
+    const selectedOutlet = this.outlets.find(outlet => outlet.outletid === outletid);
+    if (selectedOutlet) {
+      this.guestForm.get('OutletName')?.setValue(selectedOutlet.name);
+    }
+  }
+
+  private formatDate(date: string): string {
+    return new Date(date).toISOString().split('T')[0]; // Extracts "yyyy-MM-dd"
   }
 
   onSubmit() {

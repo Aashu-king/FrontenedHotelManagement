@@ -14,11 +14,28 @@ align-items: center;">
 
 <form [formGroup]="reservationForm">
 
-  <div>
+  <!-- <div>
     <label for="guestId">Guest</label>
     <select id="guestId" formControlName="guestId">
       <option *ngFor="let guest of guests" [value]="guest.guestId">{{ guest.firstName }} {{ guest.lastName }}</option>
     </select>
+  </div> -->
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Guest</mat-label>
+      <input type="text"
+             placeholder="Pick a Guest"
+             aria-label="Guest"
+             matInput
+             formControlName="GuestName"
+             [matAutocomplete]="autoGuest">
+      <mat-autocomplete #autoGuest="matAutocomplete" (optionSelected)="onOptionSelectedGuest($event)">
+        <mat-option *ngFor="let Guest of filteredGuests$ | async" [value]="Guest.GuestName">
+          {{ Guest.GuestName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
   <div>
