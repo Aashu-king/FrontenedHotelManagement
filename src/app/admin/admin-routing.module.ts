@@ -30,6 +30,13 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BillDetailComponent } from './bill-detail/bill-detail.component';
 import { BillDetailListComponent } from './bill-detail/bill-detail-list/bill-detail-list.component';
+import { TablesListComponent } from './table/tables-list/tables-list.component';
+import { TablesResvationListComponent } from './table-resrvation/tables-resvation-list/tables-resvation-list.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderItemListComponent } from './order-items/order-item-list/order-item-list.component';
+import { PaymentsListComponent } from './payments/payments-list/payments-list.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
 
 const routes: Routes = [
   {
@@ -119,6 +126,28 @@ const routes: Routes = [
       {
         path : 'bill-details',
         component : BillDetailListComponent
+      },
+      {
+        path : 'table',
+        component : TablesListComponent
+      },
+      {path : 'tablereservation',
+        component : TablesResvationListComponent
+      },
+      {path : 'orders',
+        component : OrderListComponent
+      },
+      {
+        path : 'orderitems',
+        component : OrderItemListComponent
+      },
+      {
+        path : 'payments',
+        component : PaymentsListComponent
+      },
+      {
+        path : 'menu',
+        component : MenuListComponent
       }
     ]
   }

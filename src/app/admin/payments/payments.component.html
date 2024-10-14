@@ -1,0 +1,41 @@
+<div class="payment-form-container">
+  <h2>{{ isEditMode ? 'Update Payment' : 'Create Payment' }}</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Guest ID</mat-label>
+      <input matInput formControlName="guestId">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Order ID</mat-label>
+      <input matInput formControlName="order_id">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Payment Date</mat-label>
+      <input matInput formControlName="payment_date" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Payment Method</mat-label>
+      <mat-select formControlName="payment_method">
+        <mat-option value="Cash">Cash</mat-option>
+        <mat-option value="Card">Card</mat-option>
+        <mat-option value="Room Bill">Room Bill</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input matInput formControlName="amount" type="number">
+    </mat-form-field>
+
+    <div class="checkbox-field">
+      <mat-checkbox formControlName="is_settled">Is Settled</mat-checkbox>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

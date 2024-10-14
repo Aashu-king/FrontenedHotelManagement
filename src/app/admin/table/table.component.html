@@ -1,0 +1,58 @@
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+    <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="closeDialog()">
+      <i class="fa fa-close"></i> Cancel
+    </button>
+    <button type="submit" style="margin-right: 10px;" (click)="saveTable()" [disabled]="tableForm.invalid">
+      <i class="fa fa-save"></i> {{ data ? 'Update' : 'Save' }}
+    </button>
+    <!-- <button *ngIf="data.tableId" type="button" style="margin-right: 10px;" (click)="onDeleteTable()">
+      <i class="fa fa-trash"></i> Delete
+    </button> -->
+  </div>
+  
+  <form [formGroup]="tableForm">
+    <div class="form-group">
+      <label for="tableNumber">Table Number</label>
+      <input 
+        type="text" 
+        id="tableNumber" 
+        placeholder="Enter Table Number" 
+        formControlName="table_number" 
+        required 
+        class="form-control"
+      />
+      <div *ngIf="tableForm.get('table_number')?.invalid && tableForm.get('table_number')?.touched" class="error">
+        Table Number is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="maxCapacity">Max Capacity</label>
+      <input 
+        type="number" 
+        id="maxCapacity" 
+        placeholder="Enter Max Capacity" 
+        formControlName="max_capacity" 
+        required 
+        class="form-control"
+      />
+      <div *ngIf="tableForm.get('max_capacity')?.invalid && tableForm.get('max_capacity')?.touched" class="error">
+        Max Capacity is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status" required class="form-control">
+        <option value="">Select Status</option>
+        <option value="Available">Available</option>
+        <option value="Reserved">Reserved</option>
+      </select>
+      <div *ngIf="tableForm.get('status')?.invalid && tableForm.get('status')?.touched" class="error">
+        Status is required.
+      </div>
+    </div>
+
+    
+  </form>
+  

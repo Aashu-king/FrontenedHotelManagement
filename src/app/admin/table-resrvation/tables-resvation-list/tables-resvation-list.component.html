@@ -1,0 +1,37 @@
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+    <!-- Add New Reservation Button -->
+    <button class="add-new-page-button" (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+        Add Table Reservation
+    </button>
+  
+    <!-- Table -->
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Guest Name</th>
+                <th>Table ID</th>
+                <th>Reservation Start</th>
+                <th>Reservation End</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.reservation_id)">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.guest?.name }}</td> <!-- Assuming Guest model has a 'name' property -->
+                <td>{{ item.table_id }}</td>
+                <td>{{ item.reservation_start | date: 'short' }}</td>
+                <td>{{ item.reservation_end | date: 'short' }}</td>
+                <td>
+                    <span [class]="getStatusClass(item.status)">
+                        {{ item.status }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <mat-paginator [length]="justTableData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+</div>

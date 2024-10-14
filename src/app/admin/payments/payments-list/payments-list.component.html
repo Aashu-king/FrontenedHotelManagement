@@ -1,0 +1,37 @@
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+    <!-- Add New Payment Button -->
+    <button (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+      Add New Payment
+    </button>
+  
+    <!-- Payments Table -->
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Guest Name</th>
+          <th>Order ID</th>
+          <th>Payment Date</th>
+          <th>Payment Method</th>
+          <th>Amount</th>
+          <th>Is Settled</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of paginatedData; let i = index" (click)="openDialogForUpdate(payment.payment_id)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ payment.guest?.firstName }}</td>
+          <td>{{ payment.order_id }}</td>
+          <td>{{ payment.payment_date | date }}</td>
+          <td>{{ payment.payment_method }}</td>
+          <td>{{ payment.amount | currency }}</td>
+          <td>{{ payment.is_settled ? 'Yes' : 'No' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Paginator -->
+    <mat-paginator [length]="paymentData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+  

@@ -1,0 +1,43 @@
+
+
+  <div class="table-container" style="    display: flex;
+justify-content: flex-end;
+flex-wrap: wrap;">
+    <!-- Add New Page Button -->
+    <button class="add-new-page-button" (click)="openDialog()" style=" background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;">  Add Table</button>
+  
+    <!-- Table -->
+    <table class="styled-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Table Number</th>
+            <th>Max Capacity</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let table of paginatedData; let i = index" (click)="openDialogForUpdate(table.table_id)">
+            <td>{{ i + 1 }}</td>
+            <td>{{ table.table_number }}</td>
+            <td>{{ table.max_capacity }}</td>
+            <td>
+              <span [class]="table.status === 'Available' ? 'status active' : 'status inactive'">
+                {{ table.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <mat-paginator [length]="justTableData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+      </mat-paginator>
+  </div>
+  
+  

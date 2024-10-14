@@ -19,15 +19,15 @@ export class OutletComponent {
 
   ngOnInit(): void {
     this.outletForm = this.fb.group({
-      outletid: [{ value: '', disabled: true }], 
+      outletid: [], 
       name: ['', [Validators.required, Validators.maxLength(100)]],
       address: ['', [Validators.required, Validators.maxLength(255)]],
       city: ['', [Validators.required, Validators.maxLength(100)]],
       state: ['', [Validators.required, Validators.maxLength(100)]],
-      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]], 
+      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]], 
       phoneNumber: ['', [Validators.pattern('[0-9]{10,20}')]], 
       email: ['', [Validators.email]], 
-      hotelId: [''] 
+      hotelId: [] 
     });
     if(this.data){
       console.log("🚀 ~ ModuleComponent ~ ngOnInit ~ this.data:", this.data)
@@ -54,7 +54,10 @@ export class OutletComponent {
 
   onSubmit() {
     if(!this.data) {
+      console.log("🚀 ~ OutletComponent ~ onSubmit ~ this.data:", this.data)
+      console.log("🚀 ~ OutletComponent ~ onSubmit ~ this.outletForm.valid:", this.outletForm.valid)
       if (this.outletForm.valid) {
+        console.log("🚀 ~ OutletComponent ~ onSubmit ~ this.outletForm.valid:", this.outletForm.valid)
         console.log(this.outletForm.value);
         this.http.post('http://localhost:3000/api/v1/outlet', this.outletForm.value).subscribe(
           (response : any) => {

@@ -1,0 +1,32 @@
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+    <!-- Add New Menu Button -->
+    <button class="add-new-page-button" (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+      Add Menu Item
+    </button>
+  
+    <!-- Table -->
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.menu_item_id)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.item_name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <mat-paginator [length]="menuData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+  

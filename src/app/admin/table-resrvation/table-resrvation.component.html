@@ -1,0 +1,39 @@
+<!-- table-reservation.component.html -->
+<div class="table-reservation-container">
+    <h2>{{ isEditMode ? 'Edit Reservation' : 'Add Reservation' }}</h2>
+    
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="guestId">Guest ID:</label>
+        <input id="guestId" formControlName="guestId" type="number" required />
+      </div>
+      
+      <div>
+        <label for="table_id">Table ID:</label>
+        <input id="table_id" formControlName="table_id" type="number" required />
+      </div>
+      
+      <div>
+        <label for="reservation_start">Reservation Start:</label>
+        <input id="reservation_start" formControlName="reservation_start" type="datetime-local" required />
+      </div>
+      
+      <div>
+        <label for="reservation_end">Reservation End:</label>
+        <input id="reservation_end" formControlName="reservation_end" type="datetime-local" required />
+      </div>
+      
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" formControlName="status" required>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+      
+      <button type="submit">{{ isEditMode ? 'Update Reservation' : 'Create Reservation' }}</button>
+      <button type="button" (click)="closeDialog()">Cancel</button>
+    </form>
+  </div>
+  

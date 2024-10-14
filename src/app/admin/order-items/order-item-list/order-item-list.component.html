@@ -1,0 +1,32 @@
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+    <!-- Add New Reservation Button -->
+    <button class="add-new-reservation-button" (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">Add Reservation</button>
+  
+    <!-- Table -->
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Order ID</th>
+          <th>Menu Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.order_item_id)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.order?.order_id }}</td>
+          <td>{{ item.menu?.item_name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Paginator -->
+    <mat-paginator [length]="orderItems.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+  

@@ -1,0 +1,40 @@
+<div class="table-container" style="display: flex; justify-content: flex-end; flex-wrap: wrap;">
+    <!-- Add New Reservation Button -->
+    <button (click)="openDialog()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+      Add New Reservation
+    </button>
+  
+    <!-- Orders Table -->
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Guest Name</th>
+          <th>Outlet</th>
+          <th>Order Date</th>
+          <th>Order Status</th>
+          <th>Total Amount</th>
+          <th>Room Service</th>
+          <th>Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of paginatedData; let i = index" >
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ i + 1 }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.guest?.firstName }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.outlet?.name }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.order_date | date }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.order_status }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.total_amount | currency }}</td>
+          <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.is_room_service ? 'Yes' : 'No' }}</td>
+          <td *ngIf="order.payment[0]?.is_settled">Payment Done</td>
+          <td *ngIf="order.order_status === 'Pending'" (click)="openDialogForPayments(order.order_id,order.guest?.guestId,order.order_date,order.total_amount)">Make Payment</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Paginator -->
+    <mat-paginator [length]="orderData.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+  

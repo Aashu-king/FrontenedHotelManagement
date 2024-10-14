@@ -50,6 +50,25 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
 import { RoomInfoComponent } from './room-info/room-info.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RoleListComponent } from './role/role-list/role-list.component';
+import { TableComponent } from './table/table.component';
+import { TableResrvationComponent } from './table-resrvation/table-resrvation.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderItemsComponent } from './order-items/order-items.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
+import { OrderItemListComponent } from './order-items/order-item-list/order-item-list.component';
+import { PaymentsListComponent } from './payments/payments-list/payments-list.component';
+import { TablesListComponent } from './table/tables-list/tables-list.component';
+import { TablesResvationListComponent } from './table-resrvation/tables-resvation-list/tables-resvation-list.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -93,7 +112,21 @@ import { RoomInfoComponent } from './room-info/room-info.component';
     DashboardComponent,
     AdminDashboardComponent,
     DeveloperDashboardComponent,
-    RoomInfoComponent
+    RoomInfoComponent,
+    RoleComponent,
+    RoleListComponent,
+    TableComponent,
+    TableResrvationComponent,
+    OrdersComponent,
+    OrderItemsComponent,
+    PaymentsComponent,
+    MenuListComponent,
+    MenuComponent,
+    OrderItemListComponent,
+    PaymentsListComponent,
+    TablesListComponent,
+    TablesResvationListComponent,
+    OrderListComponent
   ],
   imports: [
     CommonModule,
@@ -110,6 +143,18 @@ import { RoomInfoComponent } from './room-info/room-info.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatPaginatorModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ]
 })
 export class AdminModule { }

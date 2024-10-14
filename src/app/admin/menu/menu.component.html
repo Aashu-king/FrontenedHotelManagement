@@ -1,0 +1,22 @@
+<h2>{{ data?.menu_item_id ? 'Update Menu Item' : 'Add New Menu Item' }}</h2>
+
+<form [formGroup]="menuForm" (ngSubmit)="saveMenuItem()">
+  <label for="item_name">Item Name:</label>
+  <input id="item_name" formControlName="item_name" />
+
+  <label for="price">Price:</label>
+  <input id="price" type="number" formControlName="price" />
+
+  <label for="category">Category:</label>
+  <select id="category" formControlName="category">
+    <option value="Appetizer">Appetizer</option>
+    <option value="Main Course">Main Course</option>
+    <option value="Dessert">Dessert</option>
+  </select>
+
+  <label for="description">Description:</label>
+  <textarea id="description" formControlName="description"></textarea>
+
+  <button type="submit">Save</button>
+  <button type="button" (click)="closeDialog()">Cancel</button>
+</form>
