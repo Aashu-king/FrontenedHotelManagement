@@ -38,7 +38,6 @@ export class OrdersComponent {
       this.getOrderDetails(this.data.orderId);
       console.log("🚀 ~ OrdersComponent ~ ngOnInit ~ this.data:", this.data)
     }
-      console.log("🚀 ~ OrdersComponent ~ ngOnInit ~ this.data.orderId:", this.data.orderId)
 
     
 

@@ -79,7 +79,9 @@
         <label for="isRoomService">Is Room Service:</label>
         <input type="checkbox" formControlName="is_room_service" class="form-check-input">
       </div>
-      
+      <ng-container 
+      *ngIf="this.data"
+      >
       <div class="form-group" *ngIf="this.isEdit && this.data.isBillsettled">
         <label for="orderStatus">Order Status:</label>
         <select formControlName="order_status" class="form-control">
@@ -96,6 +98,8 @@
           <option value="Pending">Pending</option>
         </select>
       </div>
+    </ng-container>
+     
 
       <div class="form-group" *ngIf="!this.isEdit">
         <label for="orderStatus">Order Status:</label>
@@ -134,7 +138,12 @@
         <input type="number" formControlName="total_amount" class="form-control" readonly>
       </div>
       
-      <button *ngIf="this.data.isBillsettled" type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Submit Order</button>
-      <div *ngIf="!this.data.isBillsettled"> Make Payment First</div>
-    </form>
+      <ng-container *ngIf="this.data">
+        <button *ngIf="this.data.isBillsettled" type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Submit Order</button>
+        <div *ngIf="!this.data.isBillsettled"> Make Payment First</div>  
+      </ng-container>
+
+      <button *ngIf="!this.data" type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Submit Order</button>
+
+      </form>
   </div>
