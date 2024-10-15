@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-payments',
@@ -11,6 +12,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class PaymentsComponent {
   paymentForm: FormGroup;
   isEditMode = false;
+  
+  SaveUpdateEvent: boolean = false;
+  dataArray : any
+Guestoptions: any[] = [];  
+Guests: any[] = [];
+filteredGuest$: Observable<any[]> = of([]);
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +32,7 @@ export class PaymentsComponent {
       payment_method: ['Cash', Validators.required],
       amount: ['', [Validators.required, Validators.min(0)]],
       is_settled: [false, Validators.required],
+      GuestName: ['']
     });
   }
 
@@ -37,11 +45,46 @@ export class PaymentsComponent {
       this.isEditMode = false;
       this.paymentForm.setValue(this.data.obj)
     }
+    
+    this.loadOutlets();
+    this.setupOutletAutoComplete();
+  }
+
+  private loadOutlets(): void {
+    this.http.get('http://localhost:3000/api/v1/dropdown-guests').subscribe((result: any) => {
+      this.Guests = result;  // Update the correct array
+      console.log("Guests data loaded:", this.Guests);
+    });
+  }
+  
+
+  private setupOutletAutoComplete(): void {
+    this.filteredGuest$ = this.paymentForm.get('GuestName')!.valueChanges.pipe( 
+      startWith(''),
+      map(value => this.filterOutlets(value || ''))
+    );
+  }
+
+  private filterOutlets(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.Guests.filter(guest => 
+      (`${guest.firstName} ${guest.lastName}`).toLowerCase().includes(filterValue)
+    );
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedGuest = this.Guests.find(guest => 
+      `${guest.firstName} ${guest.lastName}` === event.option.value
+    );
+    if (selectedGuest) {
+      this.paymentForm.get('guestId')?.setValue(selectedGuest.guestId);
+    }
   }
 
   getPaymentById(paymentId: number) {
     this.http.get(`http://localhost:3000/api/v1/payments/${paymentId}`).subscribe((payment: any) => {
       this.paymentForm.patchValue(payment);
+      
     });
   }
 

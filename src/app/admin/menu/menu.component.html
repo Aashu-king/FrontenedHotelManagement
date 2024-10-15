@@ -1,4 +1,4 @@
-<h2>{{ data?.menu_item_id ? 'Update Menu Item' : 'Add New Menu Item' }}</h2>
+<!-- <h2>{{ data?.menu_item_id ? 'Update Menu Item' : 'Add New Menu Item' }}</h2>
 
 <form [formGroup]="menuForm" (ngSubmit)="saveMenuItem()">
   <label for="item_name">Item Name:</label>
@@ -19,4 +19,49 @@
 
   <button type="submit">Save</button>
   <button type="button" (click)="closeDialog()">Cancel</button>
+</form> -->
+
+<div class="form-header" style="display: flex; justify-content: flex-end; align-items: center;">
+  <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="closeDialog()">
+    <i class="fa fa-close"></i> Cancel
+  </button>
+  <button type="submit" style="margin-right: 10px;" (click)="saveMenuItem()">
+    <i class="fa fa-save"></i> {{ data?.menu_item_id ? 'Update' : 'Save' }} Menu Item
+  </button>
+</div>
+
+<form [formGroup]="menuForm">
+
+  <div>
+    <label for="item_name">Item Name</label>
+    <input id="item_name" formControlName="item_name" type="text" />
+  </div>
+
+  <div>
+    <label for="price">Price</label>
+    <input id="price" type="number" formControlName="price" />
+  </div>
+
+  <div>
+    <label for="category">Category</label>
+    <select id="category" formControlName="category">
+      <option value="Appetizer">Appetizer</option>
+      <option value="Main Course">Main Course</option>
+      <option value="Dessert">Dessert</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description"></textarea>
+  </div>
+
+  <div>
+    <label for="outletid">outletid</label>
+    <input id="outletid" type="number" formControlName="outletid" />
+  </div>
+
+  <!-- <div>
+    <button class="btn btn-primary" type="submit">{{ data?.menu_item_id ? 'Update' : 'Save' }} Menu Item</button>
+  </div> -->
 </form>

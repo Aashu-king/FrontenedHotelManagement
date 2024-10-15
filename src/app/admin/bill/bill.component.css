@@ -63,3 +63,7 @@ form {
     cursor: not-allowed;
   }
   
+  .error {
+    margin: 0px !important;
+    color: #000;
+}

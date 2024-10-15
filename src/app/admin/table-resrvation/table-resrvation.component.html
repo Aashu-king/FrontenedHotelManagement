@@ -1,39 +1,71 @@
 <!-- table-reservation.component.html -->
-<div class="table-reservation-container">
-    <h2>{{ isEditMode ? 'Edit Reservation' : 'Add Reservation' }}</h2>
-    
-    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="guestId">Guest ID:</label>
-        <input id="guestId" formControlName="guestId" type="number" required />
-      </div>
-      
-      <div>
-        <label for="table_id">Table ID:</label>
-        <input id="table_id" formControlName="table_id" type="number" required />
-      </div>
-      
-      <div>
-        <label for="reservation_start">Reservation Start:</label>
-        <input id="reservation_start" formControlName="reservation_start" type="datetime-local" required />
-      </div>
-      
-      <div>
-        <label for="reservation_end">Reservation End:</label>
-        <input id="reservation_end" formControlName="reservation_end" type="datetime-local" required />
-      </div>
-      
-      <div>
-        <label for="status">Status:</label>
-        <select id="status" formControlName="status" required>
-          <option value="Confirmed">Confirmed</option>
-          <option value="Cancelled">Cancelled</option>
-          <option value="Completed">Completed</option>
-        </select>
-      </div>
-      
-      <button type="submit">{{ isEditMode ? 'Update Reservation' : 'Create Reservation' }}</button>
-      <button type="button" (click)="closeDialog()">Cancel</button>
-    </form>
+<div class="container">
+  <div style="display: flex;justify-content: space-between;align-items: center;">
+    <h4>{{ isEditMode ? 'Edit Reservation' : 'Add Reservation' }}</h4>
+    <div class="form-header" style="display: flex;
+  justify-content: flex-end;
+  align-items: center;">
+      <button class="btn btn-outline-primary" style="margin-right: 10px;" (click)="dialogRef.close(SaveUpdateEvent)">
+        <i class="fa fa-close"></i> Cancel
+      </button>
+      <button type="submit" style="margin-right: 10px;" (click)="onSubmit()">
+        <i class="fa fa-save"></i> {{ isEditMode ? 'Update Reservation' : 'Create Reservation' }}
+      </button>
+      <button type="submit" *ngIf="this.data" style="margin-right: 10px;">
+        <i class="fa fa-save"></i> Delete
+      </button>
+    </div>
   </div>
-  
+ 
+
+  <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+    <!-- <div>
+      <label for="guestId">Guest ID:</label>
+      <input id="guestId" formControlName="guestId" type="number" required />
+    </div> -->
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Guest</mat-label>
+        <input type="text"
+               placeholder="Pick a Guest"
+               aria-label="Guest"
+               matInput
+               formControlName="GuestName"
+               [matAutocomplete]="autoGuest">
+        <mat-autocomplete #autoGuest="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+          <mat-option *ngFor="let guest of filteredGuest$ | async" [value]="guest.firstName + ' ' + guest.lastName">
+            {{ guest.firstName }} {{ guest.lastName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <label for="table_id">Table ID:</label>
+      <input id="table_id" formControlName="table_id" type="number" required />
+    </div>
+
+    <div>
+      <label for="reservation_start">Reservation Start:</label>
+      <input id="reservation_start" formControlName="reservation_start" type="datetime-local" required />
+    </div>
+
+    <div>
+      <label for="reservation_end">Reservation End:</label>
+      <input id="reservation_end" formControlName="reservation_end" type="datetime-local" required />
+    </div>
+
+    <div>
+      <label for="status">Status:</label>
+      <select id="status" formControlName="status" required>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+<!-- 
+    <button type="submit">{{ isEditMode ? 'Update Reservation' : 'Create Reservation' }}</button>
+    <button type="button" (click)="closeDialog()">Cancel</button> -->
+  </form>
+</div>

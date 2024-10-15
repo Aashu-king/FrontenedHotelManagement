@@ -15,18 +15,20 @@ flex-wrap: wrap;">
       <thead>
         <tr>
           <th>#</th>
-          <th>Address</th>
+          <th>Name</th>
           <th>Email</th>
-          <th>Role</th>
+          <th>address</th>
+          <th>Identification Type</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.guestId)">
           <td>{{ i + 1 }}</td>
-          <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
+          <td>{{ item.firstName }} {{item.lastName}}</td>
           <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
+          <td>{{ item.address}}</td>
+          <td>{{item.identificationType}}</td>
           <td>
             <span [class]="item.isActive ? 'status active' : 'status inactive'">
               {{ item.isActive ? 'Active' : 'Inactive' }}

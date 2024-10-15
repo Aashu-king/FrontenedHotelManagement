@@ -40,27 +40,49 @@ export class TableComponent {
     });
   }
 
-  saveTable(): void {
-    if (this.tableForm.valid) {
-      const tableData = this.tableForm.value;
-      console.log("🚀 ~ TableComponent ~ saveTable ~ tableData:", tableData)
-      if (this.data) {
-        this.http.put(`http://localhost:3000/api/v1/tables/${this.data.tableId}`, tableData).subscribe(() => {
-          this.dialogRef.close(tableData); // Optionally pass back data
-        }, error => {
-          console.error('Error updating table data:', error);
-        });
-      } else {
-      console.log("🚀 ~ TableComponent ~ saveTable ~ this.tableForm.value:", this.tableForm.value)
-
-        this.http.post('http://localhost:3000/api/v1/tables', tableData).subscribe(() => {
-          this.dialogRef.close(tableData); // Optionally pass back data
-        }, error => {
-          console.error('Error creating table data:', error);
-        });
+  saveTable() {
+    if(!this.data){
+      if (this.tableForm.valid) {
+        console.log(this.tableForm.value);
+        this.http.post('http://localhost:3000/api/v1/tables', this.tableForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    }else{
+      if (this.tableForm.valid) {
+        console.log(this.tableForm.value);
+        this.http.put(`http://localhost:3000/api/v1/tables/${this.data}`, this.tableForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
       }
     }
   }
+
+  // saveTable(): void {
+  //   if (this.tableForm.valid) {
+  //     const tableData = this.tableForm.value;
+  //     console.log("🚀 ~ TableComponent ~ saveTable ~ tableData:", tableData)
+  //     if (this.data) {
+  //       this.http.put(`http://localhost:3000/api/v1/tables/${this.data.tableId}`, tableData).subscribe(() => {
+  //         this.dialogRef.close(tableData); // Optionally pass back data
+  //       }, error => {
+  //         console.error('Error updating table data:', error);
+  //       });
+  //     } else {
+  //     console.log("🚀 ~ TableComponent ~ saveTable ~ this.tableForm.value:", this.tableForm.value)
+
+  //       this.http.post('http://localhost:3000/api/v1/tables', tableData).subscribe(() => {
+  //         this.dialogRef.close(tableData); // Optionally pass back data
+  //       }, error => {
+  //         console.error('Error creating table data:', error);
+  //       });
+  //     }
+  //   }
+  // }
 
   closeDialog(): void {
     this.dialogRef.close();
