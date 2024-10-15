@@ -21,7 +21,6 @@ export class CheckinComponent {
   ngOnInit(): void {
     this.getDropdown();
     this.checkInForm = this.fb.group({
-      checkInId: [''],
       reservationId: ['', [Validators.required]],
       checkInTime: ['', [Validators.required]],
       assignedRoomId: ['', [Validators.required]],
@@ -41,12 +40,21 @@ export class CheckinComponent {
     if(this.data.reservationId && this.data.roomId && this.data.outletid){
       this.setValueFromReservation()
     }
+    this.getDataById()
   }
 
   getDataById(){
-    this.http.get(`http://localhost:3000/api/v1/reservation/${this.data}`, this.checkInForm.value).subscribe(
+    this.http.get(`http://localhost:3000/api/v1/check-in/${this.data.checkInId}`, this.checkInForm.value).subscribe(
       (response : any) => {
-        console.log('Success!', response);
+        console.log('Success ======>!', response);
+        this.outlets = response
+
+        if(this.outlets) {
+          this.checkInForm.get('reservationId')?.setValue(this.outlets.reservationId)
+          this.checkInForm.get('address')?.setValue(this.outlets.address)
+          this.checkInForm.get('city')?.setValue(this.outlets.city)
+          this.checkInForm.get('state')?.setValue(this.outlets.state)
+        }
       }
     );
   }
@@ -83,13 +91,36 @@ export class CheckinComponent {
   }
 
   onSubmit() {
-    if (this.checkInForm.valid) {
-      console.log(this.checkInForm.value);
-      this.http.post('http://localhost:3000/api/v1/hotels', this.checkInForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data) {
+      if (this.checkInForm.valid) {
+        console.log(this.checkInForm.value);
+        this.http.post('http://localhost:3000/api/v1/check-in', this.checkInForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else {
+      if (this.checkInForm.valid) {
+        console.log(this.checkInForm.value);
+        console.log("🚀 ~ ModuleComponent ~ onSubmit ~ this.data:", this.data)
+        this.http.put(`http://localhost:3000/api/v1/check-in/${this.data}`, this.checkInForm.value).subscribe(
+          (response: any) => {
+            console.log('Success!', response);
+            this.dialogRef.close(true); 
+          }
+        );
+      }
     }
+   
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/check-in/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }

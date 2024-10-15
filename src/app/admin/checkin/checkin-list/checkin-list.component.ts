@@ -31,8 +31,8 @@ export class CheckinListComponent {
   }
 
   getData(){
-    this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
-      this.justHotelData = result
+    this.http.get('http://localhost:3000/api/v1/check-ins').subscribe((result : any) => {
+      this.justHotelData = result.data
       console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
     })
   }
@@ -41,6 +41,17 @@ export class CheckinListComponent {
     this.dialog.open(CheckinComponent, {
      height: '80%',
      width: '80%',
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
+
+  openDialogForUpdate(id : any): void {
+    console.log("🚀 ~ ModuleListComponent ~ openDialogForUpdate ~ id:", id)
+    this.dialog.open(CheckinComponent, {
+     height: '80%',
+     width: '80%',
+     data : id,
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });
