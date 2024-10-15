@@ -69,17 +69,15 @@ serachForm !: FormGroup
     this.childNavOpen = !this.childNavOpen;
   }
 
-    searchFunction(value: string){
-      if (value) {
-        this.filteredSidebarItems = this.sidebarItems.filter(item =>
-          item.label.toLowerCase().includes(value.toLowerCase())
-        );
-       
-      } else {
-        this.filteredSidebarItems = [...this.sidebarItems];
-      }
+  searchFunction(value: string) {
+    if (value) {
+      this.filteredSidebarItems = this.sidebarItems.filter(item =>
+        item.label.toLowerCase().includes(value.toLowerCase())
+      );
+    } else {
+      this.filteredSidebarItems = [...this.sidebarItems];
     }
-
+  }
     hideScrollbar(): void {
       this.ngZone.run(() => {
         this.scrollbarVisible = !this.scrollbarVisible;
@@ -96,7 +94,7 @@ serachForm !: FormGroup
         console.log("🚀 ~ SidebarComponent ~ this.http.get ~ result:", result)
         if(result){
           this.sidebarItems = result.moduleTypeData
-
+          this.filteredSidebarItems = [...this.sidebarItems];
         }
         
       })

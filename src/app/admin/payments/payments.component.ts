@@ -17,6 +17,7 @@ export class PaymentsComponent {
   dataArray : any
 Guestoptions: any[] = [];  
 Guests: any[] = [];
+PaymentDropdown: any = []
 filteredGuest$: Observable<any[]> = of([]);
 
   constructor(
@@ -55,6 +56,9 @@ filteredGuest$: Observable<any[]> = of([]);
       this.Guests = result;  // Update the correct array
       console.log("Guests data loaded:", this.Guests);
     });
+    if (this.PaymentDropdown) {
+      this.setOutlet(this.PaymentDropdown.guestId);
+    }
   }
   
 
@@ -82,10 +86,38 @@ filteredGuest$: Observable<any[]> = of([]);
   }
 
   getPaymentById(paymentId: number) {
-    this.http.get(`http://localhost:3000/api/v1/payments/${paymentId}`).subscribe((payment: any) => {
-      this.paymentForm.patchValue(payment);
+    this.http.get(`http://localhost:3000/api/v1/payments/${this.data.paymentId}`).subscribe((payment: any) => {
+      // this.paymentForm.patchValue(payment);
+      this.PaymentDropdown = payment
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this:",this.PaymentDropdown)
+      if(this.PaymentDropdown){
+       
+        this.paymentForm.get('order_id')?.setValue(this.PaymentDropdown.order_id)
+        this.paymentForm.get('payment_date')?.setValue(this.PaymentDropdown.payment_date)
+        this.paymentForm.get('payment_method')?.setValue(this.PaymentDropdown.payment_method)
+        this.paymentForm.get('amount')?.setValue(this.PaymentDropdown.amount)
+        this.paymentForm.get('is_settled')?.setValue(this.PaymentDropdown.is_settled)
+
+        if (this.Guests.length > 0) {
+          this.setOutlet(this.PaymentDropdown.guestId);
+        } else {
       
+          this.loadOutlets();
+          this.filteredGuest$.subscribe(() => {
+            this.setOutlet(this.PaymentDropdown.guestId);
+          });
+        }
+
+      }
     });
+  }
+
+  setOutlet(guestId: number) {
+    // Find the outlet with the corresponding outletid and set the OutletName
+    const selectedGuest = this.Guests.find(Guest => Guest.guestId === guestId);
+    if (selectedGuest) {
+      this.paymentForm.get('GuestName')?.setValue(`${selectedGuest.firstName} ${selectedGuest.lastName}`);
+    }
   }
 
   onSubmit() {

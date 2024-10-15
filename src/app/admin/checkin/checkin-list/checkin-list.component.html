@@ -8,24 +8,24 @@ flex-wrap: wrap;">
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;">Add Hotel</button>
+    margin-bottom: 10px;">Add CheckIn</button>
     <!-- Table -->
     <table class="styled-table">
       <thead>
         <tr>
           <th>#</th>
-          <th>Address</th>
+          <th>checkInTime</th>
           <th>Email</th>
-          <th>Role</th>
+          <th>outletid</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justHotelData; let i = index">
+        <tr *ngFor="let item of justHotelData; let i = index" (click)="openDialogForUpdate(item.checkInId)"> 
           <td>{{ i + 1 }}</td>
-          <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
+          <td>{{ item.checkInTime }}</td>
+          <td>{{ item.additionalRequests }}</td>
+          <td>{{ item.outletid}}</td>
           <td>
             <span [class]="item.isActive ? 'status active' : 'status inactive'">
               {{ item.isActive ? 'Active' : 'Inactive' }}

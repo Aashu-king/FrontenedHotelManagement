@@ -37,6 +37,7 @@ import { OrderItemListComponent } from './order-items/order-item-list/order-item
 import { PaymentsListComponent } from './payments/payments-list/payments-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -114,6 +115,10 @@ const routes: Routes = [
       {
         path: 'checkIn',
         component: CheckinListComponent
+      },
+      {
+        path: 'checkout',
+        component: CheckoutComponent
       },
       {
         path: 'admindashboard',
