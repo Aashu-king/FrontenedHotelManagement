@@ -69,7 +69,7 @@
 
    <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-6">
         <div class="row">
           <div class="col-sm-12">
             <div class="card o-hidden welcome-card" style="width: 595px;">            
@@ -174,19 +174,40 @@
           
         </div>
       </div>
-      <div class="col-lg-4">
+      <!-- <div class="col-lg-6">
         <div class="card get-card">
           <div class="card-header card-no-border">
-            <h5>Today Progress</h5><span class="f-14 f-w-500 f-light">Your Daily Goal Almost Done!</span>
+            <h5>Bar Chart (Revenue vs Profit)</h5><span class="f-14 f-w-500 f-light">Bar Chart (Revenue vs Profit)</span>
           </div>
           <div class="card-body pt-0">
             <div class="progress-chart-wrap">
-              <div id="progresschart"></div>
+              <div style="display: block;">
+                <div style="width: 80%; margin: auto;">
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div> -->
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card get-card">
+              <div class="card-header card-no-border">
+                <h5>Business Analysis</h5><span class="f-14 f-w-500 f-light">Revenue Expense Profit(REP)</span>
+              </div>
+              <div class="card-body pt-0">
+                <div class="progress-chart-wrap">
+                  <div style="display: block;">
+                    <div style="width: 80%; margin: auto;">
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
-    
      
       <div class="col-xxl-4 col-ed-7 col-xl-7 col-md-6 box-col-7"> 
         <div class="card">
@@ -237,16 +258,14 @@
         <div class="card">
           <div class="card-header card-no-border">
             <div class="header-top"> 
-              <h5>Upcoming Events</h5>
-              <div class="dropdown icon-dropdown">
-                <button class="btn dropdown-toggle" id="upcomingdropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="upcomingdropdown"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday </a></div>
-              </div>
+              <h5>Outletwise Collection</h5>
             </div>
           </div>
           <div class="card-body pt-0">
             <div class="upcoming-event-wrap">
-              <div id="upcomingchart"></div>
+              <div style="display: block;">
+                <canvas id="outletChart"></canvas>
+              </div>
             </div>
           </div>
         </div>

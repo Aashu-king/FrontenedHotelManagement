@@ -68,7 +68,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatSelectModule } from '@angular/material/select';
-
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -155,6 +155,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatCheckboxModule,
     MatButtonModule,
     NgMultiSelectDropDownModule.forRoot(),
+    NgChartsModule
   ]
 })
 export class AdminModule { }
