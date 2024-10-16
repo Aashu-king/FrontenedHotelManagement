@@ -31,8 +31,8 @@ align-items: center;">
              formControlName="GuestName"
              [matAutocomplete]="autoGuest">
       <mat-autocomplete #autoGuest="matAutocomplete" (optionSelected)="onOptionSelectedGuest($event)">
-        <mat-option *ngFor="let Guest of filteredGuests$ | async" [value]="Guest.GuestName">
-          {{ Guest.GuestName }}
+        <mat-option *ngFor="let guest of filteredGuests$ | async" [value]="guest.firstName + ' ' + guest.lastName">
+          {{ guest.firstName }} {{ guest.lastName }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

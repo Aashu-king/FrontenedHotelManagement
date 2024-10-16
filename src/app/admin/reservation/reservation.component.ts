@@ -12,10 +12,12 @@ import { map, Observable, of, startWith } from 'rxjs';
 })
 export class ReservationComponent {
   reservationForm !: FormGroup;
-  guests = [
-    { guestId: 1, firstName: 'John', lastName: 'Doe' },
-    { guestId: 2, firstName: 'Jane', lastName: 'Smith' }
-  ];
+  billForm!: FormGroup;
+  billDetailForm!: FormGroup;
+  // guests = [
+  //   { guestId: 1, firstName: 'John', lastName: 'Doe' },
+  //   { guestId: 2, firstName: 'Jane', lastName: 'Smith' }
+  // ];
   rooms = [
     { roomId: 1, roomNumber: '101' },
     { roomId: 2, roomNumber: '102' }
@@ -25,11 +27,13 @@ export class ReservationComponent {
   permissionArray : any 
   pageurl : any;
   dataArray : any
-
-  billForm!: FormGroup;
+  outlets: any[] = [];
+  Guests: any[] = [];
+  Rooms: any[] = [];
+  
   moduleTypeOptions: any[] = []; 
   filteredModuleTypes!: Observable<any[]>;
-  billDetailForm!: FormGroup;
+ 
   atLeastAmountToBePaidis : any
 
   // permissionArray : any 
@@ -39,50 +43,19 @@ export class ReservationComponent {
 
   
 OutletTypeOptions: any[] = [];  
-outlets: any[] = [];
+
  filteredOutlets$: Observable<any[]> = of([]);
  GuestOptions: any[] = [];  
-Guests: any[] = [];
  filteredGuests$: Observable<any[]> = of([]);
-Rooms: any[] = [];
 RoomOptions: any[] = [];  
 filteredRooms$: Observable<any[]> = of([]);
+
+
   constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<ReservationComponent>,private http: HttpClient,@Inject(MAT_DIALOG_DATA) public data: any,private router: Router) {}
 
   ngOnInit(): void {
-    this.reservationForm = this.fb.group({
-      reservationId: [''],
-      guestId: ['', Validators.required],
-      roomId: ['', Validators.required],
-      reservationDate: ['', Validators.required],
-      checkInDate: ['', Validators.required],
-      checkOutDate: ['', Validators.required],
-      status: ['pending', Validators.required],
-      paymentStatus: ['pending', Validators.required],
-      totalAmount: [0, [Validators.required, Validators.min(0)]],
-      specialRequests: [''],
-      outletid: ['', Validators.required],
-      OutletName: [''],
-      GuestName: ['']
-    });
-
-    this.billForm = this.fb.group({
-      billId: [],
-      guestId: [parseInt(this.reservationForm.get('outletid')?.value)],
-      totalAmount: [, [Validators.required, Validators.min(0)]],
-      paymentMethod: ['', [Validators.required]],
-      status: ['', [Validators.required]],
-      outletid: [this.reservationForm.get('outletid')?.value],
-    });
-
-    this.billDetailForm = this.fb.group({
-      billDetailId: [''],
-      billId: [''],
-      description: ['', [Validators.required, Validators.maxLength(255)]],
-      amount: ['', [Validators.required, Validators.min(0)]],
-      outletid: [],
-    });
-
+    this.initForms();
+   
     this.pageurl =  this.router.url.split('/')[2]
     console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl:", this.pageurl)
     // console.log("🚀 ~ HotelListComponent ~ ngOnInit ~ this.pageurl.split('/'):", this.pageurl.split('/'))
@@ -166,6 +139,42 @@ filteredRooms$: Observable<any[]> = of([]);
     this.setupRoomAutoComplete();
   }
 
+
+  initForms(): void {
+    this.reservationForm = this.fb.group({
+      reservationId: [''],
+      guestId: ['', Validators.required],
+      roomId: ['', Validators.required],
+      reservationDate: ['', Validators.required],
+      checkInDate: ['', Validators.required],
+      checkOutDate: ['', Validators.required],
+      status: ['pending', Validators.required],
+      paymentStatus: ['pending', Validators.required],
+      totalAmount: [0, [Validators.required, Validators.min(0)]],
+      specialRequests: [''],
+      outletid: ['', Validators.required],
+      OutletName: [''],
+      GuestName: ['']
+    });
+
+    this.billForm = this.fb.group({
+      billId: [],
+      guestId: ['', Validators.required],
+      totalAmount: [, [Validators.required, Validators.min(0)]],
+      paymentMethod: ['', Validators.required],
+      status: ['', Validators.required],
+      outletid: ['', Validators.required]
+    });
+
+    this.billDetailForm = this.fb.group({
+      billDetailId: [''],
+      billId: [''],
+      description: ['', [Validators.required, Validators.maxLength(255)]],
+      amount: ['', [Validators.required, Validators.min(0)]],
+      outletid: ['', Validators.required]
+    });
+  }
+
   private loadOutlets(): void {
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
@@ -179,8 +188,8 @@ filteredRooms$: Observable<any[]> = of([]);
 
   private loadGuests(): void {
     this.http.get('http://localhost:3000/api/v1/dropdown-guests').subscribe((result: any) => {
-      this.guests  = result;
-      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ GuestOptions:", this.GuestOptions);
+      this.Guests  = result;
+      console.log("Guest dropdown+==>:", this.Guests);
     });
   }
 
@@ -221,8 +230,8 @@ filteredRooms$: Observable<any[]> = of([]);
 
   private filterGuests(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.guests.filter((option: any) => 
-      option.name.toLowerCase().includes(filterValue)
+    return this.Guests.filter(guest => 
+      (`${guest.firstName} ${guest.lastName}`).toLowerCase().includes(filterValue)
     );
   }
 
@@ -241,10 +250,11 @@ filteredRooms$: Observable<any[]> = of([]);
   }
 
   onOptionSelectedGuest(event: any): void {
-    const selectedGuest  = this.guests.find((type: any) => type.GuestName === event.option.value);
-    if (selectedGuest ) {
+    const selectedGuest = this.Guests.find(guest => `${guest.firstName} ${guest.lastName}` === event.option.value);
+    if (selectedGuest) {
       this.reservationForm.get('guestId')?.setValue(selectedGuest.guestId);
     }
+    
   }
 
   onOptionSelectedRoom(event: any): void {
@@ -313,7 +323,7 @@ filteredRooms$: Observable<any[]> = of([]);
         // this.guestForm.get('moduleTypeName')?.setValue(this.dataArray.moduleTypeName)
         this.reservationForm.get('guestId')?.setValue(this.dataArray.GuestName)
         this.reservationForm.get('roomId')?.setValue(this.dataArray.Room)
-        const selectedGuest = this.guests.find(Guest => Guest.guestId === this.dataArray.guestId);
+        const selectedGuest = this.Guests.find(Guests => Guests.guestId === this.dataArray.guestId);
         const selectedRoom = this.Rooms.find(Room => Room.roomId === this.dataArray.roomId);
         if (this.outlets.length > 0) {
           this.setOutlet(this.dataArray.outletid);
