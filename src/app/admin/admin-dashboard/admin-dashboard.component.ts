@@ -106,7 +106,77 @@ export class AdminDashboardComponent {
       this.http.get('http://localhost:3000/api/v1/graphData').subscribe((result : any) => {
      
         console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", result)
-        this.createChart(result.barChartData)
+        console.log("🚀 ~ AdminDashboardComponent ~ this.http.get ~ result.barChartData:", result.barChartData)
+        // this.createChart(result.barChartData)
+        this.createChart({
+          "labels": [
+              "January 2024",
+              "February 2024",
+              "March 2024",
+              "April 2024",
+              "May 2024",
+              "June 2024",
+              "July 2024",
+              "August 2024",
+              "September 2024",
+              "October 2024",
+              "November 2024",
+              "December 2024"
+          ],
+          "datasets": [
+              {
+                  "data": [
+                      1120000,
+                      1130000,
+                      1140000,
+                      1150000,
+                      1160000,
+                      1170000,
+                      1180000,
+                      190000,
+                      1200000,
+                      1702896.46,
+                      210000,
+                      220000
+                  ],
+                  "label": "Total Revenue"
+              },
+              {
+                  "data": [
+                      160000,
+                      162000,
+                      164000,
+                      166000,
+                      168000,
+                      170000,
+                      172000,
+                      174000,
+                      160000,
+                      220000,
+                      380000,
+                      540000
+                  ],
+                  "label": "Total Expenses"
+              },
+              {
+                  "data": [
+                      160000,
+                      168000,
+                      176000,
+                      184000,
+                      192000,
+                      1100000,
+                      1108000,
+                      1116000,
+                      1140000,
+                      1482896.46,
+                      -380000,
+                      -540000
+                  ],
+                  "label": "Profit"
+              }
+          ]
+      })
       })
       this.http.get('http://localhost:3000/api/v1/outletGraphData').subscribe((result : any) => {
      

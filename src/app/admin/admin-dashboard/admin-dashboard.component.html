@@ -67,7 +67,7 @@
   
    -->
 
-   <div class="container-fluid" style="    margin-top: 80px;">
+   <!-- <div class="container-fluid" style="    margin-top: 80px;">
     <div class="row">
       <div class="col-lg-7">
         <div class="row">
@@ -173,13 +173,7 @@
           </div>
           
         </div>
-        <button class="add-new-page-button" (click)="schduleingFunction()" style=" background: linear-gradient(to right, #6766ff, #ed8db7);
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 10px;">Schedule Cleaning</button>
+     
         
       </div>
       <div class="col-lg-5"> 
@@ -467,5 +461,369 @@
       </div>
      
     </div>
-  </div>
+  </div> -->
+
+  <div class="container-fluid" style="    margin-top: 80px;">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card o-hidden welcome-card" style="width: 750px;">            
+              <div class="card-body" style="display: flex;
+              flex-wrap: wrap;
+              flex-direction: column;
+              justify-content: space-between;
+              align-content: space-between;
+              align-items: flex-start;">
+                <h4 class="mb-3 mt-1 f-w-500 mb-0 f-22">Hello Prince<span> <img src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/hand.svg" alt="hand vector"></span></h4>
+                <p>It is a comprehensive software solution designed to streamline and automate the various operations of a hotel.</p>
+              </div><img class="welcome-img" src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/widget.svg" alt="search image">
+            </div>
+          </div>
+          
+        
+          
+        </div>
+      </div>
+      <div class="col-lg-6" style="display: flex;">
+        <div class="col-sm-4" style="display: flex;">
+          <div class="card course-box" (click)="openRoomAvailability('','toOpenReservation')"> 
+            <div class="card-body"> 
+              <div class="course-widget"> 
+                <div class="course-icon"> 
+                  <svg class="fill-icon">
+                    <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#course-1"></use>
+                  </svg>
+                </div>
+                <div> 
+                  <h4 class="mb-0">100+</h4><span class="f-light">Completed Courses</span><a class="btn btn-light f-light">View Reservations<span class="ms-2"> 
+                      <svg class="fill-icon f-light">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#arrowright"></use>
+                      </svg></span></a>
+                </div>
+              </div>
+            </div>
+            <ul class="square-group">
+              <li class="square-1 warning"></li>
+              <li class="square-1 primary"></li>
+              <li class="square-2 warning1"></li>
+              <li class="square-3 danger"></li>
+              <li class="square-4 light"></li>
+              <li class="square-5 warning"></li>
+              <li class="square-6 success"></li>
+              <li class="square-7 success"></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4" style="display: flex;">
+          <div class="card course-box" (click)="openRoomAvailability('','toOpenGuestManagement')"> 
+            <div class="card-body"> 
+              <div class="course-widget"> 
+                <div class="course-icon warning"> 
+                  <svg class="fill-icon">
+                    <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#course-2"></use>
+                  </svg>
+                </div>
+                <div> 
+                  <h4 class="mb-0">50+</h4><span class="f-light">In Progress Courses</span><a class="btn btn-light f-light">View Guest<span class="ms-2"> 
+                      <svg class="fill-icon f-light">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#arrowright"></use>
+                      </svg></span></a>
+                </div>
+              </div>
+            </div>
+            <ul class="square-group">
+              <li class="square-1 warning"></li>
+              <li class="square-1 primary"></li>
+              <li class="square-2 warning1"></li>
+              <li class="square-3 danger"></li>
+              <li class="square-4 light"></li>
+              <li class="square-5 warning"></li>
+              <li class="square-6 success"></li>
+              <li class="square-7 success"></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4" style="display: flex;">
+          <div class="card course-box" (click)="openRoomAvailability('','toCreateResrvation')"> 
+            <div class="card-body"> 
+              <div class="course-widget"> 
+                <div class="course-icon"> 
+                  <svg class="fill-icon">
+                    <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#course-1"></use>
+                  </svg>
+                </div>
+                <div> 
+                  <h4 class="mb-0">100+</h4><span class="f-light">Completed Courses</span><a class="btn btn-light f-light">Create Reservation<span class="ms-2"> 
+                      <svg class="fill-icon f-light">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#arrowright"></use>
+                      </svg></span></a>
+                </div>
+              </div>
+            </div>
+            <ul class="square-group">
+              <li class="square-1 warning"></li>
+              <li class="square-1 primary"></li>
+              <li class="square-2 warning1"></li>
+              <li class="square-3 danger"></li>
+              <li class="square-4 light"></li>
+              <li class="square-5 warning"></li>
+              <li class="square-6 success"></li>
+              <li class="square-7 success"></li>
+            </ul>
+          </div>
+        </div>
+        <!-- <button class="add-new-page-button" (click)="schduleingFunction()" style=" background: linear-gradient(to right, #6766ff, #ed8db7);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;">Schedule Cleaning</button> -->
+        </div>
+      
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="card get-card">
+              <div class="card-header card-no-border">
+                <h5>Business Analysis</h5><span class="f-14 f-w-500 f-light">Revenue Expense Profit(REP)</span>
+              </div>
+              <div class="card-body pt-0">
+                <div class="progress-chart-wrap">
+                  <div style="display: block;">
+                    <div style="width: 80%; margin: auto;">
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card get-card">
+              <div class="card-header card-no-border">
+                <h5>Business Analysis</h5><span class="f-14 f-w-500 f-light">Revenue Expense Profit(REP)</span>
+              </div>
+              <div class="card-body pt-0">
+                <div class="progress-chart-wrap">
+                  <div style="display: block;">
+                    <div style="width: 80%; margin: auto;">
+                      <canvas id="outletChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+     
+      <div class="col-xxl-4 col-ed-7 col-xl-7 col-md-6 box-col-7"> 
+        <div class="card">
+          <div class="card-header card-no-border">
+            <div class="header-top"> 
+              <h5>Check Room Availability</h5>
+              <div class="dropdown icon-dropdown">
+                <button class="btn dropdown-toggle" id="activitydropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="activitydropdown"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday </a></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <div class="calendar-container">
+              <div class="calendar-header">
+                <button class="prev-month" (click)="changeMonth(-1)">&#10094;</button>
+                <div class="month-year">
+                  <span>{{ monthName }}</span>
+                  <span>{{ currentYear }}</span>
+                </div>
+                <button class="next-month" (click)="changeMonth(1)">&#10095;</button>
+              </div>
+              <table class="calendar">
+                <thead>
+                  <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let week of calendarDays">
+                    <td *ngFor="let day of week" [class.active]="isToday(day)" (click)="openRoomAvailability(day,'toOpenCalendar')">
+                      {{ day.date }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-ed-6 col-md-5 col-sm-6 box-col-5">
+        <div class="card">
+          <div class="card-header card-no-border">
+            <div class="header-top">
+              <h5 class="m-0">Available Room Types</h5>
+              <div class="card-header-right-icon"><a class="link-only" href="#">View <i data-feather="arrow-right"></i></a></div>
+            </div>
+          </div>
+          <div class="card-body pt-0"> 
+            <ul class="lessons-lists"> 
+              <li> <img src="../assets/images/dashboard-3/lessons/1.png" alt="ux icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">UI/UX </h6><span class="f-light">Web design</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart1"> </div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/2.png" alt="vue icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Vue 3</h6><span class="f-light">JS Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart2"></div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/3.png" alt="bootstrap icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Bootstrap 5</h6><span class="f-light">Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart3"></div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/3.png" alt="bootstrap icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Bootstrap 5</h6><span class="f-light">Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart3"></div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/3.png" alt="bootstrap icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Bootstrap 5</h6><span class="f-light">Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart3"></div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/3.png" alt="bootstrap icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Bootstrap 5</h6><span class="f-light">Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart3"></div>
+                </div>
+              </li>
+              <li> <img src="../assets/images/dashboard-3/lessons/3.png" alt="bootstrap icon">
+                <div> 
+                  <h6 class="f-14 f-w-400 mb-0">Bootstrap 5</h6><span class="f-light">Framework</span>
+                </div>
+                <div class="lesson-wrap ms-auto"> 
+                  <div id="lessonChart3"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-5 col-ed-12 box-col-12"> 
+        <div class="card course-card"> 
+          <div class="card-header card-no-border">
+            <div class="header-top">
+              <h5 class="m-0">My Course</h5>
+              <div class="card-header-right-icon">
+                <div class="dropdown">
+                  <button class="btn dropdown-toggle" id="popularButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">Most Popular</button>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularButton"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <div class="course-main-card">
+              <div class="course-wrapper"> 
+                <div class="course-icon-box">
+                  <div class="icon-wrap"><img src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/course/1.svg" alt="clock vector"></div><img class="arrow-bg" src="../assets/images/dashboard-3/course/back-arrow/1.png" alt="sqaure border arrow">
+                </div>
+                <h6 class="f-14">Management</h6>
+              </div>
+              <div class="course-wrapper">
+                <div class="course-icon-box">
+                  <div class="icon-wrap"><img src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/course/2.svg" alt="web development vector"></div><img class="arrow-bg" src="../assets/images/dashboard-3/course/back-arrow/2.png" alt="sqaure border arrow">
+                </div>
+                <h6 class="f-14">Web Devlopment</h6>
+              </div>
+              <div class="course-wrapper">
+                <div class="course-icon-box">
+                  <div class="icon-wrap"><img src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/course/3.svg" alt="business vector"></div><img class="arrow-bg" src="../assets/images/dashboard-3/course/back-arrow/1.png" alt="sqaure border arrow">
+                </div>
+                <h6 class="f-14">Business Analytics</h6>
+              </div>
+              <div class="course-wrapper">
+                <div class="course-icon-box">
+                  <div class="icon-wrap"><img src="https://admin.pixelstrap.com/cuba/assets/images/dashboard-3/course/4.svg" alt="marketing vector"></div><img class="arrow-bg" src="../assets/images/dashboard-3/course/back-arrow/3.png" alt="sqaure border arrow">
+                </div>
+                <h6 class="f-14">Marketing</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-ed-6 col-md-7 box-col-7">
+        <div class="card schedule-card">
+          <div class="card-header card-no-border">
+            <div class="header-top">
+              <h5 class="m-0">Upcoming Schedule</h5>
+              <div class="card-header-right-icon"><a class="btn btn-light-primary" href="#">+ Create</a></div>
+            </div>
+          </div>
+          <div class="card-body pt-0"> 
+            <ul class="schedule-list"> 
+              <li class="primary"><img src="../assets/images/dashboard/user/4.jpg" alt="profile">
+                <div> 
+                  <h6 class="mb-1">Web Design</h6>
+                  <ul>
+                    <li class="f-light">
+                      <svg class="fill-icon f-light">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#bag"></use>
+                      </svg><span>January 3, 2022</span>
+                    </li>
+                    <li class="f-light">
+                      <svg class="fill-icon f-success">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#clock"></use>
+                      </svg><span> 09.00 - 12.00 AM</span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="warning"><img src="../assets/images/dashboard/user/2.jpg" alt="profile">
+                <div> 
+                  <h6 class="mb-1">UI/UX Design</h6>
+                  <ul>
+                    <li class="f-light">
+                      <svg class="fill-icon f-light">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#bag"></use>
+                      </svg><span>Febuary 10, 2022</span>
+                    </li>
+                    <li class="f-light">
+                      <svg class="fill-icon f-success">
+                        <use href="https://admin.pixelstrap.com/cuba/assets/svg/icon-sprite.svg#clock"></use>
+                      </svg><span> 11.00 - 1.00 PM</span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    </div>
 
