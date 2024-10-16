@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { map, Observable, of, startWith } from 'rxjs';
 
@@ -21,7 +21,7 @@ Guests: any[] = [];
 filteredGuest$: Observable<any[]> = of([]);
   permissionArray : any 
   pageurl : any;
-  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<BillComponent>,private http: HttpClient,private router : Router) {}
+  constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<BillComponent>,private http: HttpClient,private router : Router,@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.billForm = this.fb.group({
@@ -32,7 +32,7 @@ filteredGuest$: Observable<any[]> = of([]);
       status: ['', [Validators.required]],
       outletid: ['', [Validators.required]],
       OutletName:[''],
-      GuestName: ['']
+      GuestName: [''],
     });
 
     this.pageurl =  this.router.url.split('/')[2]
@@ -110,13 +110,33 @@ filteredGuest$: Observable<any[]> = of([]);
   }
 
   onSubmit() {
-    if (this.billForm.valid) {
-      console.log(this.billForm.value);
-      this.http.post('http://localhost:3000/api/v1/bill', this.billForm.value).subscribe(
-        (response : any) => {
-          console.log('Success!', response);
-        }
-      );
+    if(!this.data) {
+      if (this.billForm.valid) {
+        console.log(this.billForm.value);
+        this.http.post('http://localhost:3000/api/v1/bill', this.billForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
+    } else {
+      if (this.billForm.valid) {
+        console.log(this.billForm.value);
+        this.http.put(`http://localhost:3000/api/v1/bill/${this.data}`, this.billForm.value).subscribe(
+          (response : any) => {
+            console.log('Success!', response);
+          }
+        );
+      }
     }
+  }
+
+  onDelete(){
+    this.http.delete(`http://localhost:3000/api/v1/bill/${this.data}`).subscribe(
+      (response: any) => {
+        console.log('Success!', response);
+        this.dialogRef.close(true); 
+      }
+    );
   }
 }

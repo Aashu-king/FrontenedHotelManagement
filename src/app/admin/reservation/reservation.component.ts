@@ -31,7 +31,6 @@ export class ReservationComponent {
   Guests: any[] = [];
   Rooms: any[] = [];
   
-  moduleTypeOptions: any[] = []; 
   filteredModuleTypes!: Observable<any[]>;
  
   atLeastAmountToBePaidis : any
@@ -120,14 +119,6 @@ filteredRooms$: Observable<any[]> = of([]);
       }
     })
 
-    
-
-   
-    
-
-    this.loadModuleTypeOptions();
-
-   
     if(this.data){
       this.getByIdData()
     }
@@ -158,7 +149,7 @@ filteredRooms$: Observable<any[]> = of([]);
     });
 
     this.billForm = this.fb.group({
-      billId: [],
+      billId: [''],
       guestId: ['', Validators.required],
       totalAmount: [, [Validators.required, Validators.min(0)]],
       paymentMethod: ['', Validators.required],
@@ -178,7 +169,7 @@ filteredRooms$: Observable<any[]> = of([]);
   private loadOutlets(): void {
     this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
       this.outlets  = result;
-      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ moduleTypeOptions:", this.OutletTypeOptions);
+      console.log("outlet dropdown", this.outlets);
       
       if (this.dataArray) {
         this.setOutlet(this.dataArray.outletid);
@@ -196,7 +187,7 @@ filteredRooms$: Observable<any[]> = of([]);
   private loadRooms(): void {
     this.http.get('http://localhost:3000/api/v1/dropdown-rooms').subscribe((result: any) => {
       this.Rooms  = result;
-      console.log("🚀 ~ ModuleComponent ~ this.httpClient.get ~ RoomOptions:", this.RoomOptions);
+      console.log("room dropdown", this.Rooms);
     });
   }
 
@@ -238,14 +229,16 @@ filteredRooms$: Observable<any[]> = of([]);
   private filterRooms(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.Rooms.filter((option: any) => 
-      option.Room.toLowerCase().includes(filterValue)
+      option.roomNumber.toLowerCase().includes(filterValue)
     );
   }
 
   onOptionSelected(event: any): void {
-    const selectedOutlet  = this.outlets.find((type: any) => type.OutletName === event.option.value);
+    const selectedOutlet  = this.outlets.find((type: any) => type.name === event.option.value);
     if (selectedOutlet ) {
       this.reservationForm.get('outletid')?.setValue(selectedOutlet.outletid);
+      this.billForm.get('outletid')?.setValue(selectedOutlet.outletid)
+      this.billDetailForm.get('outletid')?.setValue(selectedOutlet.outletid)
     }
   }
 
@@ -253,12 +246,15 @@ filteredRooms$: Observable<any[]> = of([]);
     const selectedGuest = this.Guests.find(guest => `${guest.firstName} ${guest.lastName}` === event.option.value);
     if (selectedGuest) {
       this.reservationForm.get('guestId')?.setValue(selectedGuest.guestId);
+      this.billForm.get('guestId')?.setValue(selectedGuest.guestId)
+      this.billDetailForm.get('guestId')?.setValue(selectedGuest.guestId)
+      
     }
     
   }
 
   onOptionSelectedRoom(event: any): void {
-    const selectedRoom  = this.Rooms.find((type: any) => type.room === event.option.value);
+    const selectedRoom  = this.Rooms.find((type: any) => type.roomNumber === event.option.value);
     if (selectedRoom ) {
       this.reservationForm.get('roomId')?.setValue(selectedRoom.roomId);
     }
@@ -266,9 +262,9 @@ filteredRooms$: Observable<any[]> = of([]);
 
   onSubmit() {
     if(!this.data){
-      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billForm.valid:", this.billForm.value)
-      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billDetailForm.valid:", this.billDetailForm.value)
-      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.reservationForm.valid:", this.reservationForm.value)
+      console.log("Bill value", this.billForm.value)
+      console.log("billdetail value", this.billDetailForm.value)
+      console.log("reservation value", this.reservationForm.value)
       if (this.reservationForm.valid && this.billDetailForm.valid && this.billForm.valid) {
         let theObj = {
           reservationForm : this.reservationForm.value,
@@ -297,7 +293,6 @@ filteredRooms$: Observable<any[]> = of([]);
     }
    
   }
-
   getDataForTotal(){
     const params = new HttpParams()
     .set('roomId', this.reservationForm.get('roomId')?.value)
@@ -365,12 +360,6 @@ filteredRooms$: Observable<any[]> = of([]);
     );
   }
 
-  private loadModuleTypeOptions(): void {
-    this.http.get('http://localhost:3000/api/v1/dropdown-outlets').subscribe((result: any) => {
-      this.moduleTypeOptions = result;
-      console.log("🚀 ~ PageComponent ~ loadModuleTypeOptions ~ moduleTypeOptions:", this.moduleTypeOptions);
-    });
-  }
 
 
 }
