@@ -64,14 +64,15 @@ export class OrderListComponent {
     });
   }
 
-  openDialogForPayments(order_id :any,guestId : any,order_date : any,total_amount : any): void {
+  openDialogForPayments(order_id :any,guestId : any,order_date : any,total_amount : any,GuestName : any): void {
     let obj = {
       order_id : order_id,
       guestId : guestId,
       payment_date : order_date,
       amount : total_amount,
       payment_method : 'Cash',
-      is_settled : false
+      is_settled : false,
+      GuestName : GuestName
     }
     const dialogRef = this.dialog.open(PaymentsComponent, {
       height: '80%',

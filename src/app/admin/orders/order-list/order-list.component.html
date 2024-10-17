@@ -31,7 +31,7 @@
           <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.total_amount | currency }}</td>
           <td (click)="openDialogForUpdate(order.order_id,order?.payment[0]?.is_settled)">{{ order.is_room_service ? 'Yes' : 'No' }}</td>
           <td *ngIf="order.payment[0]?.is_settled">Payment Done</td>
-          <td *ngIf="order.order_status === 'Pending'" (click)="openDialogForPayments(order.order_id,order.guest?.guestId,order.order_date,order.total_amount)">Make Payment</td>
+          <td *ngIf="order.order_status === 'Pending'" (click)="openDialogForPayments(order.order_id,order.guest?.guestId,order.order_date,order.total_amount,order.guest?.firstName)">Make Payment</td>
         </tr>
       </tbody>
     </table>

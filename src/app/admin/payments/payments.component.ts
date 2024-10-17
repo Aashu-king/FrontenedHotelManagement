@@ -45,6 +45,7 @@ filteredGuest$: Observable<any[]> = of([]);
     if(this.data && this.data.throughorder && this.data.obj){
       this.isEditMode = false;
       this.paymentForm.setValue(this.data.obj)
+      console.log("🚀 ~ PaymentsComponent ~ ngOnInit ~ this.paymentForm:", this.paymentForm.value)
     }
     
     this.loadOutlets();

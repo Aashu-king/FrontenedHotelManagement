@@ -265,6 +265,9 @@ filteredRooms$: Observable<any[]> = of([]);
       console.log("Bill value", this.billForm.value)
       console.log("billdetail value", this.billDetailForm.value)
       console.log("reservation value", this.reservationForm.value)
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.reservationForm.valid:", this.reservationForm.valid)
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billDetailForm.valid:", this.billDetailForm.valid)
+      console.log("🚀 ~ ReservationComponent ~ onSubmit ~ this.billForm.valid:", this.billForm.valid)
       if (this.reservationForm.valid && this.billDetailForm.valid && this.billForm.valid) {
         let theObj = {
           reservationForm : this.reservationForm.value,
@@ -341,7 +344,6 @@ filteredRooms$: Observable<any[]> = of([]);
   }
 
   setOutlet(outletid: number) {
-    // Find the outlet with the corresponding outletid and set the OutletName
     const selectedOutlet = this.outlets.find(outlet => outlet.outletid === outletid);
     if (selectedOutlet) {
       this.reservationForm.get('OutletName')?.setValue(selectedOutlet.name);
