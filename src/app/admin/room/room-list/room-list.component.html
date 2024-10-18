@@ -18,14 +18,16 @@ flex-wrap: wrap;">
           <th>Outlet Name</th>
           <th>Room Type</th>
           <th>Room Number</th>
+          <th>Image</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.roomId)">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.outlet.name }}</td>
-          <td>{{ item.roomType.typeName }}</td>
-          <td>{{ item.roomNumber }}</td>
+        <tr *ngFor="let item of paginatedData; let i = index" >
+          <td (click)="openDialogForUpdate(item.roomId)">{{ i + 1 }}</td>
+          <td (click)="openDialogForUpdate(item.roomId)">{{ item.outlet.name }}</td>
+          <td (click)="openDialogForUpdate(item.roomId)">{{ item.roomType.typeName }}</td>
+          <td (click)="openDialogForUpdate(item.roomId)">{{ item.roomNumber }}</td>
+          <td (click)="openDialogImageUpload(item.roomId)" >Upload Image</td>
         </tr>
       </tbody>
     </table>

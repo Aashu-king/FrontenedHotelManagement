@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OutletComponent } from '../outlet.component';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
+import { ImageUploaderComponent } from '../../image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-outlet-list',
@@ -74,6 +75,17 @@ export class OutletListComponent {
      height: '80%',
      width: '80%',
      data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
+
+  openDialogImageUpload(id : any): void {
+    console.log("🚀 ~ ModuleListComponent ~ openDialogForUpdate ~ id:", id)
+    this.dialog.open(ImageUploaderComponent, {
+     height: '80%',
+     width: '80%',
+     data : {outletid : id, forWhichImage : 'outlet'},
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });

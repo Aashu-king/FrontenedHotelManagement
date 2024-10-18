@@ -1,0 +1,77 @@
+
+
+  <ng-container *ngIf="this.data">
+    <ng-container *ngIf="this.data.forWhichImage === 'hotel'">
+        <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <!-- Hotel ID Input -->
+            <div>
+              <label for="hotelid">Hotel ID:</label>
+              <input type="text" id="hotelid" formControlName="hotelid" readonly />
+            </div>
+          
+            <!-- File Upload Input -->
+            <div>
+              <label for="images">Upload Images:</label>
+              <input type="file" id="images" (change)="onImageChange($event)" multiple />
+              <div *ngIf="hotelForm.get('images')?.invalid && hotelForm.get('images')?.touched">
+                <small style="color: red;">Please upload at least one image</small>
+              </div>
+            </div>
+          
+            <!-- Submit Button -->
+            <div>
+              <button type="submit" [disabled]="!hotelForm.valid">Upload</button>
+            </div>
+          </form>
+    </ng-container>
+
+    <ng-container *ngIf="this.data.forWhichImage === 'outlet'">
+        <form [formGroup]="outletForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <!-- Hotel ID Input -->
+            <div>
+              <label for="outletid">outlet ID:</label>
+              <input type="text" id="outletid" formControlName="outletid" readonly />
+            </div>
+          
+            <!-- File Upload Input -->
+            <div>
+              <label for="images">Upload Images:</label>
+              <input type="file" id="images" (change)="onImageChange($event)" multiple />
+              <div *ngIf="outletForm.get('images')?.invalid && outletForm.get('images')?.touched">
+                <small style="color: red;">Please upload at least one image</small>
+              </div>
+            </div>
+          
+            <!-- Submit Button -->
+            <div>
+              <button type="submit" [disabled]="!outletForm.valid">Upload</button>
+            </div>
+          </form>
+    </ng-container>
+
+    <ng-container *ngIf="this.data.forWhichImage === 'room'">
+        <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <!-- Hotel ID Input -->
+            <div>
+              <label for="roomId">RoomId ID:</label>
+              <input type="text" id="roomId" formControlName="roomId" readonly />
+            </div>
+          
+            <!-- File Upload Input -->
+            <div>
+              <label for="images">Upload Images:</label>
+              <input type="file" id="images" (change)="onImageChange($event)" multiple />
+              <div *ngIf="roomForm.get('images')?.invalid && roomForm.get('images')?.touched">
+                <small style="color: red;">Please upload at least one image</small>
+              </div>
+            </div>
+          
+            <!-- Submit Button -->
+            <div>
+              <button type="submit" [disabled]="!roomForm.valid">Upload</button>
+            </div>
+          </form>
+    </ng-container>
+  </ng-container>
+  
+  

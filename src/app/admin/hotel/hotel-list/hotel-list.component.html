@@ -18,19 +18,21 @@ flex-wrap: wrap;">
           <th>Email</th>
           <th>Role</th>
           <th>Status</th>
+          <th>Image</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of paginatedData; let i = index" (click)="openDialogForUpdate(item.hotelid)">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
-          <td>
+        <tr *ngFor="let item of paginatedData; let i = index" >
+          <td (click)="openDialogForUpdate(item.hotelid)">{{ i + 1 }}</td>
+          <td (click)="openDialogForUpdate(item.hotelid)">{{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipCode }}</td>
+          <td (click)="openDialogForUpdate(item.hotelid)">{{ item.email }}</td>
+          <td (click)="openDialogForUpdate(item.hotelid)">{{ item.rating ? 'Rated' : 'Not Rated' }}</td>
+          <td (click)="openDialogForUpdate(item.hotelid)">
             <span [class]="item.isActive ? 'status active' : 'status inactive'">
               {{ item.isActive ? 'Active' : 'Inactive' }}
             </span>
           </td>
+          <td (click)="openDialogImageUpload(item.hotelid)"> Upload Image</td>
         </tr>
       </tbody>
     </table>

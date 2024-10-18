@@ -69,6 +69,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
+import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,8 @@ import { NgChartsModule } from 'ng2-charts';
     PaymentsListComponent,
     TablesListComponent,
     TablesResvationListComponent,
-    OrderListComponent
+    OrderListComponent,
+    ImageUploaderComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomComponent } from '../room.component';
 import { PageEvent } from '@angular/material/paginator';
+import { ImageUploaderComponent } from '../../image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-room-list',
@@ -63,6 +64,17 @@ export class RoomListComponent {
      height: '80%',
      width: '80%',
      data : id,
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+  }
+
+  openDialogImageUpload(id : any): void {
+    console.log("🚀 ~ ModuleListComponent ~ openDialogForUpdate ~ id:", id)
+    this.dialog.open(ImageUploaderComponent, {
+     height: '80%',
+     width: '80%',
+     data : {roomId : id, forWhichImage : 'room'},
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });
