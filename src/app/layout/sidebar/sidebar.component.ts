@@ -10,6 +10,21 @@ interface SidebarItem {
   fillIcon: string;
 }
 
+interface PageData {
+  pageName: string;
+  pageUrl: string;
+}
+
+interface ModuleData {
+  moduleName: string;
+  pageData: PageData[];
+}
+
+interface ModuleType {
+  moduleTypeName: string;
+  moduleData: ModuleData[];
+}
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -25,22 +40,25 @@ export class SidebarComponent {
 
   sidebarItems: any[]  = [];
 
+  openModuleTypes: boolean[] = [];
+  openModuleNames: { [key: number]: boolean[] } = {};
 
-filteredSidebarItems: SidebarItem[] = [...this.sidebarItems]; 
+
+filteredSidebarItems: any[] = [...this.sidebarItems]; 
 
 routerMo : any;
 searchArray : any[] = []
-openModuleTypeIndex: number | null = null;
-openModuleNameIndex: number | null = null;
+openModuleTypeIndex: number = -1;
+openModuleNameIndex: number = -1;
 
-toggleModuleType(index: number) {
-  this.openModuleTypeIndex = this.openModuleTypeIndex === index ? null : index;
-  this.openModuleNameIndex = null;
-}
+// toggleModuleType(index: number) {
+//   this.openModuleTypeIndex = this.openModuleTypeIndex === index ? null : index;
+//   this.openModuleNameIndex = null;
+// }
 
-toggleModuleName(moduleTypeIndex: number, moduleIndex: number) {
-  this.openModuleNameIndex = (this.openModuleTypeIndex === moduleTypeIndex && this.openModuleNameIndex === moduleIndex) ? null : moduleIndex;
-}
+// toggleModuleName(moduleTypeIndex: number, moduleIndex: number) {
+//   this.openModuleNameIndex = (this.openModuleTypeIndex === moduleTypeIndex && this.openModuleNameIndex === moduleIndex) ? null : moduleIndex;
+// }
 
 serachForm !: FormGroup
   constructor(public router: Router,private fb : FormBuilder,private ngZone: NgZone, private cdRef: ChangeDetectorRef,private http : HttpClient) {
@@ -69,15 +87,76 @@ serachForm !: FormGroup
     this.childNavOpen = !this.childNavOpen;
   }
 
-  searchFunction(value: string) {
-    if (value) {
-      this.filteredSidebarItems = this.sidebarItems.filter(item =>
-        item.label.toLowerCase().includes(value.toLowerCase())
-      );
+  toggleModuleType(index: number) {
+    if (this.openModuleTypeIndex === index) {
+      this.openModuleTypeIndex = -1;
+      this.openModuleNameIndex = -1;  
     } else {
-      this.filteredSidebarItems = [...this.sidebarItems];
+      this.openModuleTypeIndex = index;
+      this.openModuleNameIndex = -1;  
     }
   }
+
+  toggleModuleName(moduleTypeIndex: number, moduleIndex: number) {
+    if (this.openModuleTypeIndex === moduleTypeIndex) {
+      if (this.openModuleNameIndex === moduleIndex) {
+        this.openModuleNameIndex = -1;
+      } else {
+        this.openModuleNameIndex = moduleIndex;
+      }
+    }
+  }
+
+  searchFunction(value: string) {
+    if (value) {
+      const searchTerm = value.toLowerCase();
+      
+      this.filteredSidebarItems = this.sidebarItems.map(moduleType => {
+        const filteredModuleType = { ...moduleType };
+        
+        filteredModuleType.moduleData = moduleType.moduleData.map((module : any) => {
+          const filteredModule = { ...module };
+          
+          filteredModule.pageData = module.pageData.filter((page : any) => 
+            page.pageName.toLowerCase().includes(searchTerm)
+          );
+          
+          return filteredModule;
+        }).filter((module : any) => 
+          module.moduleName.toLowerCase().includes(searchTerm) || 
+          module.pageData.length > 0
+        );
+        
+        return filteredModuleType;
+      }).filter(moduleType => 
+        moduleType.moduleTypeName.toLowerCase().includes(searchTerm) || 
+        moduleType.moduleData.length > 0
+      );
+
+      if (this.filteredSidebarItems.length > 0) {
+        this.openModuleTypeIndex = 0;
+        if (this.filteredSidebarItems[0].moduleData.length > 0) {
+          this.openModuleNameIndex = 0;
+        }
+      }
+    } else {
+      this.filteredSidebarItems = [...this.sidebarItems];
+      this.openModuleTypeIndex = -1;
+      this.openModuleNameIndex = -1;
+    }
+  }
+
+
+  private hasMatchingChildren(moduleType: any, searchTerm: string): boolean {
+    return moduleType.moduleData.some((module : any) => 
+      module.moduleName.toLowerCase().includes(searchTerm) ||
+      module.pageData.some((page : any) => 
+        page.pageName.toLowerCase().includes(searchTerm)
+      )
+    );
+  }
+  
+  
     hideScrollbar(): void {
       this.ngZone.run(() => {
         this.scrollbarVisible = !this.scrollbarVisible;

@@ -1,77 +1,132 @@
-
-
+<div class="upload-container">
   <ng-container *ngIf="this.data">
     <ng-container *ngIf="this.data.forWhichImage === 'hotel'">
-        <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-            <!-- Hotel ID Input -->
-            <div>
-              <label for="hotelid">Hotel ID:</label>
-              <input type="text" id="hotelid" formControlName="hotelid" readonly />
+      <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <!-- Hotel ID Input -->
+        <div class="form-group">
+          <label for="hotelid">Hotel ID:</label>
+          <input type="text" id="hotelid" formControlName="hotelid" readonly />
+        </div>
+
+        <!-- File Upload Input -->
+        <div class="form-group">
+          <div class="file-upload">
+            <label class="file-upload-btn" for="hotel-images">
+              <span>{{ isUpdateMode ? 'Choose New Image' : 'Choose Images' }}</span>
+            </label>
+            <input 
+              type="file" 
+              id="hotel-images" 
+              (change)="onImageChange($event)" 
+              multiple 
+              accept="image/*"
+            />
+          </div>
+          <div *ngIf="hotelForm.get('images')?.invalid && hotelForm.get('images')?.touched" class="error-message">
+            Please upload at least one image
+          </div>
+
+          <!-- Image Preview -->
+          <div class="preview-container" *ngIf="previewUrls && previewUrls.length">
+            <div class="preview-image" *ngFor="let url of previewUrls">
+              <img [src]="url" alt="Preview">
             </div>
-          
-            <!-- File Upload Input -->
-            <div>
-              <label for="images">Upload Images:</label>
-              <input type="file" id="images" (change)="onImageChange($event)" multiple />
-              <div *ngIf="hotelForm.get('images')?.invalid && hotelForm.get('images')?.touched">
-                <small style="color: red;">Please upload at least one image</small>
-              </div>
-            </div>
-          
-            <!-- Submit Button -->
-            <div>
-              <button type="submit" [disabled]="!hotelForm.valid">Upload</button>
-            </div>
-          </form>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button class="submit-btn" type="submit" [disabled]="!hotelForm.valid">
+            Upload
+          </button>
+        </div>
+      </form>
     </ng-container>
 
     <ng-container *ngIf="this.data.forWhichImage === 'outlet'">
-        <form [formGroup]="outletForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-            <!-- Hotel ID Input -->
-            <div>
-              <label for="outletid">outlet ID:</label>
-              <input type="text" id="outletid" formControlName="outletid" readonly />
+      <form [formGroup]="outletForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <!-- Outlet ID Input -->
+        <div class="form-group">
+          <label for="outletid">Outlet ID:</label>
+          <input type="text" id="outletid" formControlName="outletid" readonly />
+        </div>
+
+        <!-- File Upload Input -->
+        <div class="form-group">
+          <div class="file-upload">
+            <label class="file-upload-btn" for="outlet-images">
+              <span>Choose Images</span>
+            </label>
+            <input 
+              type="file" 
+              id="outlet-images" 
+              (change)="onImageChange($event)" 
+              multiple 
+              accept="image/*"
+            />
+          </div>
+          <div *ngIf="outletForm.get('images')?.invalid && outletForm.get('images')?.touched" class="error-message">
+            Please upload at least one image
+          </div>
+
+          <!-- Image Preview -->
+          <div class="preview-container" *ngIf="previewUrls && previewUrls.length">
+            <div class="preview-image" *ngFor="let url of previewUrls">
+              <img [src]="url" alt="Preview">
             </div>
-          
-            <!-- File Upload Input -->
-            <div>
-              <label for="images">Upload Images:</label>
-              <input type="file" id="images" (change)="onImageChange($event)" multiple />
-              <div *ngIf="outletForm.get('images')?.invalid && outletForm.get('images')?.touched">
-                <small style="color: red;">Please upload at least one image</small>
-              </div>
-            </div>
-          
-            <!-- Submit Button -->
-            <div>
-              <button type="submit" [disabled]="!outletForm.valid">Upload</button>
-            </div>
-          </form>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button class="submit-btn" type="submit" [disabled]="!outletForm.valid">
+            Upload
+          </button>
+        </div>
+      </form>
     </ng-container>
 
     <ng-container *ngIf="this.data.forWhichImage === 'room'">
-        <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-            <!-- Hotel ID Input -->
-            <div>
-              <label for="roomId">RoomId ID:</label>
-              <input type="text" id="roomId" formControlName="roomId" readonly />
+      <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <!-- Room ID Input -->
+        <div class="form-group">
+          <label for="roomId">Room ID:</label>
+          <input type="text" id="roomId" formControlName="roomId" readonly />
+        </div>
+
+        <!-- File Upload Input -->
+        <div class="form-group">
+          <div class="file-upload">
+            <label class="file-upload-btn" for="room-images">
+              <span>Choose Images</span>
+            </label>
+            <input 
+              type="file" 
+              id="room-images" 
+              (change)="onImageChange($event)" 
+              multiple 
+              accept="image/*"
+            />
+          </div>
+          <div *ngIf="roomForm.get('images')?.invalid && roomForm.get('images')?.touched" class="error-message">
+            Please upload at least one image
+          </div>
+
+          <!-- Image Preview -->
+          <div class="preview-container" *ngIf="previewUrls && previewUrls.length">
+            <div class="preview-image" *ngFor="let url of previewUrls">
+              <img [src]="url" alt="Preview">
             </div>
-          
-            <!-- File Upload Input -->
-            <div>
-              <label for="images">Upload Images:</label>
-              <input type="file" id="images" (change)="onImageChange($event)" multiple />
-              <div *ngIf="roomForm.get('images')?.invalid && roomForm.get('images')?.touched">
-                <small style="color: red;">Please upload at least one image</small>
-              </div>
-            </div>
-          
-            <!-- Submit Button -->
-            <div>
-              <button type="submit" [disabled]="!roomForm.valid">Upload</button>
-            </div>
-          </form>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button class="submit-btn" type="submit" [disabled]="!roomForm.valid">
+            Upload
+          </button>
+        </div>
+      </form>
     </ng-container>
   </ng-container>
-  
-  
+</div>

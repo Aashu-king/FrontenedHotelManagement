@@ -90,4 +90,22 @@ export class OutletListComponent {
      position: { left: '280px', top: '60px' }
     });
   }
+
+
+  openDialogImageUploadForUpdate(id : any,imageId : any,imageName : any): void {
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ imageName:", imageName)
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ imageId:", imageId)
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ id:", id)
+   let dialogRef =  this.dialog.open(ImageUploaderComponent, {
+    height: '60%',
+    width: '40%',
+     data : {outletid : id, forWhichImage : 'outlet',imageId : imageId,imageName : imageName},
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getData()
+    })
+  }
 }

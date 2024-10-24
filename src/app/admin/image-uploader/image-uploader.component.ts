@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -9,10 +9,13 @@ import { Router } from '@angular/router';
   templateUrl: './image-uploader.component.html',
   styleUrl: './image-uploader.component.css'
 })
-export class ImageUploaderComponent implements OnInit{
+export class ImageUploaderComponent implements OnInit, OnDestroy{
   hotelForm: FormGroup;
   outletForm!: FormGroup;
   roomForm!: FormGroup;
+  previewUrls: string[] = [];
+  existingImageUrl: string = '';
+  isUpdateMode: boolean = false;
 
   constructor(private fb : FormBuilder,public dialogRef: MatDialogRef<ImageUploaderComponent>,private http: HttpClient,private router : Router,@Inject(MAT_DIALOG_DATA) public data: any,) {
     this.hotelForm = this.fb.group({
@@ -35,16 +38,45 @@ export class ImageUploaderComponent implements OnInit{
   ngOnInit(): void {
     if (this.data) {
       if(this.data.forWhichImage === 'hotel'){
+      console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.data:", this.data)
+      console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.data.forWhichImage:", this.data.forWhichImage)
 
+        if (this.data.imageName && this.data.imageId) {
+          this.isUpdateMode = true;
+          this.existingImageUrl = `http://localhost:3000/uploads/${this.data.imageName}`;
+          this.previewUrls = [this.existingImageUrl];
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.previewUrls:", this.previewUrls)
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~  this.existingImageUrl :",  this.existingImageUrl )
+        }
+        
         this.hotelForm.get('hotelid')?.patchValue(this.data.hotelid);
+
       }else if(this.data.forWhichImage === 'outlet'){
         console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.data.forWhichImage:", this.data.forWhichImage)
+
+        if (this.data.imageName && this.data.imageId) {
+          this.isUpdateMode = true;
+          this.existingImageUrl = `http://localhost:3000/uploads/${this.data.imageName}`;
+          this.previewUrls = [this.existingImageUrl];
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.previewUrls:", this.previewUrls)
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~  this.existingImageUrl :",  this.existingImageUrl )
+        }
+
         this.outletForm.get('outletid')?.patchValue(this.data.outletid);
         console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.data.outletid:", this.data.outletid)
 
 
 
       }else{
+
+        if (this.data.imageName && this.data.imageId) {
+          this.isUpdateMode = true;
+          this.existingImageUrl = `http://localhost:3000/uploads/${this.data.imageName}`;
+          this.previewUrls = [this.existingImageUrl];
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~ this.previewUrls:", this.previewUrls)
+          console.log("🚀 ~ ImageUploaderComponent ~ ngOnInit ~  this.existingImageUrl :",  this.existingImageUrl )
+        }
+        
         this.roomForm.get('roomId')?.patchValue(this.data.roomId);
 
 
@@ -55,19 +87,34 @@ export class ImageUploaderComponent implements OnInit{
   // Handle image file input change
   onImageChange(event: any) {
     const files = event.target.files;
-    if (files.length > 0 ) {
+    if (files.length > 0) {
       if(this.data.forWhichImage === 'hotel'){
-
         this.hotelForm.patchValue({ images: files });
       }else if(this.data.forWhichImage === 'outlet'){
         this.outletForm.patchValue({ images: files });
-
       }else{
         this.roomForm.patchValue({ images: files });
-
+      }
+      
+      // Clear previous previews
+      this.previewUrls = [];
+      
+      // Generate preview URLs
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.previewUrls.push(e.target.result);
+        };
+        reader.readAsDataURL(files[i]);
       }
     }
   }
+
+  ngOnDestroy() {
+    // Clean up preview URLs
+    this.previewUrls.forEach(url => URL.revokeObjectURL(url));
+  }
+  
 
   // Submit the form
   onSubmit() {

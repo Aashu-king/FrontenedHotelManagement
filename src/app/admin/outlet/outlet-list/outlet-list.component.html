@@ -33,7 +33,13 @@ flex-wrap: wrap;">
               {{ item.isActive ? 'Active' : 'Inactive' }}
             </span>
           </td>
-          <td (click)="openDialogImageUpload(item.outletid)">upload Image</td>
+          <!-- <td (click)="openDialogImageUpload(item.outletid)">upload Image</td> -->
+          <ng-container *ngIf="item.images.length <= 0">
+            <td (click)="openDialogImageUpload(item.outletid)"> Upload Image</td>
+           </ng-container>
+            <ng-container *ngIf="item.images.length > 0">
+            <td   (click)="openDialogImageUploadForUpdate(item.outletid, item.images[0].id, item.images[0]?.imageName)">Change Image</td>
+            </ng-container>
         </tr>
       </tbody>
     </table>

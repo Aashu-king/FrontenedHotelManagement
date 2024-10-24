@@ -83,7 +83,7 @@
                           </div>
                       </div>
                   </li>
-                    <li *ngFor="let moduleType of sidebarItems; let index = index">
+                    <!-- <li *ngFor="let moduleType of sidebarItems; let index = index">
                       <a (click)="toggleModuleType(index)">
                         {{ moduleType.moduleTypeName }}
                         <i class="dropdown-icon" [ngClass]="{'open': openModuleTypeIndex === index}"></i>
@@ -101,7 +101,29 @@
                           </ul>
                         </li>
                       </ul>
+                    </li> -->
+                    <li *ngFor="let moduleType of filteredSidebarItems; let index = index">
+                      <a (click)="toggleModuleType(index)">
+                        {{ moduleType.moduleTypeName }}
+                        <i class="dropdown-icon" [ngClass]="{'open': openModuleTypeIndex === index}"></i>
+                      </a>
+                      <ul *ngIf="openModuleTypeIndex === index">
+                        <li *ngFor="let module of moduleType.moduleData; let moduleIndex = index">
+                          <a (click)="toggleModuleName(index, moduleIndex)">
+                            {{ module.moduleName }}
+                            <i class="dropdown-icon" [ngClass]="{'open': openModuleTypeIndex === index && openModuleNameIndex === moduleIndex}"></i>
+                          </a>
+                          <ul *ngIf="openModuleTypeIndex === index && openModuleNameIndex === moduleIndex">
+                            <li *ngFor="let page of module.pageData">
+                              <a [routerLink]="['/admin' + page.pageUrl.trim()]">{{ page.pageName }}</a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
                     </li>
+                    
+                    
+                    
                   </div>
                 </div>
                 

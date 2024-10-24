@@ -52,6 +52,7 @@ export class HotelListComponent implements OnInit{
   getData(){
     this.http.get('http://localhost:3000/api/v1/get-hotel').subscribe((result : any) => {
       this.justHotelData = result
+      console.log("🚀 ~ HotelListComponent ~ this.http.get ~ this.justHotelData:", this.justHotelData)
       if(this.justHotelData.length > 0){
         this.setPaginatedData();
   
@@ -89,6 +90,22 @@ export class HotelListComponent implements OnInit{
      panelClass: 'custom-dialog-container',
      position: { left: '280px', top: '60px' }
     });
+  }
+  openDialogImageUploadForUpdate(id : any,imageId : any,imageName : any): void {
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ imageName:", imageName)
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ imageId:", imageId)
+    console.log("🚀 ~ HotelListComponent ~ openDialogImageUploadForUpdate ~ id:", id)
+   let dialogRef =  this.dialog.open(ImageUploaderComponent, {
+     height: '60%',
+     width: '40%',
+     data : {hotelid : id, forWhichImage : 'hotel',imageId : imageId,imageName : imageName},
+     panelClass: 'custom-dialog-container',
+     position: { left: '280px', top: '60px' }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getData()
+    })
   }
   
 }

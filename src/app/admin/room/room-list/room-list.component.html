@@ -27,7 +27,12 @@ flex-wrap: wrap;">
           <td (click)="openDialogForUpdate(item.roomId)">{{ item.outlet.name }}</td>
           <td (click)="openDialogForUpdate(item.roomId)">{{ item.roomType.typeName }}</td>
           <td (click)="openDialogForUpdate(item.roomId)">{{ item.roomNumber }}</td>
+          <ng-container *ngIf="item.images.length <= 0">
           <td (click)="openDialogImageUpload(item.roomId)" >Upload Image</td>
+           </ng-container>
+            <ng-container *ngIf="item.images.length > 0">
+            <td   (click)="openDialogImageUploadForUpdate(item.roomId, item.images[0].id, item.images[0]?.imageName)">Change Image</td>
+            </ng-container>
         </tr>
       </tbody>
     </table>
